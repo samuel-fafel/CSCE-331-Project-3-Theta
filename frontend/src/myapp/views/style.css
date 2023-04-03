@@ -1,0 +1,51 @@
+.item1 { grid-area: header; }
+.item2 { grid-area: meals; }
+.item3 { grid-area: alc; }
+.item4 { grid-area: entrees; }
+.item5 { grid-area: sides; }
+.item6 { grid-area: apps; }
+.item7 { grid-area: drinks; }
+.item8 { grid-area: order_items; }
+.item9 { grid-area: item_price; }
+.item10 { grid-area: order_subtotal; }
+.item11 { grid-area: payment; }
+.item12 { grid-area: footer; }
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header'
+    'meals entrees sides drinks'
+    'alc entrees apps drinks'
+    'order_items item_price order_subtotal payment'
+    'footer footer footer footer';
+  gap: 10px;
+  background-color: red;
+  padding: 10px;
+  height: 1000px;
+  grid-template-rows: 80px auto auto 270px 50px;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+.grid-container > div {
+  /*background-color: rgba(255, 255, 255, 0.8);*/
+  background-color: whitesmoke;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+.grid-container > .item1 {
+    /*background-color: rgba(255, 255, 255, 0.8);*/
+    background-color: whitesmoke;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  h1 {
+    color: blue;
+    text-align: center;
+    font-size: 70px
+  }
