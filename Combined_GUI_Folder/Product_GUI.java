@@ -33,16 +33,12 @@ public class Product_GUI extends JFrame {
     public static int TRANSACTION_ID = 200000;
 
     /**
-    *Gives constraint dimensions to a layout constraint varaible.
-    *<p>
-    *This method is constantly used in ordering and placing different labels and buttons
-    *on a grid with the passed on parameters.
-    *
-    * @param gridx The x-axis of where we want our item to be placed
-    * @param gridy The y-axis of where we want our item to be placed
-    * @param gridwidth The width of how many grid spaced you want the item to take up
-    * @return c The constraint variable that is configured
-    */
+     * The constraints function creates the necessary constraints for the GridBag layout
+     * @param gridx
+     * @param gridy
+     * @param gridwidth
+     * @return
+     */
     public static GridBagConstraints constraints(int gridx, int gridy, int gridwidth) {
       GridBagConstraints c = new GridBagConstraints();
       c.gridx = gridx;
@@ -54,19 +50,17 @@ public class Product_GUI extends JFrame {
     }
 
     /**
-    *Manipulates the physical feature of a Java panal.
-    *<p>
-    *This method is constantly used in assigning panel their look on the front end
-    *and it allows different size manipulation of the different panels.
-    *
-    * @param my_panel The panel that will be manipulated
-    * @param color Desired color of the panel
-    * @param border The border style of the panel
-    * @param bound1x The x dimension of where the panel will be placed on the frame
-    * @param bound1y The y dimension of where the panel will be placed on the frame
-    * @param bound2x The x dimension of the panel size
-    * @param bound2y The y dimension of the panel size
-    */
+     * The adjust_panel function takes a panel and implements background, border,
+     * and bounds given the information in the parameters.
+     * @param my_panel
+     * @param color
+     * @param border
+     * @param bound1x
+     * @param bound1y
+     * @param bound2x
+     * @param bound2y
+     */
+
     public static void adjust_panel(JPanel my_panel, Color color, Border border, int bound1x, int bound1y, int bound2x, int bound2y) {
       my_panel.setBackground(color);
       my_panel.setBorder(border);
@@ -108,6 +102,83 @@ public class Product_GUI extends JFrame {
       }
   
       return output + 1;
+    }
+
+    public static void make_product_list(Connection conn, String table){
+      //Add elements to product list from database
+      try{
+         //create a statement object
+        Statement stmt = conn.createStatement();
+        //create an SQL statement
+        String sqlStatement = "SELECT * FROM " + table;
+        //send statement to DBMS
+        ResultSet result = stmt.executeQuery(sqlStatement);
+        while(result.next()){
+            product_list.add(result.getString("name"));
+        }
+      } catch (Exception e){
+        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+      }
+      product_jlist.setListData(product_list);
+    }
+
+    public static void write_results_menu(Connection conn, String table){
+      try{
+        //Gather info for menu_meals item
+        //create a statement object
+        Statement stmt1 = conn.createStatement();
+        //create an SQL statement
+        String sqlStatement1 = "SELECT * FROM " +  table + " WHERE name = " + "'" + selected_product + "'";
+        //send statement to DBMS
+        ResultSet result1 = stmt1.executeQuery(sqlStatement1);
+        while (result1.next()) {
+          results.add(result1.getString("name"));
+          results.add(result1.getString("perishable_1"));
+          results.add(result1.getString("perishable_2"));
+          results.add(result1.getString("non_perish_1"));
+          results.add(result1.getString("non_perish_2"));
+          results.add(result1.getString("non_perish_3"));
+          results.add(result1.getString("price"));
+        }
+      } catch (Exception e){
+        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+      }
+    }
+
+    public static void update_item(Connection conn, String table){
+      String column = JOptionPane.showInputDialog(f, "Updated Column: ");
+      String value = JOptionPane.showInputDialog(f, "Updated Value: ");
+      //Add to database
+      try{
+        //create a statement object
+        Statement stmt = conn.createStatement();
+        //create an SQL statement
+        //Note: ID inputed manually
+        String sqlStatement;
+        sqlStatement = "UPDATE " + table + " SET " + column + " = '" + value + "' WHERE name = '" + selected_product + "';";
+        //send statement to DBMS
+        int rows = stmt.executeUpdate(sqlStatement);
+      } catch (Exception e){
+        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+      }
+    }
+
+    public static void delete_item(Connection conn, String table){
+      //Delete from database
+      try{
+        //create a statement object
+        Statement stmt = conn.createStatement();
+        //create an SQL statement
+        String sqlStatement;
+        sqlStatement = "DELETE FROM " + table + " WHERE name = '" + selected_product + "';";
+        //send statement to DBMS
+        int rows = stmt.executeUpdate(sqlStatement);
+      } catch (Exception e){
+        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+      }
+
+      //Add elements to product list from database
+      make_product_list(conn, table);
     }
 
     public Product_GUI() {
@@ -164,7 +235,7 @@ public class Product_GUI extends JFrame {
         search_panel.add(product_label, constraints(0, 0, 2));
 
         //Create a lists and combo box of all menu items
-        String products[] = {"Choose List","Menu_Meals","Menu_Drinks","Menu_Entrees","Menu_Sides","Perishable", "Non-perishable"};
+        String products[] = {"Choose List","Menu_Meals","Menu_Drinks","Menu_Entrees","Menu_Sides","Perishable", "Non_perishable", "Positions", "Schedules", "Employees"};
         JComboBox<String> comb_box = new JComboBox<>(products);
         search_panel.add(comb_box, constraints(0, 1, 2));
 
@@ -263,20 +334,7 @@ public class Product_GUI extends JFrame {
 
             if(comb_box.getSelectedItem() == "Menu_Meals"){
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_meals";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
               //Create string list of column names for table
               column_names.add("Name");
@@ -290,20 +348,7 @@ public class Product_GUI extends JFrame {
 
             if(comb_box.getSelectedItem() == "Menu_Drinks"){
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_drinks";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
               //Create string list of column names for table
               column_names.add("Name");
@@ -317,20 +362,7 @@ public class Product_GUI extends JFrame {
 
             if(comb_box.getSelectedItem() == "Menu_Entrees"){
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_entrees";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
               //Create string list of column names for table
               column_names.add("Name");
@@ -344,20 +376,7 @@ public class Product_GUI extends JFrame {
 
             if(comb_box.getSelectedItem() == "Menu_Sides"){
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_sides";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
               //Create string list of column names for table
               column_names.add("Name");
@@ -371,20 +390,7 @@ public class Product_GUI extends JFrame {
 
             if(comb_box.getSelectedItem() == "Perishable"){
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM perishable";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
               //Create string list of column names for table
               column_names.add("ID");
@@ -396,22 +402,9 @@ public class Product_GUI extends JFrame {
               column_names.add("Price");
             }
 
-            if(comb_box.getSelectedItem() == "Non-perishable"){
+            if(comb_box.getSelectedItem() == "Non_perishable"){
               //Add elements to list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM non_perishable";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
               //Create string list of column names for table
               column_names.add("ID");
@@ -419,6 +412,42 @@ public class Product_GUI extends JFrame {
               column_names.add("Stock");
               column_names.add("Reorder_Date");
               column_names.add("Buy_Price");
+            }
+
+            if (comb_box.getSelectedItem() == "Positions"){
+              //Add elements to list from database
+              make_product_list(conn, current_table);
+
+              //Create string list of column names for table
+              column_names.add("ID");
+              column_names.add("Name");
+              column_names.add("Hourly_Pay");
+              column_names.add("Admin");
+            }
+
+            if (comb_box.getSelectedItem() == "Schedules"){
+              //Add elements to list from database
+              make_product_list(conn, current_table);
+
+              //Create string list of column names for table
+              column_names.add("Name");
+              column_names.add("Employee");
+              column_names.add("Date");
+              column_names.add("Start_Time");
+              column_names.add("End_Time");
+              column_names.add("Clock_In");
+              column_names.add("Clock_Out");
+            }
+
+            if (comb_box.getSelectedItem() == "Employees"){
+              //Add elements to list from database
+              make_product_list(conn, current_table);
+
+              //Create string list of column names for table
+              column_names.add("ID");
+              column_names.add("Name");
+              column_names.add("Position");
+              column_names.add("Pin");
             }
 
             /*for (int i = 0; i < column_names.size(); i++){
@@ -460,127 +489,51 @@ public class Product_GUI extends JFrame {
             }
 
             if (current_table == "Menu_Meals"){
+              //Write results
+              write_results_menu(conn, current_table);
 
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_meals WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
               }
-
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-            }
             }
 
             if (current_table == "Menu_Drinks"){
+              //Write results
+              write_results_menu(conn, current_table);
 
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_drinks WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
               }
-
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-            }
             }
 
             if (current_table == "Menu_Entrees"){
+              //Write results
+              write_results_menu(conn, current_table);
 
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_entrees WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
               }
-
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-            }
             }
 
             if (current_table == "Menu_Sides"){
+              //Write results
+              write_results_menu(conn, current_table);
 
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_sides WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
               }
-
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-            }
             }
 
             if (current_table == "Perishable"){
@@ -620,7 +573,7 @@ public class Product_GUI extends JFrame {
               JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
             }
             }
-            if (current_table == "Non-perishable"){
+            if (current_table == "Non_perishable"){
               /*String product_id = "null";
               String product_name = "null";
               String stock_amount = "null";
@@ -642,6 +595,93 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("stock"));
                   results.add(result2.getString("reorder_date"));
                   results.add(result2.getString("buy_price"));
+                }
+              } catch (Exception e){
+                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              }
+
+            //closing the connection
+            try {
+              conn.close();
+            } catch(Exception e) {
+              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+            }
+            }
+
+            if (current_table == "Positions"){
+
+              try{
+                //Create a statement for nonperishable items
+                //create a statement object
+                Statement stmt2 = conn.createStatement();
+                //create an SQL statement
+                String sqlStatement2 = "SELECT * FROM positions WHERE name = " + "'" + selected_product + "'";
+                //send statement to DBMS
+                ResultSet result2 = stmt2.executeQuery(sqlStatement2);
+                while (result2.next()) {
+                  results.add(result2.getString("id"));
+                  results.add(result2.getString("name"));
+                  results.add(result2.getString("hourly_pay"));
+                  results.add(result2.getString("admin"));
+                }
+              } catch (Exception e){
+                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              }
+
+            //closing the connection
+            try {
+              conn.close();
+            } catch(Exception e) {
+              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+            }
+            }
+
+            if (current_table == "Schedules"){
+
+              try{
+                //Create a statement for nonperishable items
+                //create a statement object
+                Statement stmt2 = conn.createStatement();
+                //create an SQL statement
+                String sqlStatement2 = "SELECT * FROM schedules WHERE name = " + "'" + selected_product + "'";
+                //send statement to DBMS
+                ResultSet result2 = stmt2.executeQuery(sqlStatement2);
+                while (result2.next()) {
+                  results.add(result2.getString("name"));
+                  results.add(result2.getString("employee"));
+                  results.add(result2.getString("date"));
+                  results.add(result2.getString("start_time"));
+                  results.add(result2.getString("end_time"));
+                  results.add(result2.getString("clock_in"));
+                  results.add(result2.getString("clock_out"));
+                }
+              } catch (Exception e){
+                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              }
+
+            //closing the connection
+            try {
+              conn.close();
+            } catch(Exception e) {
+              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+            }
+            }
+
+            if (current_table == "Employees"){
+
+              try{
+                //Create a statement for nonperishable items
+                //create a statement object
+                Statement stmt2 = conn.createStatement();
+                //create an SQL statement
+                String sqlStatement2 = "SELECT * FROM employees WHERE name = " + "'" + selected_product + "'";
+                //send statement to DBMS
+                ResultSet result2 = stmt2.executeQuery(sqlStatement2);
+                while (result2.next()) {
+                  results.add(result2.getString("id"));
+                  results.add(result2.getString("name"));
+                  results.add(result2.getString("position"));
+                  results.add(result2.getString("pin"));
                 }
               } catch (Exception e){
                 JOptionPane.showMessageDialog(null,"Error accessing Database.");
@@ -699,20 +739,7 @@ public class Product_GUI extends JFrame {
               }
 
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_meals";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
             }
             if(current_table == "Menu_Drinks"){
@@ -739,20 +766,7 @@ public class Product_GUI extends JFrame {
               }
 
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_drinks";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
             }
             if(current_table == "Menu_Entrees"){
@@ -779,20 +793,7 @@ public class Product_GUI extends JFrame {
               }
 
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_entrees";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
             }
             if(current_table == "Menu_Sides"){
               String name = JOptionPane.showInputDialog(f, "Item name: ");
@@ -818,20 +819,7 @@ public class Product_GUI extends JFrame {
               }
 
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM menu_sides";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
             }
           if(current_table == "Perishable"){
@@ -859,23 +847,10 @@ public class Product_GUI extends JFrame {
             }
 
               //Add elements to product list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM perishable";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
           }
-          if(current_table == "Non-perishable"){
+          if(current_table == "Non_perishable"){
             //Collect info
             int id_num = get_latest_transaction("non_perishable");
             String id = Integer.toString(id_num);
@@ -900,21 +875,91 @@ public class Product_GUI extends JFrame {
             }
 
               //Add elements to list from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "SELECT * FROM non_perishable";
-                //send statement to DBMS
-                ResultSet result = stmt.executeQuery(sqlStatement);
-                while(result.next()){
-                  product_list.add(result.getString("name"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-              product_jlist.setListData(product_list);
+              make_product_list(conn, current_table);
 
+          }
+
+          if(current_table == "Positions"){
+            //Collect info
+            int id_num = get_latest_transaction("positions");
+            String id = Integer.toString(id_num);
+            String name = JOptionPane.showInputDialog(f, "Item name: ");
+            String hourly_pay = JOptionPane.showInputDialog(f, "Item Hourly_Pay: ");
+            String admin = JOptionPane.showInputDialog(f, "Item admin: ");
+
+            //Add to database
+            try{
+              //create a statement object
+              Statement stmt = conn.createStatement();
+              //create an SQL statement
+              //TODO Step 2
+              String sqlStatement = "INSERT INTO positions(id,name,hourly_pay,admin) VALUES ('"
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + hourly_pay + "'" + "," + 
+              "'" + admin + "'" + ");";
+              //send statement to DBMS
+              int rows = stmt.executeUpdate(sqlStatement);
+            } catch (Exception e){
+              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+            }
+
+            //Add elements to list from database
+            make_product_list(conn, current_table);
+          }
+
+          if(current_table == "Schedules"){
+            //Collect info
+            String shift_name = JOptionPane.showInputDialog(f, "Item shift name: ");
+            String employee = JOptionPane.showInputDialog(f, "Item employee: ");
+            String date = JOptionPane.showInputDialog(f, "Item date: ");
+            String start_time = JOptionPane.showInputDialog(f, "Item start time: ");
+            String end_time = JOptionPane.showInputDialog(f, "Item end time: ");
+            String clock_in = JOptionPane.showInputDialog(f, "Item clock in: ");
+            String clock_out = JOptionPane.showInputDialog(f, "Item clock out ");
+
+            //Add to database
+            try{
+              //create a statement object
+              Statement stmt = conn.createStatement();
+              //create an SQL statement
+              //TODO Step 2
+              String sqlStatement = "INSERT INTO schedules(name,employee,date,start_time,end_time,clock_in,clock_out) VALUES ('"
+              + shift_name + "'" + "," + "'" + employee + "'" + "," + "'" + date + "'" + "," + "'" + start_time + "'" + "," + "'" + end_time + 
+              "'" + "," + "'" + clock_in + "'" + "," + "'" + clock_out + "'" + ");";
+              //send statement to DBMS
+              int rows = stmt.executeUpdate(sqlStatement);
+            } catch (Exception e){
+              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+            }
+
+            //Add elements to list from database
+            make_product_list(conn, current_table);
+          }
+
+          if(current_table == "Employees"){
+            //Collect info
+            int id_num = get_latest_transaction("positions");
+            String id = Integer.toString(id_num);
+            String name = JOptionPane.showInputDialog(f, "Item name: ");
+            String position = JOptionPane.showInputDialog(f, "Item position: ");
+            String pin = JOptionPane.showInputDialog(f, "Item pin: ");
+
+            //Add to database
+            try{
+              //create a statement object
+              Statement stmt = conn.createStatement();
+              //create an SQL statement
+              //TODO Step 2
+              String sqlStatement = "INSERT INTO positions(id,name,position,pin) VALUES ('"
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + position + "'" + "," + 
+              "'" + pin + "'" + ");";
+              //send statement to DBMS
+              int rows = stmt.executeUpdate(sqlStatement);
+            } catch (Exception e){
+              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+            }
+
+            //Add elements to list from database
+            make_product_list(conn, current_table);
           }
 
             //closing the connection
@@ -946,172 +991,31 @@ public class Product_GUI extends JFrame {
               System.exit(0);
             }
             if(current_table == "Menu_Meals"){
-              String column = JOptionPane.showInputDialog(f, "Updated Column: ");
-              String value = JOptionPane.showInputDialog(f, "Updated Value: ");
-              //Add to database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                //Note: ID inputed manually
-                String sqlStatement = "UPDATE menu_meals SET " + column + " = '" + value + "' WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              update_item(conn, current_table);
 
               //Rewrite to GUI
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_meals WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              write_results_menu(conn, current_table);
             }
             if(current_table == "Menu_Drinks"){
-              String column = JOptionPane.showInputDialog(f, "Updated Column: ");
-              String value = JOptionPane.showInputDialog(f, "Updated Value: ");
-              //Add to database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                //Note: ID inputed manually
-                String sqlStatement = "UPDATE menu_drinks SET " + column + " = '" + value + "' WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              update_item(conn, current_table);
 
               //Rewrite to GUI
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_drinks WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              write_results_menu(conn, current_table);
             }
             if(current_table == "Menu_Entrees"){
-              String column = JOptionPane.showInputDialog(f, "Updated Column: ");
-              String value = JOptionPane.showInputDialog(f, "Updated Value: ");
-              //Add to database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                //Note: ID inputed manually
-                String sqlStatement = "UPDATE menu_entrees SET " + column + " = '" + value + "' WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              update_item(conn, current_table);
 
               //Rewrite to GUI
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_entrees WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              write_results_menu(conn, current_table);
             }
             if(current_table == "Menu_Sides"){
-              String column = JOptionPane.showInputDialog(f, "Updated Column: ");
-              String value = JOptionPane.showInputDialog(f, "Updated Value: ");
-              //Add to database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                //Note: ID inputed manually
-                String sqlStatement = "UPDATE menu_sides SET " + column + " = '" + value + "' WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              update_item(conn, current_table);
 
               //Rewrite to GUI
-              try{
-                //Gather info for menu_meals item
-                //create a statement object
-                Statement stmt1 = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement1 = "SELECT * FROM menu_sides WHERE name = " + "'" + selected_product + "'";
-                //send statement to DBMS
-                ResultSet result1 = stmt1.executeQuery(sqlStatement1);
-                while (result1.next()) {
-                  results.add(result1.getString("name"));
-                  results.add(result1.getString("perishable_1"));
-                  results.add(result1.getString("perishable_2"));
-                  results.add(result1.getString("non_perish_1"));
-                  results.add(result1.getString("non_perish_2"));
-                  results.add(result1.getString("non_perish_3"));
-                  results.add(result1.getString("price"));
-                }
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              write_results_menu(conn, current_table);
             }
           if(current_table == "Perishable"){
-            String column = JOptionPane.showInputDialog(f, "Updated Column: ");
-            String value = JOptionPane.showInputDialog(f, "Updated Value: ");
-            //Add to database
-            try{
-              //create a statement object
-              Statement stmt = conn.createStatement();
-              //create an SQL statement
-              //Note: ID inputed manually
-              String sqlStatement = "UPDATE perishable SET " + column + " = '" + value + "' WHERE name = '" + selected_product + "';";
-              //send statement to DBMS
-              int rows = stmt.executeUpdate(sqlStatement);
-            } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
-            }
+            update_item(conn, current_table);
 
             //Rewrite to GUI
             try{
@@ -1135,22 +1039,9 @@ public class Product_GUI extends JFrame {
               JOptionPane.showMessageDialog(null,"Error accessing Database.");
             }
           }
-            if(current_table == "Non-perishable"){
+            if(current_table == "Non_perishable"){
               //Collect info
-              String column = JOptionPane.showInputDialog(f, "Updated Column: ");
-              String value = JOptionPane.showInputDialog(f, "Updated Value: ");
-
-              //Add to database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "UPDATE non_perishable SET " + column + " = '" + value + "' WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
+              update_item(conn, current_table);
 
               //Rewrite to GUI
               try{
@@ -1167,6 +1058,78 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("stock"));
                   results.add(result2.getString("reorder_date"));
                   results.add(result2.getString("buy_price"));
+                }
+              } catch (Exception e){
+                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              }
+            }
+
+            if(current_table == "Positions"){
+              update_item(conn, current_table);
+
+              //Rewrite to GUI
+              try{
+                //Create a statement for nonperishable items
+                //create a statement object
+                Statement stmt2 = conn.createStatement();
+                //create an SQL statement
+                String sqlStatement2 = "SELECT * FROM positions WHERE name = " + "'" + selected_product + "'";
+                //send statement to DBMS
+                ResultSet result2 = stmt2.executeQuery(sqlStatement2);
+                while (result2.next()) {
+                  results.add(result2.getString("id"));
+                  results.add(result2.getString("name"));
+                  results.add(result2.getString("hourly_pay"));
+                  results.add(result2.getString("admin"));
+                }
+              } catch (Exception e){
+                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              }
+            }
+
+            if(current_table == "Schedules"){
+              update_item(conn, current_table);
+
+              //Rewrite to GUI
+              try{
+                //Create a statement for nonperishable items
+                //create a statement object
+                Statement stmt2 = conn.createStatement();
+                //create an SQL statement
+                String sqlStatement2 = "SELECT * FROM schedules WHERE name = " + "'" + selected_product + "'";
+                //send statement to DBMS
+                ResultSet result2 = stmt2.executeQuery(sqlStatement2);
+                while (result2.next()) {
+                  results.add(result2.getString("name"));
+                  results.add(result2.getString("employee"));
+                  results.add(result2.getString("date"));
+                  results.add(result2.getString("start_time"));
+                  results.add(result2.getString("end_time"));
+                  results.add(result2.getString("clock_in"));
+                  results.add(result2.getString("clock_out"));
+                }
+              } catch (Exception e){
+                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              }
+            }
+
+            if(current_table == "Employees"){
+              update_item(conn, current_table);
+
+              //Rewrite to GUI
+              try{
+                //Create a statement for nonperishable items
+                //create a statement object
+                Statement stmt2 = conn.createStatement();
+                //create an SQL statement
+                String sqlStatement2 = "SELECT * FROM employees WHERE name = " + "'" + selected_product + "'";
+                //send statement to DBMS
+                ResultSet result2 = stmt2.executeQuery(sqlStatement2);
+                while (result2.next()) {
+                  results.add(result2.getString("id"));
+                  results.add(result2.getString("name"));
+                  results.add(result2.getString("position"));
+                  results.add(result2.getString("pin"));
                 }
               } catch (Exception e){
                 JOptionPane.showMessageDialog(null,"Error accessing Database.");
@@ -1204,180 +1167,7 @@ public class Product_GUI extends JFrame {
             System.exit(0);
           }
 
-          if(current_table == "Menu_Meals"){
-              //Delete from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "DELETE FROM menu_meals WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-
-            //Add elements to product list from database
-            try{
-              //create a statement object
-              Statement stmt = conn.createStatement();
-              //create an SQL statement
-              String sqlStatement = "SELECT * FROM menu_meals";
-              //send statement to DBMS
-              ResultSet result = stmt.executeQuery(sqlStatement);
-              while(result.next()){
-                product_list.add(result.getString("name"));
-              }
-            } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
-            }
-            product_jlist.setListData(product_list);
-          }
-
-          if(current_table == "Menu_Drinks"){
-              //Delete from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "DELETE FROM menu_drinks WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-            //Add elements to product list from database
-            try{
-              //create a statement object
-              Statement stmt = conn.createStatement();
-              //create an SQL statement
-              String sqlStatement = "SELECT * FROM menu_drinks";
-              //send statement to DBMS
-              ResultSet result = stmt.executeQuery(sqlStatement);
-              while(result.next()){
-                product_list.add(result.getString("name"));
-              }
-            } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
-            }
-            product_jlist.setListData(product_list);
-          }
-
-          if(current_table == "Menu_Entrees"){
-              //Delete from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "DELETE FROM menu_entrees WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-            //Add elements to product list from database
-            try{
-              //create a statement object
-              Statement stmt = conn.createStatement();
-              //create an SQL statement
-              String sqlStatement = "SELECT * FROM menu_entrees";
-              //send statement to DBMS
-              ResultSet result = stmt.executeQuery(sqlStatement);
-              while(result.next()){
-                product_list.add(result.getString("name"));
-              }
-            } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
-            }
-            product_jlist.setListData(product_list);
-          }
-
-          if(current_table == "Menu_Sides"){
-              //Delete from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "DELETE FROM menu_sides WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-            //Add elements to product list from database
-            try{
-              //create a statement object
-              Statement stmt = conn.createStatement();
-              //create an SQL statement
-              String sqlStatement = "SELECT * FROM menu_sides";
-              //send statement to DBMS
-              ResultSet result = stmt.executeQuery(sqlStatement);
-              while(result.next()){
-                product_list.add(result.getString("name"));
-              }
-            } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
-            }
-            product_jlist.setListData(product_list);
-          }
-
-          if(current_table == "Perishable"){
-              //Delete from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "DELETE FROM perishable WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-            //Add elements to product list from database
-            try{
-              //create a statement object
-              Statement stmt = conn.createStatement();
-              //create an SQL statement
-              String sqlStatement = "SELECT * FROM perishable";
-              //send statement to DBMS
-              ResultSet result = stmt.executeQuery(sqlStatement);
-              while(result.next()){
-                product_list.add(result.getString("name"));
-              }
-            } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
-            }
-            product_jlist.setListData(product_list);
-          }
-
-          if(current_table == "Non-perishable"){
-              //Delete from database
-              try{
-                //create a statement object
-                Statement stmt = conn.createStatement();
-                //create an SQL statement
-                String sqlStatement = "DELETE FROM non_perishable WHERE name = '" + selected_product + "';";
-                //send statement to DBMS
-                int rows = stmt.executeUpdate(sqlStatement);
-              } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
-              }
-            //Add elements to list from database
-            try{
-              //create a statement object
-              Statement stmt = conn.createStatement();
-              //create an SQL statement
-              String sqlStatement = "SELECT * FROM non_perishable";
-              //send statement to DBMS
-              ResultSet result = stmt.executeQuery(sqlStatement);
-              while(result.next()){
-                product_list.add(result.getString("name"));
-              }
-            } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
-            }
-            product_jlist.setListData(product_list);
-          }
+          delete_item(conn, current_table);
 
           //closing the connection
           try {
