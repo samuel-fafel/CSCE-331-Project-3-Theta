@@ -1,0 +1,8 @@
+Name,Perishable 1,Perishable 2,Non-Perish 1,Non-Perish 2,Non-Perish 3,Price
+Sm_Drink,Soda_Syrup,NULL,Sm_cup,Top,Straw,1.90
+Md_Drink,Soda_Syrup,NULL,Md_cup,Top,Straw,2.10
+Lg_Drink,Soda_Syrup,NULL,Lg_cup,Top,Straw,2.30
+Iced_Tea,Tea,NULL,Md_cup,Top,Straw,2.10
+Bottled_Water,NULL,NULL,Water_Bottle,NULL,NULL,1.50
+Juice,NULL,NULL,Juice_Box,NULL,NULL,1.00
+No_Drink,NULL,NULL,NULL,NULL,NULL,0.00
