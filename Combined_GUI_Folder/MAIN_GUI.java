@@ -8,18 +8,17 @@ import javax.swing.border.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
-/*
-  compile: javac* .java
-  Windows: java -cp ".;postgresql-42.2.8.jar" MAIN_GUI
-  Mac/Linux: java -cp ".:postgresql-42.2.8.jar" MAIN_GUI
-  AjaxSwing: jar cfm combined_gui.jar META-INF/MANIFEST.MF postgresql-42.2.8.jar *.class 
-*/
+/* INSTRUCTIONS
+  Compile: 
+    javac -source 11 -target 11 *.java
+  REGENERATE combined_gui.jar FOR AjaxSwing: 
+    jar cfm combined_gui.jar META-INF/MANIFEST.MF postgresql-42.2.8.jar *.class
 
-/* Queries
-  UPDATE transactions SET meal_size='Bowl' WHERE id='1';
-  DELETE FROM transactions WHERE date='03_08_2023';
+  Run Manually Windows: 
+    java -cp ".;postgresql-42.2.8.jar" MAIN_GUI
+  Run Manually Mac/Linux: 
+    java -cp ".:postgresql-42.2.8.jar" MAIN_GUI
 */
-
 
 /**
   *This class contains everything needed for the main GUI which will be used to navigate to other interfaces.
