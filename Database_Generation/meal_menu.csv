@@ -1,0 +1,11 @@
+Name,Perishable 1,Perishable 2,Non-Perish 1,Non-Perish 2,Non-Perish 3,Price
+Bowl,NULL,NULL,Bowl,Plasticware,NULL,7.50
+Plate,NULL,NULL,Plate,Plasticware,NULL,9.00
+Bigger_Plate,NULL,NULL,Bigger_Plate,Plasticware,NULL,10.50
+Family_Meal,NULL,NULL,To_go_Box,Plasticware,NULL,40.00
+Cub_Meal,NULL,NULL,To_go_Box,Plasticware,NULL,6.00
+A_La_Carte_Entree_Sm,NULL,NULL,Sm_box,Plasticware,NULL,4.90
+A_La_Carte_Entree_Md,NULL,NULL,Md_box,Plasticware,NULL,8.20
+A_La_Carte_Entree_Lg,NULL,NULL,Lg_box,Plasticware,NULL,10.90
+A_La_Carte_Side_Md,NULL,NULL,Md_box,Plasticware,NULL,4.40
+A_La_Carte_Side_Lg,NULL,NULL,Lg_box,Plasticware,NULL,5.40

@@ -1,0 +1,8 @@
+Name,Perishable 1,Perishable 2,Non-Perish 1,Non-Perish 2,Non-Perish 3,Price
+White_Rice,White_Rice,NULL,NULL,NULL,NULL,0.00
+Brown_Rice,Brown_Rice,NULL,NULL,NULL,NULL,0.00
+Fried_Rice,White_Rice,Vegetable Mix,NULL,NULL,NULL,0.00
+Chow_Mein,Noodles,Vegetable Mix,NULL,NULL,NULL,0.00
+Super_Greens,Vegetables,NULL,NULL,NULL,NULL,0.00
+Egg_Rolls,Egg_Roll_Casing,NULL,NULL,NULL,NULL,0.00
+Spring_Rolls,Spring_Roll_Casing,NULL,NULL,NULL,NULL,0.00
