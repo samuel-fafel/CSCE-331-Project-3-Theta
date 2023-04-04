@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
   compile: javac* .java
   Windows: java -cp ".;postgresql-42.2.8.jar" MAIN_GUI
   Mac/Linux: java -cp ".:postgresql-42.2.8.jar" MAIN_GUI
+  AjaxSwing: jar cfm combined_gui.jar META-INF/MANIFEST.MF postgresql-42.2.8.jar *.class 
 */
 
 /* Queries
