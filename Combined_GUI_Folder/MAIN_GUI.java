@@ -8,6 +8,7 @@ import javax.swing.border.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
+<<<<<<< HEAD
 /*
   compile: javac* .java
   Windows: java -cp ".;postgresql-42.2.8.jar" MAIN_GUI
@@ -20,6 +21,20 @@ import java.text.SimpleDateFormat;
 */
 
 
+=======
+/* INSTRUCTIONS
+  Compile: 
+    javac -source 11 -target 11 *.java
+  REGENERATE combined_gui.jar FOR AjaxSwing: 
+    jar cfm combined_gui.jar META-INF/MANIFEST.MF postgresql-42.2.8.jar *.class
+
+  Run Manually Windows: 
+    java -cp ".;postgresql-42.2.8.jar" MAIN_GUI
+  Run Manually Mac/Linux: 
+    java -cp ".:postgresql-42.2.8.jar" MAIN_GUI
+*/
+
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 /**
   *This class contains everything needed for the main GUI which will be used to navigate to other interfaces.
   *<p>
@@ -123,7 +138,10 @@ public class MAIN_GUI extends JFrame {
    * Generates a string to be the content of a Z report.
    * Goes through all the transactions of the current day to update running totals, records them, then zeroes them out.
    * @return report_string
+<<<<<<< HEAD
    * @author Haden Johnson
+=======
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
    */
   public static String generateZReport(){
     // Connect to Database

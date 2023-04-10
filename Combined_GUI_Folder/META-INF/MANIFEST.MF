@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: 20 (Oracle Corporation)
+Main-Class: MAIN_GUI
+Class-Path: postgresql-42.2.8.jar
+

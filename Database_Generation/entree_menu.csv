@@ -1,0 +1,13 @@
+Name,Perishable 1,Perishable 2,Non-Perish 1,Non-Perish 2,Non-Perish 3,Price
+Orange_Chicken,Chicken,Orange_Sauce,NULL,NULL,NULL,0.00
+String_Bean_Chicken,Chicken,String_Beans,NULL,NULL,NULL,0.00
+Kung_Pao_Chicken,Chicken,Kung_Pao_Sauce,NULL,NULL,NULL,0.00
+Mushroom_Chicken,Chicken,Mushrooms,NULL,NULL,NULL,0.00
+Beijing_Beef,Beef,NULL,NULL,NULL,NULL,0.00
+Broccoli_Beef,Beef,Broccoli,NULL,NULL,NULL,0.00
+Black_Pepper_Angus_Steak,Steak,Black_Pepper,NULL,NULL,NULL,0.00
+Honey_Walnut_Shrimp,Shrimp,Honey_Walnut_Mix,NULL,NULL,NULL,0.00
+Grilled_Teriyaki_Chicken,Chicken,Teriyaki_Sauce,NULL,NULL,NULL,0.00
+Black_Pepper_Chicken,Chicken,Black_Pepper,NULL,NULL,NULL,0.00
+Sweetfire_Chicken,Chicken,Sweetfire_Sauce,NULL,NULL,NULL,0.00
+Honey_Sesame_Chicken,Chicken,Honey_Sesame_Mix,NULL,NULL,NULL,0.00

@@ -2,8 +2,18 @@ import java.sql.*;
 import java.awt.event.*;
 import java.awt.*;
 
+<<<<<<< HEAD
 import javax.swing.*;
 import javax.swing.border.*;
+=======
+import javax.naming.spi.DirStateFactory.Result;
+import javax.swing.*;
+import java.awt.BorderLayout.*;
+import javax.swing.BorderFactory.*;
+import javax.swing.border.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 import java.util.*;
 import java.lang.Math;
 import java.text.SimpleDateFormat;
@@ -31,10 +41,15 @@ import java.text.SimpleDateFormat;
 public class Cashier_GUI extends JFrame {
   static JFrame f;
   private static String user;
+<<<<<<< HEAD
   public static int TRANSACTION_ID;
   public static int ORDER_ID;
 
   private static HashMap<Integer, String> current_item_list;
+=======
+  public static int TRANSACTION_ID = 200000;
+
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 
   static java.util.List<String> menu_meals = new ArrayList<>(Arrays.asList(
     "Bowl",
@@ -85,7 +100,11 @@ public class Cashier_GUI extends JFrame {
     "No_Drink"
   ));
 
+<<<<<<< HEAD
   public static void get_latest_IDs() {
+=======
+  public static int get_latest_transaction() {
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
     //Building the connection
     Connection conn = null;
     try {
@@ -99,6 +118,7 @@ public class Cashier_GUI extends JFrame {
     }
 
     // QUERY DATABASE FOR LASTEST TRANSACTION ID
+<<<<<<< HEAD
     try{
       Statement stmt = conn.createStatement(); // create a statement object
       String query = "SELECT id,order_number FROM transactions ORDER BY id DESC LIMIT 1";  // create an SQL statement
@@ -109,6 +129,18 @@ public class Cashier_GUI extends JFrame {
       }
     } catch (Exception e){
       JOptionPane.showMessageDialog(null,"Error accessing Database for transaction numbers:\n" + e);
+=======
+    int output = TRANSACTION_ID + 1;
+    try{
+      Statement stmt = conn.createStatement(); // create a statement object
+      String query = "SELECT id FROM transactions ORDER BY id DESC LIMIT 1";  // create an SQL statement
+      ResultSet result = stmt.executeQuery(query); // send statement to DBMS
+      while (result.next()) { // Get responses from database
+        output = Integer.parseInt(result.getString(1));
+      }
+    } catch (Exception e){
+      JOptionPane.showMessageDialog(null,"Error accessing Database:\n" + e);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
     }
 
     //closing the connection
@@ -119,7 +151,11 @@ public class Cashier_GUI extends JFrame {
       JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
     }
 
+<<<<<<< HEAD
     return;
+=======
+    return output;
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
   }
 
   public static void set_user(String user_input) {
@@ -217,7 +253,11 @@ public class Cashier_GUI extends JFrame {
       System.exit(0);
     }
 
+<<<<<<< HEAD
     // QUERY DATABASE FOR ITEMS
+=======
+    // QUERY DATABASE FOR TRANSACTIONS
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
     HashMap< Integer, Vector<String> > transaction_info = new HashMap< Integer, Vector<String> >();
     try{
       Statement stmt = conn.createStatement(); // create a statement object
@@ -248,7 +288,11 @@ public class Cashier_GUI extends JFrame {
     return transaction_info;
   }
 
+<<<<<<< HEAD
   public static void add_transaction(HashMap<Integer, String> item_list, String payment_method, Double subtotal) {
+=======
+  public static void add_transaction(Vector<String> order_items, String payment_method, Double subtotal) {
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
     // CONNECT TO DATABASE
     Connection conn = null;
     try {
@@ -275,6 +319,7 @@ public class Cashier_GUI extends JFrame {
     // CREATE TRANSACTION
     double tax = Math.round(subtotal * 0.0825 * 100.0) / 100.0;
     double total = Math.round((subtotal + tax) * 100.0) / 100.0;
+<<<<<<< HEAD
     current_item_list.put(0,  Integer.toString(TRANSACTION_ID));
     current_item_list.put(9,  current_date);
     current_item_list.put(10, get_user());
@@ -284,6 +329,49 @@ public class Cashier_GUI extends JFrame {
     current_item_list.put(14, Double.toString(total));
     current_item_list.put(15, current_time);
     current_item_list.put(16, Integer.toString(ORDER_ID));
+=======
+    HashMap<Integer, String> item_list = new HashMap<Integer, String>() {{
+      put(0,  Integer.toString(TRANSACTION_ID));
+      put(1,  "Sale");
+      put(2,  "none");
+      put(3,  "none");
+      put(4,  "none");
+      put(5,  "none");
+      put(6,  "none");
+      put(7,  "none");
+      put(8,  "none");
+      put(9,  current_date);
+      put(10, get_user());
+      put(11, payment_method);
+      put(12, Double.toString(subtotal));
+      put(13, Double.toString(tax));
+      put(14, Double.toString(total));
+      put(15, current_time);
+    }};
+
+    // Parse order_items
+    int meals_index = 2;
+    int entrees_index = 3;
+    int sides_index = 6;
+    int drinks_index = 8;
+    int payment_index = 11;
+    for (String item : order_items) {
+      if (menu_meals.contains(item)) {
+        item_list.put(meals_index, item);
+      }
+      else if (menu_entrees.contains(item) && entrees_index < sides_index) {
+        item_list.put(entrees_index, item);
+        entrees_index++;
+      }
+      else if (menu_sides.contains(item) && sides_index < drinks_index) {
+        item_list.put(sides_index, item);
+        sides_index++;
+      }
+      else if (menu_drinks.contains(item)) {
+        item_list.put(drinks_index, item);
+      }
+    }
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 
     // Assemble String
     String values_list = "";
@@ -300,7 +388,11 @@ public class Cashier_GUI extends JFrame {
     try{
       Statement stmt = conn.createStatement(); // create a statement object
       String query = "INSERT INTO transactions VALUES(" + values_list + ");";  // create an SQL statement
+<<<<<<< HEAD
       stmt.executeQuery(query); // send statement to DBMS
+=======
+      ResultSet result = stmt.executeQuery(query); // send statement to DBMS
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
     } catch (Exception e) {
       if (!e.toString().contains("No results were returned by the query.")) {
         JOptionPane.showMessageDialog(null,"Error accessing Database:\n" + e);
@@ -316,6 +408,7 @@ public class Cashier_GUI extends JFrame {
     }
   }
 
+<<<<<<< HEAD
   /* ITEM PARSING
     // Parse order_items
       int meals_index = 2;
@@ -371,6 +464,15 @@ public class Cashier_GUI extends JFrame {
       }
     }
     
+=======
+  public static void update_text(TextArea textfield_items, Vector<String> items, TextArea textfield_prices, Vector<Double> prices) {
+    String item_list = "";
+    String prices_list = "";
+    for (int i = 0; i < items.size(); i++) {
+      item_list += items.get(i) + "\n";
+      prices_list += Double.toString(prices.get(i)) + "\n";
+    }
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
     textfield_items.setText(item_list);
     textfield_prices.setText(prices_list);
   }
@@ -455,7 +557,25 @@ public class Cashier_GUI extends JFrame {
     f = new JFrame("DB GUI");
 
     //border initialization
+<<<<<<< HEAD
     Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+=======
+    Border blackline = BorderFactory.createLineBorder(Color.black);
+    Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+    Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+    Border empty = BorderFactory.createEmptyBorder();
+
+    //Font initialization
+    Font font = new Font("Verdana",Font.BOLD,16);
+
+    //Dimensions initialization
+    //Dimension labelDimension = new Dimension(300,80);
+    Dimension halfDimension = new Dimension(100,50);
+    Dimension thirdDimension = new Dimension(100,50);
+    Dimension accessoryDimension = new Dimension(190,50);
+    Dimension accessoryDimension2 = new Dimension(170,50);
+    //Dimension buttonDimension = new Dimension(50,80);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 
     //creating contraints
     GridBagConstraints c = new GridBagConstraints();
@@ -902,6 +1022,7 @@ public class Cashier_GUI extends JFrame {
 
     }
 
+<<<<<<< HEAD
     //first initialization of current_item_list
     current_item_list = new HashMap<Integer, String>() {{
       put(0,  Integer.toString(TRANSACTION_ID));
@@ -928,17 +1049,31 @@ public class Cashier_GUI extends JFrame {
     for(int i = 0; i < 15; i++){
       current_price.add(0.00);
     }
+=======
+    Vector<String> current_order = new Vector<String>();
+    Vector<Double> current_price = new Vector<Double>();
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 
     // BUTTONS FUNCTIONALITY
     // Empower Meal/A-La-Carte Buttons
     HashMap< Integer, Vector<String> > menu_meals = menu_query("menu_meals"); // get drinks data
     for (int b = 0; b < meal_alacarte_buttons.size(); b++) {
+<<<<<<< HEAD
       Vector<String> meals = menu_meals.get(b+1);
       meal_alacarte_buttons.get(b).addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           current_item_list.put(2,meals.get(0));
           current_price.set(2,Double.parseDouble(meals.get(6)));
           update_text(order_items, order_prices, current_price);
+=======
+      int id = b;
+      Vector<String> meals = menu_meals.get(b+1);
+      meal_alacarte_buttons.get(b).addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          current_order.add(meals.get(0));
+          current_price.add(Double.parseDouble(meals.get(6)));
+          update_text(order_items, current_order, order_prices, current_price);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
           update_total(order_totals, current_price);
         }
       });
@@ -947,12 +1082,22 @@ public class Cashier_GUI extends JFrame {
     // Empower Entree Buttons
     HashMap< Integer, Vector<String> > menu_entrees = menu_query("menu_entrees"); // get entree data
     for (int b = 0; b < entree_buttons.size(); b++) {
+<<<<<<< HEAD
       Vector<String> entrees = menu_entrees.get(b+1);
       entree_buttons.get(b).addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           current_item_list.put(3,entrees.get(0));
           current_price.set(3,Double.parseDouble(entrees.get(6)));
           update_text(order_items, order_prices, current_price);
+=======
+      int id = b;
+      Vector<String> entrees = menu_entrees.get(b+1);
+      entree_buttons.get(b).addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          current_order.add(entrees.get(0));
+          current_price.add(Double.parseDouble(entrees.get(6)));
+          update_text(order_items, current_order, order_prices, current_price);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
           update_total(order_totals, current_price);
         }
       });
@@ -961,6 +1106,7 @@ public class Cashier_GUI extends JFrame {
     // Empower Sides Buttons
     HashMap< Integer, Vector<String> > menu_sides = menu_query("menu_sides"); // get sides data
     for (int b = 0; b < side_buttons.size(); b++) {
+<<<<<<< HEAD
       Vector<String> sides = menu_sides.get(b+1);
       side_buttons.get(b).addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
@@ -968,6 +1114,15 @@ public class Cashier_GUI extends JFrame {
           current_item_list.put(6,sides.get(0));
           current_price.set(6,Double.parseDouble(sides.get(6)));
           update_text(order_items, order_prices, current_price);
+=======
+      int id = b;
+      Vector<String> sides = menu_sides.get(b+1);
+      side_buttons.get(b).addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          current_order.add(sides.get(0));
+          current_price.add(Double.parseDouble(sides.get(6)));
+          update_text(order_items, current_order, order_prices, current_price);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
           update_total(order_totals, current_price);
         }
       });
@@ -976,17 +1131,29 @@ public class Cashier_GUI extends JFrame {
     // Empower Appetizer Buttons
     apps_buttons.get(0).addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
         current_item_list.put(4,menu_sides.get(6).get(0));
         current_price.set(4,Double.parseDouble(menu_sides.get(6).get(6)));
         update_text(order_items, order_prices, current_price);
+=======
+        current_order.add(menu_sides.get(6).get(0));
+        current_price.add(Double.parseDouble(menu_sides.get(6).get(6)));
+        update_text(order_items, current_order, order_prices, current_price);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
         update_total(order_totals, current_price);
       }
     });
     apps_buttons.get(1).addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
         current_item_list.put(5,menu_sides.get(7).get(0));
         current_price.set(5,Double.parseDouble(menu_sides.get(7).get(6)));
         update_text(order_items, order_prices, current_price);
+=======
+        current_order.add(menu_sides.get(7).get(0));
+        current_price.add(Double.parseDouble(menu_sides.get(7).get(6)));
+        update_text(order_items, current_order, order_prices, current_price);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
         update_total(order_totals, current_price);
       }
     });
@@ -994,12 +1161,22 @@ public class Cashier_GUI extends JFrame {
     // Empower Drink Buttons
     HashMap< Integer, Vector<String> > menu_drinks = menu_query("menu_drinks"); // get drinks data
     for (int b = 0; b < drinks_buttons.size(); b++) {
+<<<<<<< HEAD
       Vector<String> drinks = menu_drinks.get(b+1);
       drinks_buttons.get(b).addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           current_item_list.put(6,drinks.get(0));
           current_price.add(Double.parseDouble(drinks.get(6)));
           update_text(order_items, order_prices, current_price);
+=======
+      int id = b;
+      Vector<String> drinks = menu_drinks.get(b+1);
+      drinks_buttons.get(b).addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          current_order.add(drinks.get(0));
+          current_price.add(Double.parseDouble(drinks.get(6)));
+          update_text(order_items, current_order, order_prices, current_price);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
           update_total(order_totals, current_price);
         }
       });
@@ -1013,6 +1190,7 @@ public class Cashier_GUI extends JFrame {
     });
     reset_order_button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
         for( Map.Entry<Integer,String> elem : current_item_list.entrySet()){
           if(elem.getKey() > 1 && elem.getKey() < 9){
             elem.setValue("none");
@@ -1022,6 +1200,11 @@ public class Cashier_GUI extends JFrame {
           val *= 0.00;
         }
         update_text(order_items, order_prices, current_price);
+=======
+        current_order.clear();
+        current_price.clear();
+        update_text(order_items, current_order, order_prices, current_price);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
         update_total(order_totals, current_price);
       }
     });
@@ -1030,9 +1213,14 @@ public class Cashier_GUI extends JFrame {
         double subtotal = update_total(order_totals, current_price);
         JRadioButton payment_method = radioButton1;
         if (!radioButton1.isSelected()) payment_method = radioButton2;
+<<<<<<< HEAD
         TRANSACTION_ID += 1;
         ORDER_ID += 1;
         add_transaction(current_item_list, payment_method.getText(), subtotal);
+=======
+        TRANSACTION_ID = get_latest_transaction() + 1;
+        add_transaction(current_order, payment_method.getText(), subtotal);
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
       }
     });
 

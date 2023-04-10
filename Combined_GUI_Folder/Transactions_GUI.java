@@ -6,7 +6,10 @@ import java.awt.BorderLayout.*;
 import javax.swing.BorderFactory.*;
 import javax.swing.border.*;
 import javax.swing.text.BadLocationException;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 import java.util.HashMap;
@@ -14,11 +17,14 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+<<<<<<< HEAD
 /* Queries
   UPDATE transactions SET meal_size='Bowl' WHERE id='1';
   DELETE FROM transactions WHERE date='03_08_2023';
 */
 
+=======
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
 public class Transactions_GUI extends JFrame {
   static java.util.List<String> menu_combined = new ArrayList<>(Arrays.asList(
     "Bowl",
@@ -187,6 +193,7 @@ public class Transactions_GUI extends JFrame {
     return output;
   }
 
+<<<<<<< HEAD
   // QUERY DATABASE FOR ALL TRANSACTION INFO
   public static HashMap<Integer, Vector<String> > full_query(Connection conn) {
     // QUERY DATABASE FOR TRANSACTIONS
@@ -212,6 +219,16 @@ public class Transactions_GUI extends JFrame {
     return transaction_info;
   }
 
+=======
+  /* Samuel Fafel
+    menu_query takes in a string for the menu requested
+    and returns a Hashmap (dictionary) containing each row
+    of data in the requested menu SQL table.
+    Key is the row of the table
+    Value is a Vector containing the entries in that row.
+    Indexes of that Vector correspond to columns in the table.
+  */ 
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
   // Ask for all the entries in a given MENU (only menus)
   public static HashMap< Integer, Vector<String> > menu_query(String menu) {
     //Building the connection
@@ -257,6 +274,14 @@ public class Transactions_GUI extends JFrame {
     return transaction_info;
   }
 
+<<<<<<< HEAD
+=======
+  /* Samuel Fafel
+    button_query takes in an id for the transaction requested
+    and returns a Vector containing each entry in the transaction
+    Indexes of the Vector correspond to columns in the table.
+  */ 
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
   // BUTTON QUERY
   public static Vector<String> button_query(int id) {
     //Building the connection
@@ -290,7 +315,19 @@ public class Transactions_GUI extends JFrame {
     return transaction_info;
   }
 
+<<<<<<< HEAD
   // GENERIC QUERY (DOES expect a return message from Database)
+=======
+  /* Samuel Fafel
+    generic_query takes in a string for the SQL query and the open
+    Connection to the server. It returns a Hashmap similar to menu_query
+    except that the Hashmap contains data for transactions rather than menus
+    Key is the row of the table
+    Value is a Vector containing the entries in that row.
+    Indexes of that Vector correspond to columns in the table.
+  */ 
+  // GENERIC TRANSACTION QUERY
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
   public static HashMap<Integer, Vector<String> > generic_query(String sql_query, Connection conn) {
     // QUERY DATABASE FOR TRANSACTIONS
     HashMap< Integer, Vector<String> > transaction_info = new HashMap< Integer, Vector<String> >();
@@ -312,7 +349,15 @@ public class Transactions_GUI extends JFrame {
     return transaction_info;
   }
 
+<<<<<<< HEAD
   // GENERIC QUERY (does NOT expect a return message from Database)
+=======
+  /* Samuel Fafel
+    run_command takes in a string for the SQL query and returns void
+    it submits the command to the server, and the server is in charge of processing it.
+  */ 
+  // SUBMIT ANY COMMAND TO DATABASE
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
   public static void run_command(String sql_query) {
     //Build the connection
     Connection conn = null;
@@ -343,7 +388,10 @@ public class Transactions_GUI extends JFrame {
    * Goes through all the transactions of the current day to display and update running totals of sold items and sales.
    * If a z report exists for the current day, only later transactions are considered
    * @return report_string
+<<<<<<< HEAD
    * @author Haden Johnson
+=======
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
    */
   public static String generateXReport(){
     // Connect to Database
@@ -445,6 +493,12 @@ public class Transactions_GUI extends JFrame {
     return report_string;
   }
 
+<<<<<<< HEAD
+=======
+  /* Samuel Fafel
+    generate_sales_report takes in strings for the start/end date/times
+  */ 
+>>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
   // GENERATE SALES REPORT
   public static void generate_sales_report(String start_date, String start_time, String end_date, String end_time) {
     //Build the Connection
