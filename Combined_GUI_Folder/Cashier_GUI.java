@@ -375,13 +375,17 @@ public class Cashier_GUI extends JFrame {
     textfield_prices.setText(prices_list);
   }
 
-  public static double update_total(TextArea textfield, Vector<Double> prices) {
+  public static double update_total(JTextArea textfield, Vector<Double> prices) {
     double total = 0;
     for (int i = 0; i < prices.size(); i++) {
       total += prices.get(i);
     }
     textfield.setText(String.format("%.2f", total));
     return total;
+  }
+
+  public static void adjust_text_area (JTextArea my_area) {
+    my_area.setBackground(Color.LIGHT_GRAY);
   }
 
   public static void login_frame_settings(JFrame frame) {
@@ -610,9 +614,13 @@ public class Cashier_GUI extends JFrame {
     }
 
     // Initializing View TextAreas
-    TextArea order_prices = new TextArea("",8,25,1);
-    TextArea order_items = new TextArea("",8,25,1);
-    TextArea order_totals = new TextArea("",1,25,1);
+    JTextArea order_items = new JTextArea("",8,25);
+    JTextArea order_prices = new JTextArea("",8,25);
+    JTextArea order_totals = new JTextArea("",1,25);
+
+    adjust_text_area(order_items);
+    adjust_text_area(order_prices);
+    adjust_text_area(order_totals);
 
     // Initializing Payment Method Buttons
     ButtonGroup payment_buttons = new ButtonGroup();
