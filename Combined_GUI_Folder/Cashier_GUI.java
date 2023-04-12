@@ -338,7 +338,7 @@ public class Cashier_GUI extends JFrame {
     }
   */
 
-  public static void update_text(TextArea textfield_items, TextArea textfield_prices, Vector<Double> prices) {
+  public static void update_text(JTextArea textfield_items, JTextArea textfield_prices, Vector<Double> prices) {
     String item_list = "";
     String prices_list = "";
 
@@ -879,7 +879,7 @@ public class Cashier_GUI extends JFrame {
         drink_panel.add(no_drink, c);
       }
 
-      // Label & TextArea Placement for View Panel
+      // Label & JTextArea Placement for View Panel
       {
         c.insets = new Insets(5,5,5,5);
         view_panel.add(order_items_label, constraints(0,0,1, c));
