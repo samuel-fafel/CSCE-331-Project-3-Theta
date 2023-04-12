@@ -125,6 +125,10 @@ public class Transactions_GUI extends JFrame {
     my_panel.setBounds(bound1x,bound1y,bound2x,bound2y);
   }
 
+  public static void adjust_text_area(JTextArea my_area) {
+    my_area.setBorder(new BevelBorder(BevelBorder.LOWERED));
+    my_area.setBackground(Color.LIGHT_GRAY);
+  }
   /**
   *Manipulates the physical feature of a Java labels.
   *<p>
@@ -188,7 +192,7 @@ public class Transactions_GUI extends JFrame {
     Key is the row of the table
     Value is a Vector containing the entries in that row.
     Indexes of that Vector correspond to columns in the table.
-  */ 
+  */
   // Ask for all the entries in a given MENU (only menus)
   public static HashMap< Integer, Vector<String> > menu_query(String menu) {
     //Building the connection
@@ -238,7 +242,7 @@ public class Transactions_GUI extends JFrame {
     button_query takes in an id for the transaction requested
     and returns a Vector containing each entry in the transaction
     Indexes of the Vector correspond to columns in the table.
-  */ 
+  */
   // BUTTON QUERY
   public static Vector<String> button_query(int id) {
     //Building the connection
@@ -279,7 +283,7 @@ public class Transactions_GUI extends JFrame {
     Key is the row of the table
     Value is a Vector containing the entries in that row.
     Indexes of that Vector correspond to columns in the table.
-  */ 
+  */
   // GENERIC TRANSACTION QUERY
   public static HashMap<Integer, Vector<String> > generic_query(String sql_query, Connection conn) {
     // QUERY DATABASE FOR TRANSACTIONS
@@ -305,7 +309,7 @@ public class Transactions_GUI extends JFrame {
   /* Samuel Fafel
     run_command takes in a string for the SQL query and returns void
     it submits the command to the server, and the server is in charge of processing it.
-  */ 
+  */
   // SUBMIT ANY COMMAND TO DATABASE
   public static void run_command(String sql_query) {
     //Build the connection
@@ -350,7 +354,7 @@ public class Transactions_GUI extends JFrame {
       System.err.println(e.getClass().getName()+": "+e.getMessage());
       //System.exit(0);
     }
-  
+
     // Get & format current date
     java.util.Calendar calendar = java.util.Calendar.getInstance();
     int year = calendar.get(Calendar.YEAR);
@@ -358,14 +362,14 @@ public class Transactions_GUI extends JFrame {
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     String current_date = "";
     if(month < 10){
-       current_date += "0"; 
+       current_date += "0";
     }
-    current_date += month + "/"; 
+    current_date += month + "/";
     if(day < 10){
-      current_date += "0"; 
+      current_date += "0";
    }
     current_date += day + "/" + year;
-    
+
     // Initialize variables
     // String to return
     String report_string = "X Report for " + current_date + "\n";
@@ -385,7 +389,7 @@ public class Transactions_GUI extends JFrame {
         while(DB_menu.next()){
           totals_map.put(DB_menu.getString("name"), DB_menu.getInt("running_total") );
         }
-        
+
         //check for z report checkpoint times from current date
         ResultSet z_result = stmt.executeQuery("SELECT * FROM z_reports WHERE date='" + current_date + "' ORDER BY time DESC LIMIT 1");
         if(z_result.next()){
@@ -419,14 +423,14 @@ public class Transactions_GUI extends JFrame {
           report_string += duo.getKey() + ": " + duo.getValue() + "\n";
           run_command("UPDATE menu_full SET running_total=" + duo.getValue() + " WHERE name='" + duo.getKey() + "'");
         }
-        
+
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null,"Error accessing Database for X Report:\n" + e);
     }
 
     // add total sales
     report_string += "Total Sales: $" + Float.toString(total) + "\n";
-    
+
     //closing the connection
     try {
       conn.close();
@@ -440,7 +444,7 @@ public class Transactions_GUI extends JFrame {
 
   /* Samuel Fafel
     generate_sales_report takes in strings for the start/end date/times
-  */ 
+  */
   // GENERATE SALES REPORT
   public static void generate_sales_report(String start_date, String start_time, String end_date, String end_time) {
     //Build the Connection
@@ -630,16 +634,6 @@ public class Transactions_GUI extends JFrame {
       excess_report_panel.add(new JLabel(items.get(i)), constraints(0, i+1, 1));
       excess_report_panel.add(new JLabel(" | " + percentages.get(i) + "% Sold"), constraints (1, i+1, 1));
     }
-    /*
-    for (int i = 0; i < menu_combined.size(); i++) {
-      String key = menu_combined.get(i);
-      Integer value = sales_by_item.get(key);
-      if (key != "none") {
-        excess_report_panel.add(new JLabel(Integer.toString(value)), constraints(0, i+1, 1));
-        excess_report_panel.add(new JLabel(" | " + key), constraints(1, i+1, 1));
-      }
-    }
-    */
 
     excess_report_frame.setSize(650, 700);
     excess_report_frame.add(excess_report_panel, BorderLayout.CENTER);
@@ -729,10 +723,16 @@ public class Transactions_GUI extends JFrame {
     // SALES REPORT BUTTON
     list_panel.add(new JLabel("Start Date/Time:"), constraints(0,1,1));
     list_panel.add(new JLabel("End Date/Time:"), constraints(1,1,1));
-    TextArea sales_report_startdate = new TextArea("MM/DD/YYYY", 1,12,1);
-    TextArea sales_report_enddate = new TextArea("MM/DD/YYYY", 1,12,1);
-    TextArea sales_report_starttime = new TextArea("HH:MM:SS", 1,12,1);
-    TextArea sales_report_endtime = new TextArea("HH:MM:SS", 1,12,1);
+    JTextArea sales_report_startdate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea sales_report_enddate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea sales_report_starttime = new JTextArea("HH:MM:SS", 1,12);
+    JTextArea sales_report_endtime = new JTextArea("HH:MM:SS", 1,12);
+
+    adjust_text_area(sales_report_startdate);
+    adjust_text_area(sales_report_enddate);
+    adjust_text_area(sales_report_starttime);
+    adjust_text_area(sales_report_endtime);
+
     JButton sales_report_generate = new JButton("Generate Sales Report");
     list_panel.add(sales_report_startdate, constraints(0,2,1));
     list_panel.add(sales_report_enddate, constraints(1,2,1));
@@ -748,10 +748,16 @@ public class Transactions_GUI extends JFrame {
     // EXCESS REPORT BUTTON
     list_panel.add(new JLabel("Start Date/Time:"), constraints(0,4,1));
     list_panel.add(new JLabel("End Date/Time:"), constraints(1,4,1));
-    TextArea excess_report_startdate = new TextArea("MM/DD/YYYY", 1,12,1);
-    TextArea excess_report_enddate = new TextArea("MM/DD/YYYY", 1,12,1);
-    TextArea excess_report_starttime = new TextArea("HH:MM:SS", 1,12,1);
-    TextArea excess_report_endtime = new TextArea("HH:MM:SS", 1,12,1);
+    JTextArea excess_report_startdate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea excess_report_enddate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea excess_report_starttime = new JTextArea("HH:MM:SS", 1,12);
+    JTextArea excess_report_endtime = new JTextArea("HH:MM:SS", 1,12);
+
+    adjust_text_area(excess_report_startdate);
+    adjust_text_area(excess_report_enddate);
+    adjust_text_area(excess_report_starttime);
+    adjust_text_area(excess_report_endtime);
+
     JButton excess_report_generate = new JButton("Excess Sales Report");
     list_panel.add(excess_report_startdate, constraints(0,5,1));
     list_panel.add(excess_report_enddate, constraints(1,5,1));
@@ -790,16 +796,19 @@ public class Transactions_GUI extends JFrame {
     info_panel.add(info_label, constraints(0, 0, 20));
     String[] fieldnames = new String[] {"ID", "Order Type", "Meal Size", "Entree 1", "Entree 2", "Entree 3",
     "Side 1", "Side 2", "Drink", "Date", "Conducted By", "Payment Method  ", "Subtotal", "Tax", "Total", "Time"};
-    Vector<TextArea> textfields = new Vector<TextArea>();
+    Vector<JTextArea> textfields = new Vector<JTextArea>();
     for (int i = 0; i < fieldnames.length; i++) {
-      textfields.add(new TextArea(fieldnames[i],1,25,1));
+      JTextArea temp = new JTextArea(fieldnames[i], 1, 25);
+      adjust_text_area(temp);
+      textfields.add(temp);
       info_panel.add(new JLabel(fieldnames[i]), constraints(0, i+1, 1));
       info_panel.add(textfields.get(i), constraints(1, i+1, 1));
     }
 
     // MANUAL TRANSACTION LOOKUP
     list_panel.add(new JLabel("Manual Transaction Lookup:"), constraints(0,33,1));
-    TextArea manual_lookup = new TextArea("Enter Transaction ID", 1,12,1);
+    JTextArea manual_lookup = new JTextArea("Enter Transaction ID", 1,12);
+    adjust_text_area(manual_lookup);
     JButton request_transaction = new JButton("Display Transaction");
     list_panel.add(manual_lookup, constraints(0,34,1));
     list_panel.add(request_transaction, constraints(1,34,1));
@@ -831,7 +840,8 @@ public class Transactions_GUI extends JFrame {
     f.add(bottom_panel);
     bottom_panel.add(close_button, constraints(0,0,1));
     bottom_panel.add(x_button);
-    TextArea query_box = new TextArea("", 1,75,1);
+    JTextArea query_box = new JTextArea("", 1,75);
+    adjust_text_area(query_box);
     JButton query_button = new JButton("submit query");
     query_button.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
