@@ -610,8 +610,8 @@ public class Cashier_GUI extends JFrame {
     }
 
     // Initializing View TextAreas
-    TextArea order_items = new TextArea("",8,25,1);
     TextArea order_prices = new TextArea("",8,25,1);
+    TextArea order_items = new TextArea("",8,25,1);
     TextArea order_totals = new TextArea("",1,25,1);
 
     // Initializing Payment Method Buttons

@@ -2,8 +2,6 @@ import java.sql.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.BorderLayout.*;
-import javax.swing.BorderFactory.*;
 import javax.swing.border.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
@@ -96,7 +94,6 @@ public class MAIN_GUI extends JFrame {
   public static void run_command(String sql_query) {
     //Building the connection
     Connection conn = null;
-    //TODO STEP 1
     try {
       Class.forName("org.postgresql.Driver");
       conn = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_theta",
@@ -111,7 +108,7 @@ public class MAIN_GUI extends JFrame {
     try{
       Statement stmt = conn.createStatement(); // create a statement object
       String query = sql_query;  // create an SQL statement
-      ResultSet result = stmt.executeQuery(query); // send statement to DBMS
+      stmt.executeQuery(query); // send statement to DBMS
     } catch (Exception e){
       if (!e.toString().contains("No results were returned by the query.")) {
         JOptionPane.showMessageDialog(null,"error when trying " + sql_query + "\n" + e);
@@ -123,10 +120,7 @@ public class MAIN_GUI extends JFrame {
    * Generates a string to be the content of a Z report.
    * Goes through all the transactions of the current day to update running totals, records them, then zeroes them out.
    * @return report_string
-<<<<<<< HEAD
    * @author Haden Johnson
-=======
->>>>>>> 185940ceabd5b8a7ebb7f67b398ca7bfc78652da
    */
   public static String generateZReport(){
     // Connect to Database
@@ -235,7 +229,6 @@ public class MAIN_GUI extends JFrame {
   public MAIN_GUI() {
     //Building the connection
     Connection conn = null;
-    //TODO STEP 1
     try {
       Class.forName("org.postgresql.Driver");
       conn = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_theta",
