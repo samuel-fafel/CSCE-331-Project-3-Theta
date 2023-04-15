@@ -936,13 +936,47 @@ public class Cashier_GUI extends JFrame {
       Vector<String> meals = menu_meals.get(b+1);
       meal_alacarte_buttons.get(b).addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+          //update item listing and price
           current_item_list.put(2,meals.get(0));
           current_price.set(2,Double.parseDouble(meals.get(6)));
-          if(meals.get(0).contains("Bigger_Plate")){ meal_cap = 3; }
-          else if(meals.get(0).contains("Plate")){ meal_cap = 2; }
-          else{ meal_cap=1; }
+
+          //reset meal's contents
+          //(avoids the database recieving a previously selected entree if the meal size is reduced)
+          current_item_list.put(3,"none");
+          current_item_list.put(4,"none");
+          current_item_list.put(5,"none");
+          current_item_list.put(6,"none");
+          current_item_list.put(7,"none");
+
+          //update indexing values and empty entree labels based on selection
+          if(meals.get(0).contains("Bigger_Plate") || meals.get(0).contains("Family_Meal")){ 
+            meal_cap = 3;
+            current_item_list.put(3,"entree1");
+            current_item_list.put(4,"entree2");
+            current_item_list.put(5,"entree3");
+            current_item_list.put(6,"side1");
+            current_item_list.put(7,"side2");
+          }else if(meals.get(0).contains("Plate")){ 
+            meal_cap = 2;
+            current_item_list.put(3,"entree1");
+            current_item_list.put(4,"entree2");
+            current_item_list.put(6,"side1");
+            current_item_list.put(7,"side2");
+          }else if(meals.get(0).contains("Bowl")){
+            meal_cap=1;
+            current_item_list.put(3,"entree1");
+            current_item_list.put(6,"side1");
+            current_item_list.put(7,"side2");
+          }else if(meals.get(0).contains("A_La_Carte_Side")){
+            meal_cap=0;
+            current_item_list.put(6,"side1");
+          }else{
+            meal_cap=1;
+          }
           entrees_index = 3;
           sides_index = 6;
+          
+          //display visual updates
           update_text(order_items, order_prices, current_price);
           update_total(order_totals, current_price);
         }
@@ -955,10 +989,14 @@ public class Cashier_GUI extends JFrame {
       Vector<String> entrees = menu_entrees.get(b+1);
       entree_buttons.get(b).addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          current_item_list.put(entrees_index,entrees.get(0));
-          current_price.set(entrees_index,Double.parseDouble(entrees.get(6)));
-          entrees_index++;
-          if(entrees_index > 2+meal_cap){entrees_index = 3;}
+          if(!current_item_list.get(2).contains("A_La_Carte_Side")){
+            current_item_list.put(entrees_index,entrees.get(0));
+            current_price.set(entrees_index,Double.parseDouble(entrees.get(6)));
+            if(!current_item_list.get(2).contains("A_La_Carte_Entree")){
+              entrees_index++;
+              if(entrees_index > 2+meal_cap){entrees_index = 3;}
+            }
+          }
           update_text(order_items, order_prices, current_price);
           update_total(order_totals, current_price);
         }
@@ -971,9 +1009,13 @@ public class Cashier_GUI extends JFrame {
       Vector<String> sides = menu_sides.get(b+1);
       side_buttons.get(b).addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          current_item_list.put(sides_index,sides.get(0));
-          current_price.set(sides_index,Double.parseDouble(sides.get(6)));
-          sides_index = ((sides_index + 1) % 2) + 6;
+          if(!current_item_list.get(2).contains("A_La_Carte_Entree")){
+            current_item_list.put(sides_index,sides.get(0));
+            current_price.set(sides_index,Double.parseDouble(sides.get(6)));
+            if(!current_item_list.get(2).contains("A_La_Carte_Side")){
+              sides_index = ((sides_index + 1) % 2) + 6;
+            }
+          }
           update_text(order_items, order_prices, current_price);
           update_total(order_totals, current_price);
         }
@@ -983,22 +1025,30 @@ public class Cashier_GUI extends JFrame {
     // Empower Appetizer Buttons
     apps_buttons.get(0).addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        current_item_list.put(entrees_index,menu_sides.get(6).get(0));
-        current_price.set(entrees_index,Double.parseDouble(menu_sides.get(6).get(6)));
-        entrees_index++;
-        if(entrees_index > 2+meal_cap){entrees_index = 3;}
-        update_text(order_items, order_prices, current_price);
-        update_total(order_totals, current_price);
+        if(!current_item_list.get(2).contains("A_La_Carte_Side")){
+          current_item_list.put(entrees_index,menu_sides.get(6).get(0));
+          current_price.set(entrees_index,Double.parseDouble(menu_sides.get(6).get(6)));
+          if(!current_item_list.get(2).contains("A_La_Carte_Entree")){
+            entrees_index++;
+            if(entrees_index > 2+meal_cap){entrees_index = 3;}
+          }
+          update_text(order_items, order_prices, current_price);
+          update_total(order_totals, current_price);
+        }
       }
     });
     apps_buttons.get(1).addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        current_item_list.put(entrees_index,menu_sides.get(7).get(0));
-        current_price.set(entrees_index,Double.parseDouble(menu_sides.get(7).get(6)));
-        entrees_index++;
-        if(entrees_index > 2+meal_cap){entrees_index = 3;}
-        update_text(order_items, order_prices, current_price);
-        update_total(order_totals, current_price);
+        if(!current_item_list.get(2).contains("A_La_Carte_Side")){
+          current_item_list.put(entrees_index,menu_sides.get(7).get(0));
+          current_price.set(entrees_index,Double.parseDouble(menu_sides.get(7).get(6)));
+          if(!current_item_list.get(2).contains("A_La_Carte_Entree")){
+            entrees_index++;
+            if(entrees_index > 2+meal_cap){entrees_index = 3;}
+          }
+          update_text(order_items, order_prices, current_price);
+          update_total(order_totals, current_price);
+        }
       }
     });
 
