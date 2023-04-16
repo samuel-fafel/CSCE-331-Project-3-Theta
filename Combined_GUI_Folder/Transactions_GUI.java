@@ -158,7 +158,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // QUERY DATABASE FOR LASTEST TRANSACTION ID
@@ -204,7 +205,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // QUERY DATABASE FOR TRANSACTIONS
@@ -254,7 +256,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // QUERY DATABASE FOR TRANSACTIONS
@@ -321,7 +324,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // run command
@@ -352,6 +356,7 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
       //System.exit(0);
     }
 
@@ -456,7 +461,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // Gather Transactional Data
@@ -533,7 +539,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
     // Gather Transactional Data
     LocalDate startDate = LocalDate.parse(start_date, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
@@ -568,7 +575,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // Count how many ingredients were used and put into hashmap
@@ -658,7 +666,8 @@ public class Transactions_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // create a new frame

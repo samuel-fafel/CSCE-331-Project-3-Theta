@@ -77,7 +77,8 @@ public class Product_GUI extends JFrame {
       } catch (Exception e) {
         e.printStackTrace();
         System.err.println(e.getClass().getName()+": "+e.getMessage());
-        System.exit(0);
+        JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+        //System.exit(0);
       }
   
       // QUERY DATABASE FOR LASTEST TRANSACTION ID
@@ -110,7 +111,7 @@ public class Product_GUI extends JFrame {
          //create a statement object
         Statement stmt = conn.createStatement();
         //create an SQL statement
-        String sqlStatement = "SELECT * FROM " + table;
+        String sqlStatement = "SELECT * FROM " + table + " ORDER BY id";
         //send statement to DBMS
         ResultSet result = stmt.executeQuery(sqlStatement);
         while(result.next()){
@@ -132,6 +133,7 @@ public class Product_GUI extends JFrame {
         //send statement to DBMS
         ResultSet result1 = stmt1.executeQuery(sqlStatement1);
         while (result1.next()) {
+          results.add(result1.getString("id"));
           results.add(result1.getString("name"));
           results.add(result1.getString("perishable_1"));
           results.add(result1.getString("perishable_2"));
@@ -195,8 +197,9 @@ public class Product_GUI extends JFrame {
       } catch (Exception e) {
         e.printStackTrace();
         System.err.println(e.getClass().getName()+": "+e.getMessage());
-        System.exit(0);
-      } //JOptionPane.showMessageDialog(null,"Opened database successfully");
+        JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+        //System.exit(0);
+      } 
 
       JButton close_button = new JButton("Close");
       for (int i = 0; i < 1; i++) {
@@ -329,7 +332,8 @@ public class Product_GUI extends JFrame {
             } catch (Exception e) {
               e.printStackTrace();
               System.err.println(e.getClass().getName()+": "+e.getMessage());
-              System.exit(0);
+              JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+              //System.exit(0);
             }
 
             if(comb_box.getSelectedItem() == "Menu_Meals"){
@@ -337,6 +341,7 @@ public class Product_GUI extends JFrame {
               make_product_list(conn, current_table);
 
               //Create string list of column names for table
+              column_names.add("ID");
               column_names.add("Name");
               column_names.add("Perishable_1");
               column_names.add("Perishable_2");
@@ -351,6 +356,7 @@ public class Product_GUI extends JFrame {
               make_product_list(conn, current_table);
 
               //Create string list of column names for table
+              column_names.add("ID");
               column_names.add("Name");
               column_names.add("Perishable_1");
               column_names.add("Perishable_2");
@@ -365,6 +371,7 @@ public class Product_GUI extends JFrame {
               make_product_list(conn, current_table);
 
               //Create string list of column names for table
+              column_names.add("ID");
               column_names.add("Name");
               column_names.add("Perishable_1");
               column_names.add("Perishable_2");
@@ -379,6 +386,7 @@ public class Product_GUI extends JFrame {
               make_product_list(conn, current_table);
 
               //Create string list of column names for table
+              column_names.add("ID");
               column_names.add("Name");
               column_names.add("Perishable_1");
               column_names.add("Perishable_2");
@@ -430,6 +438,7 @@ public class Product_GUI extends JFrame {
               make_product_list(conn, current_table);
 
               //Create string list of column names for table
+              column_names.add("ID");
               column_names.add("Name");
               column_names.add("Employee");
               column_names.add("Date");
@@ -485,66 +494,11 @@ public class Product_GUI extends JFrame {
             } catch (Exception e) {
               e.printStackTrace();
               System.err.println(e.getClass().getName()+": "+e.getMessage());
-              System.exit(0);
-            }
-
-            if (current_table == "Menu_Meals"){
-              //Write results
-              write_results_menu(conn, current_table);
-
-              //closing the connection
-              try {
-                conn.close();
-              } catch(Exception e) {
-                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-              }
-            }
-
-            if (current_table == "Menu_Drinks"){
-              //Write results
-              write_results_menu(conn, current_table);
-
-              //closing the connection
-              try {
-                conn.close();
-              } catch(Exception e) {
-                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-              }
-            }
-
-            if (current_table == "Menu_Entrees"){
-              //Write results
-              write_results_menu(conn, current_table);
-
-              //closing the connection
-              try {
-                conn.close();
-              } catch(Exception e) {
-                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-              }
-            }
-
-            if (current_table == "Menu_Sides"){
-              //Write results
-              write_results_menu(conn, current_table);
-
-              //closing the connection
-              try {
-                conn.close();
-              } catch(Exception e) {
-                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-              }
+              JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+              //System.exit(0);
             }
 
             if (current_table == "Perishable"){
-              /*String product_id = "null";
-              String product_name = "null";
-              String stock_amount = "null";
-              String reorder_level = "null";
-              String reorder_date = "null";
-              String serving_size = "null";
-              String buy_price = "null";*/
-
               try{
                 //Gather info for perishable item
                 //create a statement object
@@ -565,22 +519,15 @@ public class Product_GUI extends JFrame {
               } catch (Exception e){
                 JOptionPane.showMessageDialog(null,"Error accessing Database.");
               }
-
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+                //closing the connection
+                try {
+                  conn.close();
+                } catch(Exception e) {
+                  JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+                }
             }
-            }
-            if (current_table == "Non_perishable"){
-              /*String product_id = "null";
-              String product_name = "null";
-              String stock_amount = "null";
-              String reorder_level = "null";
-              String reorder_date = "null";
-              String serving_size = "null";
-              String buy_price = "null";*/
+            
+            else if (current_table == "Non_perishable"){
               try{
                 //Create a statement for nonperishable items
                 //create a statement object
@@ -600,16 +547,15 @@ public class Product_GUI extends JFrame {
                 JOptionPane.showMessageDialog(null,"Error accessing Database.");
               }
 
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-            }
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+              }
             }
 
-            if (current_table == "Positions"){
-
+            else if (current_table == "Positions"){
               try{
                 //Create a statement for nonperishable items
                 //create a statement object
@@ -628,16 +574,15 @@ public class Product_GUI extends JFrame {
                 JOptionPane.showMessageDialog(null,"Error accessing Database.");
               }
 
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-            }
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+              }
             }
 
-            if (current_table == "Schedules"){
-
+            else if (current_table == "Schedules"){
               try{
                 //Create a statement for nonperishable items
                 //create a statement object
@@ -647,6 +592,7 @@ public class Product_GUI extends JFrame {
                 //send statement to DBMS
                 ResultSet result2 = stmt2.executeQuery(sqlStatement2);
                 while (result2.next()) {
+                  results.add(result2.getString("id"));
                   results.add(result2.getString("name"));
                   results.add(result2.getString("employee"));
                   results.add(result2.getString("date"));
@@ -659,16 +605,15 @@ public class Product_GUI extends JFrame {
                 JOptionPane.showMessageDialog(null,"Error accessing Database.");
               }
 
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-            }
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+              }
             }
 
-            if (current_table == "Employees"){
-
+            else if (current_table == "Employees"){
               try{
                 //Create a statement for nonperishable items
                 //create a statement object
@@ -687,12 +632,24 @@ public class Product_GUI extends JFrame {
                 JOptionPane.showMessageDialog(null,"Error accessing Database.");
               }
 
-            //closing the connection
-            try {
-              conn.close();
-            } catch(Exception e) {
-              JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+              }
             }
+
+            else { // Menu is selected
+              //Write results
+              write_results_menu(conn, current_table);
+
+              //closing the connection
+              try {
+                conn.close();
+              } catch(Exception e) {
+                JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
+              }
             }
 
             results_jlist.setListData(results);
@@ -713,7 +670,8 @@ public class Product_GUI extends JFrame {
             } catch (Exception e) {
               e.printStackTrace();
               System.err.println(e.getClass().getName()+": "+e.getMessage());
-              System.exit(0);
+              JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+              //System.exit(0);
             }
             if(current_table == "Menu_Meals"){
               String name = JOptionPane.showInputDialog(f, "Item name: ");
@@ -988,7 +946,8 @@ public class Product_GUI extends JFrame {
             } catch (Exception e) {
               e.printStackTrace();
               System.err.println(e.getClass().getName()+": "+e.getMessage());
-              System.exit(0);
+              JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+              //System.exit(0);
             }
             if(current_table == "Menu_Meals"){
               update_item(conn, current_table);
@@ -1164,7 +1123,8 @@ public class Product_GUI extends JFrame {
           } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+            //System.exit(0);
           }
 
           delete_item(conn, current_table);

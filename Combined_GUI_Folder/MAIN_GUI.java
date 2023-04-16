@@ -101,7 +101,7 @@ public class MAIN_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      //System.exit(0);
     } //JOptionPane.showMessageDialog(null,"Opened database successfully");
 
     // run command
@@ -236,8 +236,9 @@ public class MAIN_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
-    } //JOptionPane.showMessageDialog(null,"Opened database successfully");
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
+    } //
 
     // create a new frame
     f = new JFrame("MAIN GUI");
@@ -342,7 +343,7 @@ public class MAIN_GUI extends JFrame {
     f.add(middle_panel);
     f.add(temp_panel);
 
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     f.setVisible(true);
   }
 
