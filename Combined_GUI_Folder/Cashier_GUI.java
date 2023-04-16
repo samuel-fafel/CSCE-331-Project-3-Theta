@@ -67,8 +67,8 @@ public class Cashier_GUI extends JFrame {
 
   static java.util.List<String> menu_sides = new ArrayList<>(Arrays.asList(
     "White_Rice",
-    "Brown_Rice",
     "Fried_Rice",
+    "Brown_Rice",
     "Chow_Mein",
     "Super_Greens",
     "Egg_Rolls",
@@ -95,7 +95,8 @@ public class Cashier_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // QUERY DATABASE FOR LASTEST TRANSACTION ID
@@ -214,14 +215,15 @@ public class Cashier_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
-      System.exit(0);
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+      //System.exit(0);
     }
 
     // QUERY DATABASE FOR ITEMS
     HashMap< Integer, Vector<String> > transaction_info = new HashMap< Integer, Vector<String> >();
     try{
       Statement stmt = conn.createStatement(); // create a statement object
-      String query = "SELECT * FROM " + menu;  // create an SQL statement
+      String query = "SELECT * FROM " + menu + " ORDER BY id";  // create an SQL statement
       ResultSet result = stmt.executeQuery(query); // send statement to DBMS
       int id = 1;
       while (result.next()) { // Get responses from database
@@ -258,6 +260,7 @@ public class Cashier_GUI extends JFrame {
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
+      JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
       //System.exit(0);
     }
 
@@ -338,7 +341,7 @@ public class Cashier_GUI extends JFrame {
     }
   */
 
-  public static void update_text(TextArea textfield_items, TextArea textfield_prices, Vector<Double> prices) {
+  public static void update_text(JTextArea textfield_items, JTextArea textfield_prices, Vector<Double> prices) {
     String item_list = "";
     String prices_list = "";
 
@@ -449,7 +452,8 @@ public class Cashier_GUI extends JFrame {
         } catch (Exception e) {
         e.printStackTrace();
         System.err.println(e.getClass().getName()+": "+e.getMessage());
-        System.exit(0);
+        JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+        //System.exit(0);
         }
       }
     });
@@ -543,7 +547,9 @@ public class Cashier_GUI extends JFrame {
     // BUTTON INITIALIZATION
     // Initializing Meal / A-La-Carte Buttons
     Vector<JButton> meal_alacarte_buttons = new Vector<JButton>();
+    JButton bowl_size = new JButton("Bowl"); meal_alacarte_buttons.add(bowl_size);
     JButton plate_size = new JButton("Plate");meal_alacarte_buttons.add(plate_size);
+    JButton bigger_plate_size = new JButton("Bigger Plate"); meal_alacarte_buttons.add(bigger_plate_size);
     JButton family_size = new JButton("Family Meal");meal_alacarte_buttons.add(family_size);
     JButton cub_size = new JButton("Cub Meal");meal_alacarte_buttons.add(cub_size);
     JButton sm_entree = new JButton("Small Entree"); meal_alacarte_buttons.add(sm_entree);
@@ -551,8 +557,6 @@ public class Cashier_GUI extends JFrame {
     JButton lg_entree = new JButton("Large Entree"); meal_alacarte_buttons.add(lg_entree);
     JButton md_side = new JButton("Medium Side"); meal_alacarte_buttons.add(md_side);
     JButton lg_side = new JButton("Large Side"); meal_alacarte_buttons.add(lg_side);
-    JButton bowl_size = new JButton("Bowl"); meal_alacarte_buttons.add(bowl_size);
-    JButton bigger_plate_size = new JButton("Bigger Plate"); meal_alacarte_buttons.add(bigger_plate_size);
     JButton no_meal = new JButton("None"); meal_alacarte_buttons.add(no_meal);
     JButton no_alacarte = new JButton("None"); meal_alacarte_buttons.add(no_alacarte);
     for (int i = 0; i < meal_alacarte_buttons.size(); i++) {
@@ -939,7 +943,7 @@ public class Cashier_GUI extends JFrame {
 
     // BUTTONS FUNCTIONALITY
     // Empower Meal/A-La-Carte Buttons
-    HashMap< Integer, Vector<String> > menu_meals = menu_query("menu_meals"); // get drinks data
+    HashMap< Integer, Vector<String> > menu_meals = menu_query("menu_meals"); // get meals data
     for (int b = 0; b < meal_alacarte_buttons.size(); b++) {
       Vector<String> meals = menu_meals.get(b+1);
       meal_alacarte_buttons.get(b).addActionListener(new ActionListener() {
