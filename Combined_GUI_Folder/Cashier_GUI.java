@@ -603,8 +603,8 @@ public class Cashier_GUI extends JFrame {
     JButton lg_fountain_drink = new JButton("Large Fountain Drink"); drinks_buttons.add(lg_fountain_drink);
     JButton tea = new JButton("Brewed Ice Tea"); drinks_buttons.add(tea);
     JButton water_bottle = new JButton("Water Bottle"); drinks_buttons.add(water_bottle);
-    JButton no_drink = new JButton("None"); drinks_buttons.add(no_drink);
     JButton kid_juice = new JButton("Kid's Juice"); drinks_buttons.add(kid_juice);
+    JButton no_drink = new JButton("None"); drinks_buttons.add(no_drink);
     for (int i = 0; i < drinks_buttons.size(); i++) {
       buttonsettings(drinks_buttons.get(i));
     }
