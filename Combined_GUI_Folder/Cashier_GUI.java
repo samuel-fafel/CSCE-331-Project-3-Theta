@@ -33,7 +33,7 @@ public class Cashier_GUI extends JFrame {
   private static String user;
   public static int TRANSACTION_ID;
   public static int ORDER_ID;
-  
+
   static public int entrees_index = 3;
   static public int sides_index = 6;
   static public int meal_cap = 1;
@@ -381,12 +381,6 @@ public class Cashier_GUI extends JFrame {
     my_area.setBackground(Color.LIGHT_GRAY);
   }
 
-  public static void login_frame_settings(JFrame frame) {
-    frame.setTitle("Login");
-    frame.setSize(300, 200);
-    frame.setLayout(new BorderLayout());
-  }
-
   /**
   *The contructor that is what makes our unique Cashier GUI.
   *<p>
@@ -394,63 +388,10 @@ public class Cashier_GUI extends JFrame {
   *to see and use the cashier GUI on the screen. Which will be able to input various orders
   *
   */
-  public Cashier_GUI() {
+  public Cashier_GUI(String user_input) {
     get_latest_IDs();
-    
-    // create a new frame
-    JFrame login_frame = new JFrame();
-    login_frame_settings(login_frame);
-    JPanel login_panel = new JPanel(new GridLayout(3, 2));
-    JLabel user_label, pin_label;
-    JTextField user_field, pin_field;
-    JButton login_button = new JButton("Login");
 
-    login_frame.add(login_panel, BorderLayout.CENTER);
-
-    // Username
-    user_label = new JLabel("Username: ");
-    user_field = new JTextField();
-    pin_label = new JLabel("PIN: ");
-    pin_field = new JTextField();
-    login_panel.add(user_label);
-    login_panel.add(user_field);
-    login_panel.add(pin_label);
-    login_panel.add(pin_field);
-
-    login_button.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ae) {
-        String user = user_field.getText();
-        String pin = pin_field.getText();
-        int pin_value = Integer.parseInt(pin);
-        Connection conn = null;
-        try {
-        Class.forName("org.postgresql.Driver");
-        conn = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_theta",
-          "csce315331_theta_master","3NHS");
-        String sql = "SELECT * FROM employees WHERE name = ? and pin = ?";
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, user);
-        statement.setInt(2, pin_value);
-        ResultSet rs = statement.executeQuery();
-        if (rs.next()) {
-          login_frame.setVisible(false);
-          set_user(user);
-          JOptionPane.showMessageDialog(null, "Welcome " + get_user());
-          f.setVisible(true);
-        } else {
-          JOptionPane.showMessageDialog(null, "Please enter a VALID username");
-        }
-        // JOptionPane.showMessageDialog(null,"Opened database successfully");
-        } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println(e.getClass().getName()+": "+e.getMessage());
-        JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
-        //System.exit(0);
-        }
-      }
-    });
-    login_panel.add(login_button);
-    login_frame.setVisible(true);
+    set_user(user_input);
 
     f = new JFrame("DB GUI");
 
@@ -953,14 +894,14 @@ public class Cashier_GUI extends JFrame {
           current_item_list.put(7,"none");
 
           //update indexing values and empty entree labels based on selection
-          if(meals.get(0).contains("Bigger_Plate") || meals.get(0).contains("Family_Meal")){ 
+          if(meals.get(0).contains("Bigger_Plate") || meals.get(0).contains("Family_Meal")){
             meal_cap = 3;
             current_item_list.put(3,"entree1");
             current_item_list.put(4,"entree2");
             current_item_list.put(5,"entree3");
             current_item_list.put(6,"side1");
             current_item_list.put(7,"side2");
-          }else if(meals.get(0).contains("Plate")){ 
+          }else if(meals.get(0).contains("Plate")){
             meal_cap = 2;
             current_item_list.put(3,"entree1");
             current_item_list.put(4,"entree2");
@@ -979,7 +920,7 @@ public class Cashier_GUI extends JFrame {
           }
           entrees_index = 3;
           sides_index = 6;
-          
+
           //display visual updates
           update_text(order_items, order_prices, current_price);
           update_total(order_totals, current_price);
@@ -1113,5 +1054,6 @@ public class Cashier_GUI extends JFrame {
     f.add(bottom_panel);
     f.add(temp_panel);
     f.setSize(1400, 900);
+    f.setVisible(true);
   }
 }
