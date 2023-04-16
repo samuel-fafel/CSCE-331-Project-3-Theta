@@ -345,7 +345,7 @@ public class Cashier_GUI extends JFrame {
     }
   */
 
-  public static void update_text(JTextArea textfield_items, JTextArea textfield_prices, Vector<Double> prices) {
+  public static void update_text(JTextArea textfield_items, Vector<Double> prices) {
     String item_list = "";
 
     //build item_list string
@@ -368,10 +368,13 @@ public class Cashier_GUI extends JFrame {
     textfield_items.setText(item_list);
   }
 
-  public static double update_total(JTextArea textfield, Vector<Double> prices) {
+  public static double update_total(JTextArea textfield, Vector<Double> prices, boolean tax) {
     double total = 0;
     for (int i = 0; i < prices.size(); i++) {
       total += prices.get(i);
+    }
+    if (tax) {
+      total += total*0.0825;
     }
     textfield.setText(String.format("$%.2f", total));
     return total;
@@ -482,8 +485,8 @@ public class Cashier_GUI extends JFrame {
     JLabel apps_label = new JLabel("Appetizers"); sides_labelsettings(apps_label);
     JLabel drink_label = new JLabel("Drinks"); sides_labelsettings(drink_label);
     JLabel order_items_label  = new JLabel("Order Items:"); labelsettings(order_items_label);
-    JLabel order_prices_label = new JLabel("Item Prices:"); labelsettings(order_prices_label);
-    JLabel order_totals_label = new JLabel("Order Subtotal:"); labelsettings(order_totals_label);
+    JLabel order_subtotal_label = new JLabel("Order Subtotal:"); labelsettings(order_subtotal_label);
+    JLabel order_taxtotal_label = new JLabel("Order Total:"); labelsettings(order_taxtotal_label);
     JLabel payment_label = new JLabel("Payment Method:"); labelsettings(payment_label);
 
     // SET BASE FRAME SETTINGS FOR PANELS
@@ -611,12 +614,12 @@ public class Cashier_GUI extends JFrame {
 
     // Initializing View TextAreas
     JTextArea order_items = new JTextArea("",8,25);
-    JTextArea order_prices = new JTextArea("",8,25);
-    JTextArea order_totals = new JTextArea("",1,25);
+    JTextArea order_subtotal = new JTextArea("",1,25);
+    JTextArea order_taxtotal = new JTextArea("",1,25);
 
     adjust_text_area(order_items);
-    adjust_text_area(order_prices);
-    adjust_text_area(order_totals);
+    adjust_text_area(order_subtotal);
+    adjust_text_area(order_taxtotal);
 
     // Initializing Payment Method Buttons
     ButtonGroup payment_buttons = new ButtonGroup();
@@ -879,11 +882,11 @@ public class Cashier_GUI extends JFrame {
       {
         c.insets = new Insets(5,5,5,5);
         view_panel.add(order_items_label, constraints(0,0,1, c));
-        view_panel.add(order_prices_label, constraints(1,0,1, c));
-        view_panel.add(order_totals_label, constraints(2,0,1, c));
+        view_panel.add(order_subtotal_label, constraints(1,0,1, c));
+        view_panel.add(order_taxtotal_label, constraints(2,0,1, c));
         view_panel.add(order_items, constraints(0,1,1, c));
-        view_panel.add(order_prices, constraints(1,1,1, c));
-        view_panel.add(order_totals, constraints(2,1,1, c));
+        view_panel.add(order_subtotal, constraints(1,1,1, c));
+        view_panel.add(order_taxtotal, constraints(2,1,1, c));
       }
 
       // Label & JRadio Placement for Payment Panel
@@ -981,8 +984,9 @@ public class Cashier_GUI extends JFrame {
           sides_index = 6;
           
           //display visual updates
-          update_text(order_items, order_prices, current_price);
-          update_total(order_totals, current_price);
+          update_text(order_items, current_price);
+          update_total(order_subtotal, current_price, false);
+          update_total(order_taxtotal, current_price, true);
         }
       });
     }
@@ -1001,8 +1005,9 @@ public class Cashier_GUI extends JFrame {
               if(entrees_index > 2+meal_cap){entrees_index = 3;}
             }
           }
-          update_text(order_items, order_prices, current_price);
-          update_total(order_totals, current_price);
+          update_text(order_items, current_price);
+          update_total(order_subtotal, current_price, false);
+          update_total(order_taxtotal, current_price, true);
         }
       });
     }
@@ -1020,8 +1025,9 @@ public class Cashier_GUI extends JFrame {
               sides_index = ((sides_index + 1) % 2) + 6;
             }
           }
-          update_text(order_items, order_prices, current_price);
-          update_total(order_totals, current_price);
+          update_text(order_items, current_price);
+          update_total(order_subtotal, current_price, false);
+          update_total(order_taxtotal, current_price, true);
         }
       });
     }
@@ -1036,8 +1042,9 @@ public class Cashier_GUI extends JFrame {
             entrees_index++;
             if(entrees_index > 2+meal_cap){entrees_index = 3;}
           }
-          update_text(order_items, order_prices, current_price);
-          update_total(order_totals, current_price);
+          update_text(order_items, current_price);
+          update_total(order_subtotal, current_price, false);
+          update_total(order_taxtotal, current_price, true);
         }
       }
     });
@@ -1050,8 +1057,9 @@ public class Cashier_GUI extends JFrame {
             entrees_index++;
             if(entrees_index > 2+meal_cap){entrees_index = 3;}
           }
-          update_text(order_items, order_prices, current_price);
-          update_total(order_totals, current_price);
+          update_text(order_items, current_price);
+          update_total(order_subtotal, current_price, false);
+          update_total(order_taxtotal, current_price, true);
         }
       }
     });
@@ -1064,8 +1072,9 @@ public class Cashier_GUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
           current_item_list.put(8,drinks.get(0));
           current_price.set(8, Double.parseDouble(drinks.get(6)));
-          update_text(order_items, order_prices, current_price);
-          update_total(order_totals, current_price);
+          update_text(order_items, current_price);
+          update_total(order_subtotal, current_price, false);
+          update_total(order_taxtotal, current_price, true);
         }
       });
     }
@@ -1086,13 +1095,14 @@ public class Cashier_GUI extends JFrame {
         for(Double val : current_price){
           val = 0.00;
         }
-        update_text(order_items, order_prices, current_price);
-        order_totals.setText(String.format("$0.00"));
+        update_text(order_items, current_price);
+        order_subtotal.setText(String.format("$0.00"));
+        order_taxtotal.setText(String.format("$0.00"));
       }
     });
     place_order_button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        double subtotal = update_total(order_totals, current_price);
+        double subtotal = update_total(order_subtotal, current_price, false);
         JRadioButton payment_method = radioButton1;
         if (!radioButton1.isSelected()) payment_method = radioButton2;
         TRANSACTION_ID ++;
