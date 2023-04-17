@@ -1054,6 +1054,7 @@ public class Cashier_GUI extends JFrame {
     f.add(bottom_panel);
     f.add(temp_panel);
     f.setSize(1400, 900);
+    f.setLocationRelativeTo(null);
     f.setVisible(true);
   }
 }

@@ -869,5 +869,6 @@ public class Transactions_GUI extends JFrame {
     // set the size of frame
     f.setSize(1400, 900);
     f.setVisible(true);
+    f.setLocationRelativeTo(null);
   }
 }

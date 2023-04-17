@@ -80,7 +80,7 @@ public class Product_GUI extends JFrame {
         JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
         //System.exit(0);
       }
-  
+
       // QUERY DATABASE FOR LASTEST TRANSACTION ID
       int output = TRANSACTION_ID + 1;
       try{
@@ -93,7 +93,7 @@ public class Product_GUI extends JFrame {
       } catch (Exception e){
         JOptionPane.showMessageDialog(null,"Error accessing Database:\n" + e);
       }
-  
+
       //closing the connection
       try {
         conn.close();
@@ -101,7 +101,7 @@ public class Product_GUI extends JFrame {
       } catch(Exception e) {
         JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
       }
-  
+
       return output + 1;
     }
 
@@ -199,7 +199,7 @@ public class Product_GUI extends JFrame {
         System.err.println(e.getClass().getName()+": "+e.getMessage());
         JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
         //System.exit(0);
-      } 
+      }
 
       JButton close_button = new JButton("Close");
       for (int i = 0; i < 1; i++) {
@@ -526,7 +526,7 @@ public class Product_GUI extends JFrame {
                   JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
                 }
             }
-            
+
             else if (current_table == "Non_perishable"){
               try{
                 //Create a statement for nonperishable items
@@ -796,7 +796,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //Note: ID inputed manually
               String sqlStatement = "INSERT INTO perishable(id,name,stock,reorder,reorder_date,serving_size,price) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'"+ reorder + "'" + "," + "'" + reorder_date + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'"+ reorder + "'" + "," + "'" + reorder_date +
               "'" + "," + "'" + serving+ "'" + "," + "'" + price + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -824,7 +824,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO non_perishable(id,name,stock,reorder_date,buy_price) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'" + reorder_date + "'" + "," + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'" + reorder_date + "'" + "," +
               "'" + price + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -852,7 +852,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO positions(id,name,hourly_pay,admin) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + hourly_pay + "'" + "," + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + hourly_pay + "'" + "," +
               "'" + admin + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -881,7 +881,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO schedules(name,employee,date,start_time,end_time,clock_in,clock_out) VALUES ('"
-              + shift_name + "'" + "," + "'" + employee + "'" + "," + "'" + date + "'" + "," + "'" + start_time + "'" + "," + "'" + end_time + 
+              + shift_name + "'" + "," + "'" + employee + "'" + "," + "'" + date + "'" + "," + "'" + start_time + "'" + "," + "'" + end_time +
               "'" + "," + "'" + clock_in + "'" + "," + "'" + clock_out + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -908,7 +908,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO positions(id,name,position,pin) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + position + "'" + "," + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + position + "'" + "," +
               "'" + pin + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -1106,7 +1106,7 @@ public class Product_GUI extends JFrame {
               JOptionPane.showMessageDialog(f, "Make sure item is selected before updating.", "Alert", JOptionPane.WARNING_MESSAGE);
             }
 
-            results_jlist.setListData(results); 
+            results_jlist.setListData(results);
 
         }
       });
@@ -1145,7 +1145,7 @@ public class Product_GUI extends JFrame {
        f.add(temp_panel);
 
        f.setSize(1400, 900);
-
+       f.setLocationRelativeTo(null);
        f.setVisible(true);
 
     }
