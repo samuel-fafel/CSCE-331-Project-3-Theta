@@ -117,6 +117,7 @@ public class MAIN_GUI extends JFrame {
     frame.setTitle("Login");
     frame.setSize(300, 200);
     frame.setLayout(new BorderLayout());
+    frame.setLocationRelativeTo(null);
   }
 
   public static void run_command(String sql_query) {
@@ -449,7 +450,7 @@ public class MAIN_GUI extends JFrame {
     transactions_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(transactions_button,c);
 
-    
+
 
     //f.add(middle_panel);
     //Color customColor = new Color(204, 255, 204);
@@ -461,13 +462,13 @@ public class MAIN_GUI extends JFrame {
     f.add(top_panel);
     f.add(middle_panel);
     f.add(temp_panel);
-
+    f.setLocationRelativeTo(null);
     f.setVisible(true);
     f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    
-    
 
-    
+
+
+
   }
 
   /**
