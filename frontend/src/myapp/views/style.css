@@ -27,7 +27,7 @@ body {
   border-radius: 20px;
   background-color: red;
   padding: 10px;
-  height: 1000px;
+  height: 1090px;
   grid-template-rows: 80px 280px 280px 270px 50px;
   margin-left: 3em;
   margin-right: 3em;
@@ -49,6 +49,13 @@ body {
     font-size: 40px;
     font-weight: bold;
   }
+
+.grid-container > .section12 {
+  background-color:#f5dfdff1;
+  text-align: center;
+  padding: 20px 0;
+  height: 100px;
+}
 
   .meal-button-grid-container {
     display: grid;
@@ -132,7 +139,7 @@ body {
       'button7';
     gap: 10px;
     grid-template-columns: 210px;
-    grid-template-rows: 60px 60px 60px 60px 60px 60px 60px;
+    grid-template-rows: 70px 70px 70px 70px 70px 70px 70px;
     width: 100%;
     text-align: center;
     margin: auto;
@@ -142,7 +149,7 @@ body {
   button
   {
     font-size: 20px;
-    border-radius:5px;
+    border-radius:10px;
     font-weight: bold;
   }
 
