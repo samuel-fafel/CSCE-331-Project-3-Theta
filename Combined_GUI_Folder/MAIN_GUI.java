@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
+import java.awt.Color;
 
 /* INSTRUCTIONS
   Compile:
@@ -413,8 +414,9 @@ public class MAIN_GUI extends JFrame {
         }
       });
     }
+    Color lightRed = new Color(252, 217, 217);
 
-    adjust_panel(top_panel,Color.lightGray,loweredbevel,20,20,1340,100);
+    adjust_panel(top_panel,lightRed,loweredbevel,20,20,1340,100);
 
     top_label.setFont(new Font("Verdana",1,30));
     top_panel.add(top_label);
@@ -424,9 +426,13 @@ public class MAIN_GUI extends JFrame {
     buttonsettings(transactions_button);
     buttonsettings(login_main_button);
 
-    adjust_panel(middle_panel,Color.lightGray,loweredbevel,20,140,1340,700);
-    constraints(c,0,1,3);
+    adjust_panel(middle_panel,lightRed,loweredbevel,20,140,1340,700);
+    constraints(c,0,2,3);
     middle_panel.add(close_button,c);
+
+    constraints(c, 0, 1, 3);
+    //transactions_button.setPreferredSize(new Dimension(20,20));
+    middle_panel.add(login_main_button, c);
 
     constraints(c,0,0,1);
     c.insets =  new Insets(0, 0, 250, 25);
@@ -443,17 +449,25 @@ public class MAIN_GUI extends JFrame {
     transactions_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(transactions_button,c);
 
-    constraints(c, 3, 1, 1);
-    middle_panel.add(login_main_button, c);
+    
 
     //f.add(middle_panel);
+    //Color customColor = new Color(204, 255, 204);
+    f.getContentPane().setBackground(Color.red);
+    // top_panel.setOpaque(false);
+    // middle_panel.setOpaque(false);
+    temp_panel.setOpaque(false);
     f.setSize(1400,900);
     f.add(top_panel);
     f.add(middle_panel);
     f.add(temp_panel);
 
-    f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     f.setVisible(true);
+    f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    
+    
+
+    
   }
 
   /**
