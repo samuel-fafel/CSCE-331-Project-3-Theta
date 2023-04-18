@@ -6,15 +6,17 @@ import javax.swing.border.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
+
+
 /* INSTRUCTIONS
-  Compile: 
+  Compile:
     javac -source 11 -target 11 *.java
-  REGENERATE combined_gui.jar FOR AjaxSwing: 
+  REGENERATE combined_gui.jar FOR AjaxSwing:
     jar cfm combined_gui.jar META-INF/MANIFEST.MF postgresql-42.2.8.jar *.class
 
-  Run Manually Windows: 
+  Run Manually Windows:
     java -cp ".;postgresql-42.2.8.jar" MAIN_GUI
-  Run Manually Mac/Linux: 
+  Run Manually Mac/Linux:
     java -cp ".:postgresql-42.2.8.jar" MAIN_GUI
 */
 
@@ -31,6 +33,27 @@ import java.text.SimpleDateFormat;
   */
 
 public class MAIN_GUI extends JFrame {
+
+  private static String user;
+  private static Boolean manager_auth;
+
+  public static void set_user(String user_input) {
+    user = user_input;
+  }
+  public static String get_user() {
+    return user;
+  }
+
+  public static void set_auth(String role) {
+    if (role.equalsIgnoreCase("Manager")) {
+      manager_auth = true;
+    } else {
+      manager_auth = false;
+    }
+  }
+  public static Boolean get_auth() {
+    return manager_auth;
+  }
 
   /**
   *Gives constraint dimensions to a layout constraint varaible.
@@ -87,9 +110,35 @@ public class MAIN_GUI extends JFrame {
   */
   public static void adjust_panel(JPanel my_panel, Color color, Border border, int bound1x, int bound1y, int bound2x, int bound2y) {
     my_panel.setBackground(color);
-    my_panel.setBorder(border);
+    //my_panel.setBorder(border);
     my_panel.setBounds(bound1x,bound1y,bound2x,bound2y);
   }
+
+  public static void login_frame_settings(JFrame frame) {
+    frame.setTitle("Login");
+    frame.setSize(300, 200);
+    frame.setLayout(new BorderLayout());
+    frame.setLocationRelativeTo(null);
+  }
+
+  public class RoundedCornerPanel extends JPanel {
+    private int cornerRadius;
+
+    public RoundedCornerPanel(int cornerRadius) {
+        this.cornerRadius = cornerRadius;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        g2.setColor(Color.BLACK); // change the color of the border
+        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, cornerRadius, cornerRadius);
+        g2.dispose();
+    }
+}
 
   public static void run_command(String sql_query) {
     //Building the connection
@@ -145,11 +194,11 @@ public class MAIN_GUI extends JFrame {
     String current_time = sdf.format(now);
     String current_date = "";
     if(month < 10){
-       current_date += "0"; 
+       current_date += "0";
     }
-    current_date += month + "/"; 
+    current_date += month + "/";
     if(day < 10){
-      current_date += "0"; 
+      current_date += "0";
    }
     current_date += day + "/" + year;
 
@@ -238,15 +287,17 @@ public class MAIN_GUI extends JFrame {
       System.err.println(e.getClass().getName()+": "+e.getMessage());
       JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
       //System.exit(0);
-    } //
+    }
 
     // create a new frame
     f = new JFrame("MAIN GUI");
      GridBagConstraints c = new GridBagConstraints();
 
     //Pannel Initiliztion
-    JPanel top_panel = new JPanel(new GridBagLayout());
-    JPanel middle_panel = new JPanel(new GridBagLayout());
+    RoundedCornerPanel top_panel = new RoundedCornerPanel(20);
+    top_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel middle_panel = new RoundedCornerPanel(20);
+    middle_panel.setLayout(new GridBagLayout());
     JPanel temp_panel = new JPanel(new GridBagLayout());
 
     Border blackline;
@@ -266,6 +317,7 @@ public class MAIN_GUI extends JFrame {
     JButton cashier_button = new JButton("Cashier Interface");
     JButton product_button = new JButton("Product Manipulation");
     JButton transactions_button = new JButton("Transactions & Reports");
+    JButton login_main_button = new JButton("Login");
     for (int i = 0; i < 1; i++) {
       Connection temp_conn = conn;
       close_button.addActionListener(new ActionListener() {
@@ -280,36 +332,114 @@ public class MAIN_GUI extends JFrame {
           f.dispose();
         }
       });
+    // Login Button
+      login_main_button.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+           // create a new frame
+        JFrame login_frame = new JFrame();
+        login_frame_settings(login_frame);
+        JPanel login_panel = new JPanel(new GridLayout(3, 2));
+        JLabel user_label, pin_label;
+        JTextField user_field, pin_field;
+        JButton login_button = new JButton("Login");
+
+        login_frame.add(login_panel, BorderLayout.CENTER);
+
+        // Username
+        user_label = new JLabel("Username: ");
+        user_field = new JTextField();
+        pin_label = new JLabel("PIN: ");
+        pin_field = new JTextField();
+        login_panel.add(user_label);
+        login_panel.add(user_field);
+        login_panel.add(pin_label);
+        login_panel.add(pin_field);
+
+        login_button.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent ae) {
+            String user = user_field.getText();
+            String pin = pin_field.getText();
+            int pin_value = Integer.parseInt(pin);
+            Connection conn = null;
+            try {
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_theta",
+              "csce315331_theta_master","3NHS");
+            String sql = "SELECT * FROM employees WHERE name = ? and pin = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, user);
+            statement.setInt(2, pin_value);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+              String role = rs.getString("position");
+              role = role.replaceAll("\\s", "");
+              login_frame.setVisible(false);
+              set_user(user);
+              set_auth(role);
+              System.out.println(role);
+              System.out.println(get_auth());
+              JOptionPane.showMessageDialog(null, "Welcome " + get_user() + "!");
+              f.setVisible(true);
+            } else {
+              JOptionPane.showMessageDialog(null, "Please enter a VALID username");
+            }
+            } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+            //System.exit(0);
+            }
+          }
+        });
+        login_panel.add(login_button);
+        login_frame.setVisible(true);
+        }
+
+      });
       cashier_button.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          try {
-            Cashier_GUI s = new Cashier_GUI();
-          } catch(Exception a) {
-            JOptionPane.showMessageDialog(null,"Error opening Cashier GUI: " + a);
+          if (get_user() != null) {
+            try {
+              System.out.println(get_user());
+              Cashier_GUI s = new Cashier_GUI(get_user());
+            } catch(Exception a) {
+              JOptionPane.showMessageDialog(null,"Error opening Cashier GUI: " + a);
+            }
+          } else {
+            JOptionPane.showMessageDialog(null, "Please login first!");
           }
         }
       });
       product_button.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          try {
-            Product_GUI s = new Product_GUI();
-          } catch(Exception a) {
-            JOptionPane.showMessageDialog(null,"Error opening Product GUI: " + a);
+          if (get_auth()) {
+            try {
+              Product_GUI s = new Product_GUI();
+            } catch(Exception a) {
+              JOptionPane.showMessageDialog(null,"Error opening Product GUI: " + a);
+            }
+          } else {
+            JOptionPane.showMessageDialog(null, "You do not have authorization access to view!");
           }
         }
       });
       transactions_button.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          try {
-            Transactions_GUI s = new Transactions_GUI();
-          } catch(Exception a) {
-            JOptionPane.showMessageDialog(null,"Error opening Transactions GUI: " + a);
+          if (get_auth()) {
+            try {
+              Transactions_GUI s = new Transactions_GUI();
+            } catch(Exception a) {
+              JOptionPane.showMessageDialog(null,"Error opening Transactions GUI: " + a);
+            }
+          } else {
+            JOptionPane.showMessageDialog(null, "You dod not have authorization access to view!");
           }
         }
       });
     }
+    Color lightRed = new Color(252, 217, 217);
 
-    adjust_panel(top_panel,Color.lightGray,loweredbevel,20,20,1340,100);
+    adjust_panel(top_panel,lightRed,loweredbevel,20,20,1340,100);
 
     top_label.setFont(new Font("Verdana",1,30));
     top_panel.add(top_label);
@@ -317,34 +447,52 @@ public class MAIN_GUI extends JFrame {
     buttonsettings(cashier_button);
     buttonsettings(product_button);
     buttonsettings(transactions_button);
+    buttonsettings(login_main_button);
 
-    adjust_panel(middle_panel,Color.lightGray,loweredbevel,20,140,1340,700);
-    constraints(c,0,1,3);
+    adjust_panel(middle_panel,lightRed,loweredbevel,20,140,1340,700);
+    constraints(c,0,2,3);
+    c.insets =  new Insets(25, 0, 0, 0);
     middle_panel.add(close_button,c);
 
+    constraints(c, 0, 1, 3);
+    //transactions_button.setPreferredSize(new Dimension(20,20));
+    c.insets =  new Insets(0, 0, 25, 0);
+    middle_panel.add(login_main_button, c);
+
     constraints(c,0,0,1);
-    c.insets =  new Insets(0, 0, 250, 25);
+    c.insets =  new Insets(0, 0, 225, 25);
     cashier_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(cashier_button,c);
 
     constraints(c,1,0,1);
-    c.insets =  new Insets(0, 25, 250, 25);
+    c.insets =  new Insets(0, 25, 225, 25);
     product_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(product_button,c);
 
     constraints(c,2,0,1);
-    c.insets =  new Insets(0, 25, 250, 0);
+    c.insets =  new Insets(0, 25, 225, 0);
     transactions_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(transactions_button,c);
 
+
+
     //f.add(middle_panel);
+    //Color customColor = new Color(204, 255, 204);
+    f.getContentPane().setBackground(Color.red);
+    // top_panel.setOpaque(false);
+    // middle_panel.setOpaque(false);
+    temp_panel.setOpaque(false);
     f.setSize(1400,900);
     f.add(top_panel);
     f.add(middle_panel);
     f.add(temp_panel);
-
-    f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    f.setLocationRelativeTo(null);
     f.setVisible(true);
+    f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+
+
+
   }
 
   /**

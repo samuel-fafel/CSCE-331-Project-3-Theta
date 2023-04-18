@@ -31,9 +31,19 @@ app.get('/', (req, res) => {
     res.render('index',data);
 });
 
-app.get('/index', (req, res) => {
-    
-});
+/*app.get('/index', (req, res) => {
+    transaction = [];
+    pool
+        .query('SELECT * FROM positions;')
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                transaction.push(query_res.rows[i]);
+            }
+            const data = {transaction: transaction};
+            console.log(transaction);
+            res.render('index', data);
+        });
+});*/
 
 app.get('/', (req, res) => {
     res.send('Hi User!');

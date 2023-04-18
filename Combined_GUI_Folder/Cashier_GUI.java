@@ -33,7 +33,7 @@ public class Cashier_GUI extends JFrame {
   private static String user;
   public static int TRANSACTION_ID;
   public static int ORDER_ID;
-  
+
   static public int entrees_index = 3;
   static public int sides_index = 6;
   static public int meal_cap = 1;
@@ -165,7 +165,8 @@ public class Cashier_GUI extends JFrame {
     inputLabel.setPreferredSize(new Dimension(330,40));
     inputLabel.setHorizontalAlignment(JLabel.CENTER);
     inputLabel.setVerticalAlignment(JLabel.CENTER);
-    inputLabel.setBackground(Color.red);
+    inputLabel.setBackground(Color.black);
+    inputLabel.setForeground(Color.white);
     inputLabel.setOpaque(true);
     inputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
   }
@@ -182,7 +183,8 @@ public class Cashier_GUI extends JFrame {
     inputLabel.setPreferredSize(new Dimension(200,40));
     inputLabel.setHorizontalAlignment(JLabel.CENTER);
     inputLabel.setVerticalAlignment(JLabel.CENTER);
-    inputLabel.setBackground(Color.red);
+    inputLabel.setBackground(Color.black);
+    inputLabel.setForeground(Color.white);
     inputLabel.setOpaque(true);
     inputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
   }
@@ -384,11 +386,24 @@ public class Cashier_GUI extends JFrame {
     my_area.setBackground(Color.LIGHT_GRAY);
   }
 
-  public static void login_frame_settings(JFrame frame) {
-    frame.setTitle("Login");
-    frame.setSize(300, 200);
-    frame.setLayout(new BorderLayout());
-  }
+  public class RoundedCornerPanel extends JPanel {
+    private int cornerRadius;
+
+    public RoundedCornerPanel(int cornerRadius) {
+        this.cornerRadius = cornerRadius;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        g2.setColor(Color.BLACK); // change the color of the border
+        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, cornerRadius, cornerRadius);
+        g2.dispose();
+    }
+}
 
   /**
   *The contructor that is what makes our unique Cashier GUI.
@@ -397,63 +412,10 @@ public class Cashier_GUI extends JFrame {
   *to see and use the cashier GUI on the screen. Which will be able to input various orders
   *
   */
-  public Cashier_GUI() {
+  public Cashier_GUI(String user_input) {
     get_latest_IDs();
-    
-    // create a new frame
-    JFrame login_frame = new JFrame();
-    login_frame_settings(login_frame);
-    JPanel login_panel = new JPanel(new GridLayout(3, 2));
-    JLabel user_label, pin_label;
-    JTextField user_field, pin_field;
-    JButton login_button = new JButton("Login");
 
-    login_frame.add(login_panel, BorderLayout.CENTER);
-
-    // Username
-    user_label = new JLabel("Username: ");
-    user_field = new JTextField();
-    pin_label = new JLabel("PIN: ");
-    pin_field = new JTextField();
-    login_panel.add(user_label);
-    login_panel.add(user_field);
-    login_panel.add(pin_label);
-    login_panel.add(pin_field);
-
-    login_button.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ae) {
-        String user = user_field.getText();
-        String pin = pin_field.getText();
-        int pin_value = Integer.parseInt(pin);
-        Connection conn = null;
-        try {
-        Class.forName("org.postgresql.Driver");
-        conn = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_theta",
-          "csce315331_theta_master","3NHS");
-        String sql = "SELECT * FROM employees WHERE name = ? and pin = ?";
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, user);
-        statement.setInt(2, pin_value);
-        ResultSet rs = statement.executeQuery();
-        if (rs.next()) {
-          login_frame.setVisible(false);
-          set_user(user);
-          JOptionPane.showMessageDialog(null, "Welcome " + get_user());
-          f.setVisible(true);
-        } else {
-          JOptionPane.showMessageDialog(null, "Please enter a VALID username");
-        }
-        // JOptionPane.showMessageDialog(null,"Opened database successfully");
-        } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println(e.getClass().getName()+": "+e.getMessage());
-        JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
-        //System.exit(0);
-        }
-      }
-    });
-    login_panel.add(login_button);
-    login_frame.setVisible(true);
+    set_user(user_input);
 
     f = new JFrame("DB GUI");
 
@@ -466,14 +428,21 @@ public class Cashier_GUI extends JFrame {
 
     // INITIALIZATION OF PANELS & LABELS
     //Pannel Initiliztion
-    JPanel top_panel = new JPanel();                        // Interface Title
-    JPanel meal_panel = new JPanel(new GridBagLayout());    // Meals
-    JPanel entree_panel = new JPanel(new GridBagLayout());  // Entrees
-    JPanel side_panel = new JPanel(new GridBagLayout());    // Sides
-    JPanel drink_panel = new JPanel(new GridBagLayout());   // Drinks
-    JPanel bottom_panel = new JPanel(new GridBagLayout());  // Close Panel
-    JPanel view_panel = new JPanel(new GridBagLayout());    // View Current Order Panel
-    JPanel payment_panel = new JPanel(new GridBagLayout()); // Decide Payment Method
+    RoundedCornerPanel top_panel = new RoundedCornerPanel(20);                        // Interface Title
+    RoundedCornerPanel meal_panel = new RoundedCornerPanel(20);    // Meals
+    meal_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel entree_panel = new RoundedCornerPanel(20);  // Entrees
+    entree_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel side_panel = new RoundedCornerPanel(20);    // Sides
+    side_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel drink_panel = new RoundedCornerPanel(20);   // Drinks
+    drink_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel bottom_panel = new RoundedCornerPanel(20);  // Close Panel
+    bottom_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel view_panel = new RoundedCornerPanel(20);    // View Current Order Panel
+    view_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel payment_panel = new RoundedCornerPanel(20); // Decide Payment Method
+    payment_panel.setLayout(new GridBagLayout());
     JPanel temp_panel = new JPanel(); // required for coherence
 
     //Label initialization
@@ -492,50 +461,51 @@ public class Cashier_GUI extends JFrame {
     // SET BASE FRAME SETTINGS FOR PANELS
     {
       // Top Panel Frame Settings
+      Color lightRed = new Color(252, 217, 217);
       top_panel.setBounds(20,20,1340,60);
-      top_panel.setBackground(Color.gray);
-      top_panel.setBorder(loweredbevel);
+      top_panel.setBackground(lightRed);
+      //top_panel.setBorder(loweredbevel);
       top_label.setFont(new Font("Verdana",1,30));
       top_panel.add(top_label);
 
       // Meals/A-La-Carte Panel Frame Settings
       meal_panel.setBounds(20,100,360,480);
-      meal_panel.setBackground(Color.white);
-      meal_panel.setBorder(loweredbevel);
+      meal_panel.setBackground(lightRed);
+      //meal_panel.setBorder(loweredbevel);
 
       // Entrees Panel Frame Settings
       entree_panel.setBounds(400,100,360,480);
-      entree_panel.setBackground(Color.white);
-      entree_panel.setBorder(loweredbevel);
+      entree_panel.setBackground(lightRed);
+      //entree_panel.setBorder(loweredbevel);
 
       // Sides/Apps Panel Frame Settings
       side_panel.setBounds(780,100,300,480);
-      side_panel.setBackground(Color.white);
-      side_panel.setBorder(loweredbevel);
+      side_panel.setBackground(lightRed);
+      //side_panel.setBorder(loweredbevel);
 
       // Drinks Panel Frame Settings
       drink_panel.setBounds(1100,100,260,480);
-      drink_panel.setBackground(Color.white);
-      drink_panel.setBorder(loweredbevel);
+      drink_panel.setBackground(lightRed);
+      //drink_panel.setBorder(loweredbevel);
 
       // View Panel Frame Settings
       view_panel.setBounds(20,600,740,170);
-      view_panel.setBackground(Color.white);
-      view_panel.setBorder(loweredbevel);
+      view_panel.setBackground(lightRed);
+      //view_panel.setBorder(loweredbevel);
 
       // Payment Panel Frame Settings
       payment_panel.setBounds(780,600,580,170);
-      payment_panel.setBackground(Color.white);
-      payment_panel.setBorder(loweredbevel);
+      payment_panel.setBackground(lightRed);
+      //payment_panel.setBorder(loweredbevel);
 
       // Bottom Panel Frame Settings
       bottom_panel.setBounds(20,790,1340,50);
-      bottom_panel.setBackground(Color.gray);
-      bottom_panel.setBorder(loweredbevel);
-      bottom_panel.setLayout(new GridLayout(1, 3, 450, 25));
+      bottom_panel.setBackground(lightRed);
+      //bottom_panel.setBorder(loweredbevel);
+      bottom_panel.setLayout(new GridLayout(1, 5, 100, 10));
 
       // Temp Panel (Coherency) Frame Settings
-      temp_panel.setBackground(Color.lightGray);
+      //temp_panel.setBackground(Color.lightGray);
       temp_panel.setBorder(loweredbevel);
     }
 
@@ -628,8 +598,26 @@ public class Cashier_GUI extends JFrame {
 
     // Initializing Bottom Buttons
     JButton close_button = new JButton("Close");
+    buttonsettings(close_button);
+    close_button.setPreferredSize(new Dimension(80,20));
+
     JButton reset_order_button = new JButton("Reset Order");
+    buttonsettings(reset_order_button);
+    reset_order_button.setPreferredSize(new Dimension(80,20));
+    
     JButton place_order_button = new JButton("Place Order");
+    buttonsettings(place_order_button);
+    place_order_button.setPreferredSize(new Dimension(80,20));
+
+    JButton view_cart_button = new JButton("View Cart");
+     view_cart_button.setPreferredSize(new Dimension(80,20));
+    buttonsettings(view_cart_button);
+
+    JButton add_to_order_button = new JButton("Add to Order");
+     add_to_order_button.setPreferredSize(new Dimension(80,20));
+    buttonsettings(add_to_order_button);
+
+    
 
     // LABEL & BUTTON PLACEMENT
     {
@@ -903,7 +891,9 @@ public class Cashier_GUI extends JFrame {
       // Button Placement for Bottom Panel
       {
         bottom_panel.add(close_button);
+        bottom_panel.add(add_to_order_button);
         bottom_panel.add(reset_order_button);
+        bottom_panel.add(view_cart_button);
         bottom_panel.add(place_order_button);
       }
 
@@ -956,14 +946,14 @@ public class Cashier_GUI extends JFrame {
           current_item_list.put(7,"none");
 
           //update indexing values and empty entree labels based on selection
-          if(meals.get(0).contains("Bigger_Plate") || meals.get(0).contains("Family_Meal")){ 
+          if(meals.get(0).contains("Bigger_Plate") || meals.get(0).contains("Family_Meal")){
             meal_cap = 3;
             current_item_list.put(3,"entree1");
             current_item_list.put(4,"entree2");
             current_item_list.put(5,"entree3");
             current_item_list.put(6,"side1");
             current_item_list.put(7,"side2");
-          }else if(meals.get(0).contains("Plate")){ 
+          }else if(meals.get(0).contains("Plate")){
             meal_cap = 2;
             current_item_list.put(3,"entree1");
             current_item_list.put(4,"entree2");
@@ -982,7 +972,7 @@ public class Cashier_GUI extends JFrame {
           }
           entrees_index = 3;
           sides_index = 6;
-          
+
           //display visual updates
           update_text(order_items, current_price);
           update_total(order_subtotal, current_price, false);
@@ -1113,6 +1103,8 @@ public class Cashier_GUI extends JFrame {
 
     // ADD EVERYTHING TO FRAME AND SET VISIBLE
     f.pack();
+    f.getContentPane().setBackground(Color.red);
+    temp_panel.setOpaque(false);
     f.add(top_panel);
     f.add(meal_panel);
     f.add(entree_panel);
@@ -1123,5 +1115,7 @@ public class Cashier_GUI extends JFrame {
     f.add(bottom_panel);
     f.add(temp_panel);
     f.setSize(1400, 900);
+    f.setLocationRelativeTo(null);
+    f.setVisible(true);
   }
 }
