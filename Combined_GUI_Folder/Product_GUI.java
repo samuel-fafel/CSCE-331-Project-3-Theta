@@ -50,6 +50,24 @@ public class Product_GUI extends JFrame {
     }
 
     /**
+  *Manipulates the physical feature of a Java buttons.
+  *<p>
+  *This method is constantly used in assigning buttons their look on the front end
+  *and it conveniently keeps all the buttons in use with a uniform look.
+  *
+  * @param inputButton The button that will be assigned the different attributes
+  */
+  public static void buttonsettings(JButton inputButton) {
+    inputButton.setFont(new Font("Verdana",Font.BOLD,12));
+    inputButton.setPreferredSize(new Dimension(110,40));
+    inputButton.setHorizontalAlignment(JButton.CENTER);
+    inputButton.setVerticalAlignment(JButton.CENTER);
+    inputButton.setBackground(Color.white);
+    inputButton.setOpaque(true);
+    inputButton.setBorder(BorderFactory.createLineBorder(Color.black));
+  }
+
+    /**
      * The adjust_panel function takes a panel and implements background, border,
      * and bounds given the information in the parameters.
      * @param my_panel
@@ -63,10 +81,29 @@ public class Product_GUI extends JFrame {
 
     public static void adjust_panel(JPanel my_panel, Color color, Border border, int bound1x, int bound1y, int bound2x, int bound2y) {
       my_panel.setBackground(color);
-      my_panel.setBorder(border);
+      //my_panel.setBorder(border);
       my_panel.setBounds(bound1x,bound1y,bound2x,bound2y);
     }
 
+    public class RoundedCornerPanel extends JPanel {
+    private int cornerRadius;
+
+    public RoundedCornerPanel(int cornerRadius) {
+        this.cornerRadius = cornerRadius;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        g2.setColor(Color.BLACK); // change the color of the border
+        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, cornerRadius, cornerRadius);
+        g2.dispose();
+      }
+
+    }
     public static int get_latest_transaction(String table) {
       //Building the connection
       Connection conn = null;
@@ -80,7 +117,7 @@ public class Product_GUI extends JFrame {
         JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
         //System.exit(0);
       }
-  
+
       // QUERY DATABASE FOR LASTEST TRANSACTION ID
       int output = TRANSACTION_ID + 1;
       try{
@@ -93,7 +130,7 @@ public class Product_GUI extends JFrame {
       } catch (Exception e){
         JOptionPane.showMessageDialog(null,"Error accessing Database:\n" + e);
       }
-  
+
       //closing the connection
       try {
         conn.close();
@@ -101,7 +138,7 @@ public class Product_GUI extends JFrame {
       } catch(Exception e) {
         JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
       }
-  
+
       return output + 1;
     }
 
@@ -199,9 +236,10 @@ public class Product_GUI extends JFrame {
         System.err.println(e.getClass().getName()+": "+e.getMessage());
         JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
         //System.exit(0);
-      } 
+      }
 
       JButton close_button = new JButton("Close");
+      buttonsettings(close_button);
       for (int i = 0; i < 1; i++) {
         Connection temp_conn = conn;
         close_button.addActionListener(new ActionListener() {
@@ -219,22 +257,28 @@ public class Product_GUI extends JFrame {
       // add actionlistener to close button
       // b.addActionListener(s);
       // add button to panel
-
+        Color lightRed = new Color(252, 217, 217);
         // set the size of frame
 
+        GridBagConstraints constrain = new GridBagConstraints();
+
         //Create title panel
-        JPanel title_panel = new JPanel(new GridBagLayout());
-        adjust_panel(title_panel, Color.gray, BorderFactory.createLoweredBevelBorder(), 20, 20, 1340, 60);
+        RoundedCornerPanel title_panel = new RoundedCornerPanel(20); 
+        title_panel.setLayout(new GridBagLayout());
+        adjust_panel(title_panel, lightRed, BorderFactory.createLoweredBevelBorder(), 20, 20, 1340, 60);
         JLabel title_label = new JLabel("Products");
+        title_label.setFont(new Font("Verdana",1,30));
         title_panel.add(title_label);
 
       //Create search panel
 
-        JPanel search_panel = new JPanel(new GridBagLayout());
-        adjust_panel(search_panel, Color.gray, BorderFactory.createLoweredBevelBorder(), 20, 100, 400, 650);
+        RoundedCornerPanel search_panel = new RoundedCornerPanel(20); 
+        search_panel.setLayout(new GridBagLayout());
+        adjust_panel(search_panel, lightRed, BorderFactory.createLoweredBevelBorder(), 20, 100, 400, 650);
         //search_panel.setSize(100, 700);
 
         JLabel product_label = new JLabel("Products");
+        //product_label.setFont(new Font("Verdana",1,30));
         search_panel.add(product_label, constraints(0, 0, 2));
 
         //Create a lists and combo box of all menu items
@@ -249,15 +293,20 @@ public class Product_GUI extends JFrame {
 
         //Add JList object to add to search panel
         search_panel.add(product_jlist, constraints(0, 3, 2));
+        
 
         //Create Apply Button for list of products
         JButton delete_button = new JButton("Delete");
+        buttonsettings(delete_button);
 
         //Create an Add button to add items to inventory
         JButton add_button = new JButton("Add");
-
+        buttonsettings(add_button);
+        
         //Create an Update button to update items in inventory
         JButton update_button = new JButton("Update");
+        buttonsettings(update_button);
+
 
         //search_panel.setLayout(new BoxLayout(search_panel, BoxLayout.Y_AXIS));
 
@@ -270,13 +319,15 @@ public class Product_GUI extends JFrame {
 
 
         //Create info panel
-        JPanel info_panel = new JPanel(new GridBagLayout());
+        RoundedCornerPanel info_panel = new RoundedCornerPanel(20); 
+        info_panel.setLayout(new GridBagLayout());
         //info_panel.setSize(300, 400);
-        adjust_panel(info_panel, Color.white, BorderFactory.createLoweredBevelBorder(), 440,100,920,650);
+        adjust_panel(info_panel, lightRed, BorderFactory.createLoweredBevelBorder(), 440,100,920,650);
 
         JLabel info_label = new JLabel("Product Info:");
+        
         info_label.setHorizontalAlignment(JLabel.CENTER);
-        info_label.setBorder(loweredbevel);
+        // info_label.setBorder(loweredbevel);
         column_jlist.setBorder(loweredbevel);
         results_jlist.setBorder(loweredbevel);
 
@@ -287,7 +338,7 @@ public class Product_GUI extends JFrame {
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
-        info_label.setBackground(Color.lightGray);
+        info_label.setBackground(Color.black);
         info_label.setPreferredSize(infoDimension);
         info_label.setFont(new Font("Verdana",Font.BOLD,32));
         info_panel.add(info_label, c);
@@ -296,7 +347,7 @@ public class Product_GUI extends JFrame {
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
-        column_jlist.setBackground(Color.lightGray);
+        column_jlist.setBackground(lightRed);
         column_jlist.setPreferredSize(infoHalfDimension);
         column_jlist.setFont(new Font("Verdana",Font.BOLD,26));
         info_panel.add(column_jlist, c);
@@ -304,7 +355,7 @@ public class Product_GUI extends JFrame {
         c.gridx = 1;
         c.gridy = 1;
         c.gridwidth = 1;
-        results_jlist.setBackground(Color.lightGray);
+        results_jlist.setBackground(lightRed);
         results_jlist.setPreferredSize(infoHalfDimension);
         results_jlist.setFont(new Font("Verdana",Font.BOLD,26));
         info_panel.add(results_jlist, c);
@@ -526,7 +577,7 @@ public class Product_GUI extends JFrame {
                   JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
                 }
             }
-            
+
             else if (current_table == "Non_perishable"){
               try{
                 //Create a statement for nonperishable items
@@ -796,7 +847,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //Note: ID inputed manually
               String sqlStatement = "INSERT INTO perishable(id,name,stock,reorder,reorder_date,serving_size,price) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'"+ reorder + "'" + "," + "'" + reorder_date + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'"+ reorder + "'" + "," + "'" + reorder_date +
               "'" + "," + "'" + serving+ "'" + "," + "'" + price + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -824,7 +875,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO non_perishable(id,name,stock,reorder_date,buy_price) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'" + reorder_date + "'" + "," + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + stock + "'" + "," + "'" + reorder_date + "'" + "," +
               "'" + price + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -852,7 +903,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO positions(id,name,hourly_pay,admin) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + hourly_pay + "'" + "," + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + hourly_pay + "'" + "," +
               "'" + admin + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -881,7 +932,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO schedules(name,employee,date,start_time,end_time,clock_in,clock_out) VALUES ('"
-              + shift_name + "'" + "," + "'" + employee + "'" + "," + "'" + date + "'" + "," + "'" + start_time + "'" + "," + "'" + end_time + 
+              + shift_name + "'" + "," + "'" + employee + "'" + "," + "'" + date + "'" + "," + "'" + start_time + "'" + "," + "'" + end_time +
               "'" + "," + "'" + clock_in + "'" + "," + "'" + clock_out + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -908,7 +959,7 @@ public class Product_GUI extends JFrame {
               //create an SQL statement
               //TODO Step 2
               String sqlStatement = "INSERT INTO positions(id,name,position,pin) VALUES ('"
-              + id + "'" + "," + "'" + name + "'" + "," + "'" + position + "'" + "," + 
+              + id + "'" + "," + "'" + name + "'" + "," + "'" + position + "'" + "," +
               "'" + pin + "'" + ");";
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
@@ -1106,7 +1157,7 @@ public class Product_GUI extends JFrame {
               JOptionPane.showMessageDialog(f, "Make sure item is selected before updating.", "Alert", JOptionPane.WARNING_MESSAGE);
             }
 
-            results_jlist.setListData(results); 
+            results_jlist.setListData(results);
 
         }
       });
@@ -1142,10 +1193,12 @@ public class Product_GUI extends JFrame {
        f.add(title_panel);
        f.add(search_panel);
        f.add(info_panel);
+       f.getContentPane().setBackground(Color.red);
+      temp_panel.setOpaque(false);
        f.add(temp_panel);
 
        f.setSize(1400, 900);
-
+       f.setLocationRelativeTo(null);
        f.setVisible(true);
 
     }
