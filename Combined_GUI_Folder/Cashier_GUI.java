@@ -499,7 +499,7 @@ public class Cashier_GUI extends JFrame {
       bottom_panel.setBounds(20,790,1340,50);
       bottom_panel.setBackground(lightRed);
       //bottom_panel.setBorder(loweredbevel);
-      bottom_panel.setLayout(new GridLayout(1, 3, 450, 25));
+      bottom_panel.setLayout(new GridLayout(1, 5, 100, 10));
 
       // Temp Panel (Coherency) Frame Settings
       //temp_panel.setBackground(Color.lightGray);
@@ -597,12 +597,24 @@ public class Cashier_GUI extends JFrame {
     JButton close_button = new JButton("Close");
     buttonsettings(close_button);
     close_button.setPreferredSize(new Dimension(80,20));
+
     JButton reset_order_button = new JButton("Reset Order");
     buttonsettings(reset_order_button);
     reset_order_button.setPreferredSize(new Dimension(80,20));
+    
     JButton place_order_button = new JButton("Place Order");
     buttonsettings(place_order_button);
     place_order_button.setPreferredSize(new Dimension(80,20));
+
+    JButton view_cart_button = new JButton("View Cart");
+     view_cart_button.setPreferredSize(new Dimension(80,20));
+    buttonsettings(view_cart_button);
+
+    JButton add_to_order_button = new JButton("Add to Order");
+     add_to_order_button.setPreferredSize(new Dimension(80,20));
+    buttonsettings(add_to_order_button);
+
+    
 
     // LABEL & BUTTON PLACEMENT
     {
@@ -876,7 +888,9 @@ public class Cashier_GUI extends JFrame {
       // Button Placement for Bottom Panel
       {
         bottom_panel.add(close_button);
+        bottom_panel.add(add_to_order_button);
         bottom_panel.add(reset_order_button);
+        bottom_panel.add(view_cart_button);
         bottom_panel.add(place_order_button);
       }
 
