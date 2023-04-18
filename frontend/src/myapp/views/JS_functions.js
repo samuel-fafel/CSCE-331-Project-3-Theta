@@ -62,9 +62,9 @@ window.onload = function(){
         var style_element = localStorage.getItem("styleSheet");
         
         //Avoid null css file when first booting website
-        if (style_element != "style.css"){
+        /*if (style_element != "style.css"){
             style_element = "style.css";
-        }
+        }*/
         // get html style element by ID
         var element = document.getElementById("css");
         // replace href attribute of html element.

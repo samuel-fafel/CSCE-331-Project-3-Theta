@@ -27,7 +27,7 @@ body {
   border-radius: 20px;
   background-color: red;
   padding: 10px;
-  height: 1090px;
+  height: 1120px;
   grid-template-rows: 80px 280px 280px 270px 50px;
   margin-left: 3em;
   margin-right: 3em;
@@ -54,7 +54,7 @@ body {
   background-color:#f5dfdff1;
   text-align: center;
   padding: 20px 0;
-  height: 100px;
+  height: 130px;
 }
 
   .meal-button-grid-container {
@@ -150,6 +150,12 @@ body {
   {
     font-size: 20px;
     border-radius:10px;
+    font-weight: bold;
+  }
+  
+  .button_access{
+    font-size: 50px;
+    border-radius: 10px;
     font-weight: bold;
   }
 

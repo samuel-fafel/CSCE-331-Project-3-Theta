@@ -4,7 +4,7 @@
 
 <head>
     <title>Home Page</title>
-    <link id="css" rel="stylesheet" type="text/css" href="style_big.css">
+    <link id="css" rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <!--<p>This is <%=name%>'s homepage.<p>-->
@@ -92,6 +92,10 @@
           </script>
 
           <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+          <button class = "button_access" onclick="resize_def()">Default Interface</button>
+          <button class = "button_access" onclick="resize_large()">Larger Interface</button>
+          <button class = "button_access" onclick="resize_huge()">Much Larger Inteface</button>
       </div>
     </div>
 
@@ -107,6 +111,8 @@
       
       document.getElementById("order").innerHTML = text;
       </script>
+
+    <script src="JS_functions.js"></script>
 
     </body>
 
