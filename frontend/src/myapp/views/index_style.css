@@ -1,0 +1,87 @@
+.section1 { grid-area: img; }
+.section2 { grid-area: maps; }
+.section3 { grid-area: about; }
+
+body {
+    background-color: black;
+}
+
+nav {
+    background-color: red; 
+    height: 100px;
+    margin-bottom: 20px;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.welcome {
+    font: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    float: right;
+}
+
+li {
+    float: right;
+    border: 2px solid white;
+    
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 34px 40px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 24px;
+
+    
+}
+
+li a:hover {
+    background-color: #FF9680; /* Darker shade of orange on hover */
+
+}
+
+li a:active {
+    background-color: #FF2C00; /* Even darker shade of orange when link is clicked */
+
+}
+
+.Logo{
+    width: 10%; 
+    height: auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'img img'
+      'maps about';
+    gap: 10px;
+    border-radius: 20px;
+    background-color: red;
+    padding: 10px;
+    height: 1000px;
+    grid-template-rows: 400px 280px ;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+  
+  .grid-container > div {
+    background-color: #f5dfdff1;
+    border-radius: 10px;
+    /* background-color: whitesmoke; */
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+  }
