@@ -3,117 +3,29 @@
 
 
 <head>
-    <title>Home Page</title>
-    <link id="css" rel="stylesheet" type="text/css" href="style.css">
+	<title>Panda Express Navigation Bar</title>
+	<link rel="stylesheet" type="text/css" href="index_style.css">
 </head>
 <body>
-    <!--<p>This is <%=name%>'s homepage.<p>-->
+	<nav>
+		
+		<ul>
+			<li><a href="#">Worker?</a></li>
+			<li><a href="/order">Order</a></li>
+			<li><a href="#">Home</a></li>
+		</ul>
+	</nav>
 
-    <div class="grid-container">
-      <div class="section1">Panda Express Ordering System</div>
-      <div class="section2">Regular Meals
-        <div class="meal-button-grid-container">
-            <button type = "button">Bowl</button>
-            <button type = "button">Plate</button>
-            <button type = "button">Bigger Plate</button>
-            <button type = "button">Family Meal</button>
-            <button type = "button">Cub Meal</button>
-            <button type = "button">None</button>
-        </div>
-      </div>
-      <div class="section3">A-La-Carte
-        <div class="alc-button-grid-container">
-            <button type = "button">Small Entree</button>
-            <button type = "button">Medium Entree</button>
-            <button type = "button">Large Entree</button>
-            <button type = "button">Medium Side</button>
-            <button type = "button">Large Side</button>
-            <button type = "button">None</button>
-        </div>
-      </div>
-
-      <div class="section4">Entrees
-        <div class="entree-button-grid-container">
-            <button type = "button">Orange Chicken</button>
-            <button type = "button">Kung Pao Chicken</button>
-            <button type = "button">Mushroom Chicken</button>
-            <button type = "button">Beijing Beef</button>
-            <button type = "button">Brocolli Beef</button>
-            <button type = "button">Black Pepper<br>Angus Steak</button>
-            <button type = "button">Honey Walnut<br>Shrimp</button>
-            <button type = "button">Grilled Teriyaki<br>Chicken</button>
-            <button type = "button">Black Pepper<br>Chicken</button>
-            <button type = "button">Sweet Fire<br>Chicken Breast</button>
-            <button type = "button">Honey Sesame<br>Chicken Breast</button>
-            <button type = "button">String Bean<br>Chicken Breast</button>
-            <button type = "button">Seasonal Entree</button>
-            <button type = "button">None</button>
-        </div>
-      </div>
-      <div class="section5">Sides
-        <div class="sides-button-grid-container">
-          <button type ="button">White Rice</button>
-          <button type ="button">Fride Rice</button>
-          <button type ="button">Brown Rice</button>
-          <button type ="button">Chow Mein</button>
-          <button type ="button">Super Greens</button>
-          <button type ="button">None</button>
-        </div>
-      </div>
-      <div class="section6">Appetizers
-        <div class="app-button-grid-container">
-          <button type ="button">Veggie Egg Roll</button>
-          <button type ="button">Chicken Egg Roll</button>
-          <button type ="button">None</button>
-        </div>
-      </div>
-      <div class="section7">Drinks
-        <div class="drink-button-grid-container">
-          <button type = "button">Small Fountain Drink</button>
-          <button type = "button">Medium Fountain Drink</button>
-          <button type = "button">Large Fountain Drink</button>
-          <button type = "button">Brewed Ice Tea</button>
-          <button type = "button">Water Bottle</button>
-          <button type = "button">Kid's Juice</button>
-          <button type = "button">None</button>
-        </div>
-      </div>
-      <div class="section8" id="order">Order Items:</div>
-      <div class="section9">Item Prices</div>
-      <div class="section10">Order Subtotal</div>
-      <div class="section11">Payment Method</div>
-      <div class="section12">Accessibility
-          <div id="google_translate_element"></div>
-
-          <script type="text/javascript">
-          function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-          }
-          </script>
-
-          <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-          <button class = "button_access" onclick="resize_def()">Default Interface</button>
-          <button class = "button_access" onclick="resize_large()">Larger Interface</button>
-          <button class = "button_access" onclick="resize_huge()">Much Larger Inteface</button>
-      </div>
+  <div class="grid-container">
+    <div class="section1">
+      <img src="Panda_Express_logo.png" class="Logo">
     </div>
-
-    <script>
-    const order = ["Bowl", "Orange Chicken", "Medium Fountain Drink"];
-      let OLen = order.length;
+    <div class="section2">
       
-      let text = "Order Items:<ul>";
-      for (let i = 0; i < OLen; i++) {
-        text += "<li>" + order[i] + "</li>";
-      }
-      text += "</ul>";
+    </div>
+    <div class="section3">
       
-      document.getElementById("order").innerHTML = text;
-      </script>
-
-    <script src="JS_functions.js"></script>
-
-    </body>
+    </div>
+</body>
 
     </html>

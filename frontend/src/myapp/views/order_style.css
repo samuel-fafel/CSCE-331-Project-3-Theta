@@ -1,0 +1,172 @@
+.section1 { grid-area: header; }
+.section2 { grid-area: meals; }
+.section3 { grid-area: alc; }
+.section4 { grid-area: entrees; }
+.section5 { grid-area: sides; }
+.section6 { grid-area: apps; }
+.section7 { grid-area: drinks; }
+.section8 { grid-area: order_items; }
+.section9 { grid-area: item_price; }
+.section10 { grid-area: order_subtotal; }
+.section11 { grid-area: payment; }
+.section12 { grid-area: footer; }
+
+body {
+  background-color: black;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header'
+    'meals entrees sides drinks'
+    'alc entrees apps drinks'
+    'order_items item_price order_subtotal payment'
+    'footer footer footer footer';
+  gap: 10px;
+  border-radius: 20px;
+  background-color: red;
+  padding: 10px;
+  height: 1120px;
+  grid-template-rows: 80px 280px 280px 270px 50px;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+.grid-container > div {
+  background-color: #f5dfdff1;
+  border-radius: 10px;
+  /* background-color: whitesmoke; */
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+.grid-container > .section1 {
+    /*background-color: rgba(255, 255, 255, 0.8);*/
+    background-color: #f5dfdff1;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  .grid-container > .section12 {
+    background-color:#f5dfdff1;
+    text-align: center;
+    padding: 20px 0;
+    height: 130px;
+  }
+  
+
+  .meal-button-grid-container {
+    display: grid;
+    grid-template-areas:
+      'button1 button2 button3'
+      'button4 button5 button6';
+    gap: 10px;
+    grid-template-rows: 70px 70px;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+  }
+
+
+  .alc-button-grid-container {
+    display: grid;
+    grid-template-areas:
+      'button1 button2 button3'
+      'button4 button5 button6';
+    gap: 10px;
+    grid-template-rows: 70px 70px;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+  }
+
+  .entree-button-grid-container {
+    display: grid;
+    grid-template-areas:
+      'button1 button2 button3'
+      'button4 button5 button6'
+      'button7 button8 button9'
+      'button10 button11 button12'
+      'button13 button14 button14';
+    gap: 10px;
+    grid-template-rows: 70px 70px 70px 70px 70px;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+  }
+  .sides-button-grid-container {
+    display: grid;
+    grid-template-areas:
+      'button1 button2',
+      'button3 button4',
+      'button5 button6';
+    gap: 10px;
+    grid-template-columns: 100px 100px;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+  }
+
+  .app-button-grid-container {
+    display: grid;
+    grid-template-areas:
+      'button1 button 2',
+      'button3';
+      gap: 10px;
+      grid-template-columns: 100px 100px;
+      grid-template-rows: 70px 70px;
+      width: 90%;
+      text-align: center;
+      margin: auto;
+      padding: 10px;
+  }
+
+  .drink-button-grid-container {
+    display: grid;
+    grid-template-areas:
+      'button1',
+      'button2',
+      'button3',
+      'button4',
+      'button5',
+      'button6',
+      'button7';
+    gap: 10px;
+    grid-template-columns: 210px;
+    grid-template-rows: 60px 60px 60px 60px 60px 60px 60px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+  }
+
+  button
+  {
+    font-size: 20px;
+    border-radius:10px;
+    font-weight: bold;
+  }
+
+  .button_access{
+    font-size: 50px;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
+  button:hover
+  {
+    background-color: white
+  }
+
+  h1 {
+    color: black;
+    text-align: center;
+    font-size: 25px
+  }
