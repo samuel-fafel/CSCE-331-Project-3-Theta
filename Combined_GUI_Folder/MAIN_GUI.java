@@ -5,7 +5,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
-import java.awt.Color;
+
+
 
 /* INSTRUCTIONS
   Compile:
@@ -109,7 +110,7 @@ public class MAIN_GUI extends JFrame {
   */
   public static void adjust_panel(JPanel my_panel, Color color, Border border, int bound1x, int bound1y, int bound2x, int bound2y) {
     my_panel.setBackground(color);
-    my_panel.setBorder(border);
+    //my_panel.setBorder(border);
     my_panel.setBounds(bound1x,bound1y,bound2x,bound2y);
   }
 
@@ -119,6 +120,25 @@ public class MAIN_GUI extends JFrame {
     frame.setLayout(new BorderLayout());
     frame.setLocationRelativeTo(null);
   }
+
+  public class RoundedCornerPanel extends JPanel {
+    private int cornerRadius;
+
+    public RoundedCornerPanel(int cornerRadius) {
+        this.cornerRadius = cornerRadius;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        g2.setColor(Color.BLACK); // change the color of the border
+        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, cornerRadius, cornerRadius);
+        g2.dispose();
+    }
+}
 
   public static void run_command(String sql_query) {
     //Building the connection
@@ -274,8 +294,10 @@ public class MAIN_GUI extends JFrame {
      GridBagConstraints c = new GridBagConstraints();
 
     //Pannel Initiliztion
-    JPanel top_panel = new JPanel(new GridBagLayout());
-    JPanel middle_panel = new JPanel(new GridBagLayout());
+    RoundedCornerPanel top_panel = new RoundedCornerPanel(20);
+    top_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel middle_panel = new RoundedCornerPanel(20);
+    middle_panel.setLayout(new GridBagLayout());
     JPanel temp_panel = new JPanel(new GridBagLayout());
 
     Border blackline;
@@ -429,24 +451,26 @@ public class MAIN_GUI extends JFrame {
 
     adjust_panel(middle_panel,lightRed,loweredbevel,20,140,1340,700);
     constraints(c,0,2,3);
+    c.insets =  new Insets(25, 0, 0, 0);
     middle_panel.add(close_button,c);
 
     constraints(c, 0, 1, 3);
     //transactions_button.setPreferredSize(new Dimension(20,20));
+    c.insets =  new Insets(0, 0, 25, 0);
     middle_panel.add(login_main_button, c);
 
     constraints(c,0,0,1);
-    c.insets =  new Insets(0, 0, 250, 25);
+    c.insets =  new Insets(0, 0, 225, 25);
     cashier_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(cashier_button,c);
 
     constraints(c,1,0,1);
-    c.insets =  new Insets(0, 25, 250, 25);
+    c.insets =  new Insets(0, 25, 225, 25);
     product_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(product_button,c);
 
     constraints(c,2,0,1);
-    c.insets =  new Insets(0, 25, 250, 0);
+    c.insets =  new Insets(0, 25, 225, 0);
     transactions_button.setPreferredSize(new Dimension(400,200));
     middle_panel.add(transactions_button,c);
 
