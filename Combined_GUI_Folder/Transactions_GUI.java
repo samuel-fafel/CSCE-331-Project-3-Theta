@@ -120,8 +120,9 @@ public class Transactions_GUI extends JFrame {
     * @param bound2y The y dimension of the panel size
     */
   public static void adjust_panel(JPanel my_panel, Color color, Border border, int bound1x, int bound1y, int bound2x, int bound2y) {
-    my_panel.setBackground(color);
-    my_panel.setBorder(border);
+    Color lightRed = new Color(252, 217, 217);
+    my_panel.setBackground(lightRed);
+    //my_panel.setBorder(border);
     my_panel.setBounds(bound1x,bound1y,bound2x,bound2y);
   }
 
@@ -142,10 +143,30 @@ public class Transactions_GUI extends JFrame {
     inputLabel.setPreferredSize(new Dimension(330,40));
     inputLabel.setHorizontalAlignment(JLabel.CENTER);
     inputLabel.setVerticalAlignment(JLabel.CENTER);
-    inputLabel.setBackground(Color.red);
+    inputLabel.setBackground(Color.black);
+    inputLabel.setForeground(Color.white);
     inputLabel.setOpaque(true);
     inputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
   }
+  public class RoundedCornerPanel extends JPanel {
+    private int cornerRadius;
+
+    public RoundedCornerPanel(int cornerRadius) {
+        this.cornerRadius = cornerRadius;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        g2.setColor(Color.BLACK); // change the color of the border
+        g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, cornerRadius, cornerRadius);
+        g2.dispose();
+    }
+}
+
 
   // GET THE LATEST TRANSACTION ID
   public static int get_latest_transaction() {
@@ -672,13 +693,18 @@ public class Transactions_GUI extends JFrame {
 
     // create a new frame
     f = new JFrame("DB GUI");
-
+    Color lightRed = new Color(252, 217, 217);
     //Pannel Initiliztion
-    JPanel top_panel = new JPanel(new GridBagLayout());
-    JPanel list_panel = new JPanel(new GridBagLayout());
-    JPanel info_panel = new JPanel(new GridBagLayout());
-    JPanel bottom_panel = new JPanel(new GridBagLayout());
+    RoundedCornerPanel top_panel = new RoundedCornerPanel(20);
+    top_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel list_panel = new RoundedCornerPanel(20);
+    list_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel info_panel = new RoundedCornerPanel(20);
+    info_panel.setLayout(new GridBagLayout());
+    RoundedCornerPanel bottom_panel = new RoundedCornerPanel(20);
+    bottom_panel.setLayout(new GridBagLayout());
     JPanel temp_panel = new JPanel(new GridBagLayout());
+
 
     Border blackline;
     Border raisedbevel;
@@ -862,6 +888,8 @@ public class Transactions_GUI extends JFrame {
     bottom_panel.add(query_box, constraints(1,1,1));
 
     // BORDER PANEL (Required for coherence)
+    f.getContentPane().setBackground(Color.red);
+    temp_panel.setOpaque(false);
     temp_panel.setBackground(Color.lightGray);
     temp_panel.setBorder(loweredbevel);
     f.add(temp_panel);

@@ -322,7 +322,7 @@ public class Product_GUI extends JFrame {
         RoundedCornerPanel info_panel = new RoundedCornerPanel(20); 
         info_panel.setLayout(new GridBagLayout());
         //info_panel.setSize(300, 400);
-        adjust_panel(info_panel, Color.white, BorderFactory.createLoweredBevelBorder(), 440,100,920,650);
+        adjust_panel(info_panel, lightRed, BorderFactory.createLoweredBevelBorder(), 440,100,920,650);
 
         JLabel info_label = new JLabel("Product Info:");
         
