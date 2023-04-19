@@ -1,3 +1,8 @@
+//Global variables
+let order = [];
+let price = [];
+
+
 /**
  * Resize Functions
  * These functions are used to change the size of all elements on the website.
@@ -72,3 +77,53 @@ window.onload = function(){
 }
 
 //Other Functions
+function print_order(){
+    let OLen = order.length;
+        
+    let text = "Order Items:<ul>";
+    for (let i = 0; i < OLen; i++) {
+      text += "<li>" + order[i] + "</li>";
+    }
+    text += "</ul>";
+    
+    document.getElementById("order").innerHTML = text;
+}
+
+function add_to_order(order, item){
+    order.push(item);
+    print_order();
+}
+
+function clear_order(){
+    order = [];
+}
+
+function add_to_price(order, item){
+    price.push(item);
+}
+
+function print_price(){
+    let PLen = price.length;
+        
+    let text = "Price:<ul>";
+    for (let i = 0; i < PLen; i++) {
+      text += "<li>" + price[i] + "</li>";
+    }
+    text += "</ul>";
+    
+    document.getElementById("price").innerHTML = text;
+}
+
+function clear_price(){
+    price = [];
+}
+
+function calc_total(price){
+    let total = 0;
+
+    for (let i = 0; i < price.length; i++){
+        total += price[i];
+    }
+
+    return total;
+}

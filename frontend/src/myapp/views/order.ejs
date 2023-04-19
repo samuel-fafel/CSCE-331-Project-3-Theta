@@ -11,11 +11,11 @@
       <div class="section1">Panda Express Ordering System</div>
       <div class="section2">Regular Meals
         <div class="meal-button-grid-container">
-            <button type = "button">Bowl</button>
-            <button type = "button">Plate</button>
-            <button type = "button">Bigger Plate</button>
-            <button type = "button">Family Meal</button>
-            <button type = "button">Cub Meal</button>
+            <button type = "button" onclick="add_to_order(order, 'Bowl')">Bowl</button>
+            <button type = "button" onclick="add_to_order(order, 'Plate')">Plate</button>
+            <button type = "button" onclick="add_to_order(order,'Bigger Plate')">Bigger Plate</button>
+            <button type = "button" onclick="add_to_order(order,'Family Meal')">Family Meal</button>
+            <button type = "button" onclick="add_to_order(order,'Cub Meal')">Cub Meal</button>
             <button type = "button">None</button>
         </div>
       </div>
@@ -100,7 +100,6 @@
     <button><a href="/">Go to Another Page</a></button>
 
     <script>
-      const order = ["Bowl", "Orange Chicken", "Medium Fountain Drink"];
         let OLen = order.length;
         
         let text = "Order Items:<ul>";
