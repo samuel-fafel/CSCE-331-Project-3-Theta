@@ -586,7 +586,7 @@ public class Cashier_GUI extends JFrame {
     JButton add_to_cart_button = new JButton("Add to Cart");
     buttonsettings(add_to_cart_button);
     add_to_cart_button.setPreferredSize(new Dimension(80,20));
-    
+
     JButton view_cart_button = new JButton("View Cart");
      view_cart_button.setPreferredSize(new Dimension(80,20));
     buttonsettings(view_cart_button);
@@ -875,17 +875,17 @@ public class Cashier_GUI extends JFrame {
 
     }
 
-    //initialize current_item_list
+    // initialize current_item_list
     current_item_list = new HashMap<Integer, String>() {{
       put(0,  Integer.toString(TRANSACTION_ID));
       put(1,  "Sale");
-      put(2,  "none"); //meal type
-      put(3,  "none"); //entree 1
-      put(4,  "none"); //entree 2
-      put(5,  "none"); //entree 3
-      put(6,  "none"); //side 1
-      put(7,  "none"); //side 2
-      put(8,  "none"); //drink
+      put(2,  "none"); // meal type
+      put(3,  "none"); // entree 1
+      put(4,  "none"); // entree 2
+      put(5,  "none"); // entree 3
+      put(6,  "none"); // side 1
+      put(7,  "none"); // side 2
+      put(8,  "none"); // drink
       put(9,  "N/A");
       put(10, get_user());
       put(11, "");
@@ -1057,8 +1057,12 @@ public class Cashier_GUI extends JFrame {
             elem.setValue("none");
           }
         }
-        for(Double val : current_price){
-          val = 0.00;
+        for (int i = 0; i < current_price.size(); i++) {
+          current_price.set(i, 0.00);
+        }
+
+        for (HashMap<Integer, String> item : cart) {
+          item.clear();
         }
         update_text(order_items, current_price);
         order_subtotal.setText(String.format("$0.00"));
@@ -1071,15 +1075,15 @@ public class Cashier_GUI extends JFrame {
         if (list_meals.contains(copy_item_list.get(2))) { // Meal Type Selected
           if (list_entrees.contains(copy_item_list.get(3))) { // At least one entree
             if (list_sides.contains(copy_item_list.get(6))) { // At least one side
-              if (cart.add(copy_item_list)) {
-                JOptionPane.showMessageDialog(null, "Added to Cart!");
-              }
+                if (cart.add(copy_item_list)) {
+                  JOptionPane.showMessageDialog(null, "Added to Cart!");
+                }
             }
           }
-        } 
+        }
       }
     });
-        
+
     view_cart_button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         // Define Cart Frame/Panel
@@ -1096,11 +1100,13 @@ public class Cashier_GUI extends JFrame {
           }
         });
         cart_panel.add(close_cart_button);
-        
+
         // Print Cart Items
         JLabel empty_cart = new JLabel("Cart is Empty");
+        empty_cart.setHorizontalAlignment(JLabel.CENTER);
+        empty_cart.setVerticalAlignment(JLabel.CENTER);
         if (cart.isEmpty()) {
-          cart_panel.add(empty_cart); 
+          cart_panel.add(empty_cart);
         }
         else {
           cart_panel.remove(empty_cart);
@@ -1113,9 +1119,13 @@ public class Cashier_GUI extends JFrame {
             String side2 = item.get(7);
             String drink = item.get(8);
 
-            String item_displayed = meal_type + " " + entree1 + " " + entree2 + " " + entree3 + " " + side1 + " " + side2 + " " + drink;
-            JLabel item_list = new JLabel(item_displayed.replace(" none", ""));
-            cart_panel.add(item_list); 
+            if (meal_type == null) {
+              cart_panel.add(empty_cart);
+            } else {
+              String item_displayed = meal_type + " " + entree1 + " " + entree2 + " " + entree3 + " " + side1 + " " + side2 + " " + drink;
+              JLabel item_list = new JLabel(item_displayed.replace(" none", ""));
+              cart_panel.add(item_list);
+            }
           }
         }
         cart_frame.setVisible(true);
