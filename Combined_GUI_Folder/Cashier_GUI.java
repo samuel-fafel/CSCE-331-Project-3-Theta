@@ -1126,7 +1126,6 @@ public class Cashier_GUI extends JFrame {
         ORDER_ID++;
         double subtotal = update_total(order_subtotal, current_price, false);
         JRadioButton payment_method = radioButton1;
-        JOptionPane.showMessageDialog(null, "Payment method = " + payment_method.getText());
         if (!radioButton1.isSelected()) payment_method = radioButton2;
         for (HashMap<Integer, String> item_list : cart) {
           TRANSACTION_ID++;
