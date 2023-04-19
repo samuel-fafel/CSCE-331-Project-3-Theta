@@ -1,6 +1,8 @@
 //Global variables
 let order = [];
+let order_sec = [];
 let price = [];
+let items = [];
 
 
 /**
@@ -67,9 +69,9 @@ window.onload = function(){
         var style_element = localStorage.getItem("styleSheet");
         
         //Avoid null css file when first booting website
-        /*if (style_element != "style.css"){
+        if ((style_element != "style.css") && (style_element != "style_big.css") && (style_element != "style_huge.css")){
             style_element = "style.css";
-        }*/
+        }
         // get html style element by ID
         var element = document.getElementById("css");
         // replace href attribute of html element.
@@ -77,6 +79,20 @@ window.onload = function(){
 }
 
 //Other Functions
+/*function create_item(item){
+    if (item == 'Bowl'){
+        order_sec = ['entree1', 'side1', 'side2'];
+    }
+    else if (item == 'Plate'){
+        order_sec = ['entree1', 'entree2', 'side1', 'side2'];
+    }
+    else if (item == 'Bigger Plate'){
+        order_sec = ['entree1', 'entree2', 'entree3', 'side1', 'side2'];
+    }
+    else {
+        
+    }
+}*/
 function print_order(){
     let OLen = order.length;
         
