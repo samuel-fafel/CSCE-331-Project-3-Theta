@@ -313,23 +313,16 @@ public class MAIN_GUI extends JFrame {
     empty = BorderFactory.createEmptyBorder();
 
     // Make Close Button & add action listener
-    JButton close_button = new JButton("Close");
+    JButton Z_button = new JButton("Generate Z Report");
     JButton cashier_button = new JButton("Cashier Interface");
     JButton product_button = new JButton("Product Manipulation");
     JButton transactions_button = new JButton("Transactions & Reports");
     JButton login_main_button = new JButton("Login");
     for (int i = 0; i < 1; i++) {
       Connection temp_conn = conn;
-      close_button.addActionListener(new ActionListener() {
+      Z_button.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          try { //closing the connection
-            temp_conn.close();
-            //JOptionPane.showMessageDialog(null,"Connection Closed.");
-          } catch(Exception a) {
-            JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-          }
           JOptionPane.showMessageDialog(null,generateZReport());
-          f.dispose();
         }
       });
     // Login Button
@@ -443,7 +436,7 @@ public class MAIN_GUI extends JFrame {
 
     top_label.setFont(new Font("Verdana",1,30));
     top_panel.add(top_label);
-    buttonsettings(close_button);
+    buttonsettings(Z_button);
     buttonsettings(cashier_button);
     buttonsettings(product_button);
     buttonsettings(transactions_button);
@@ -452,7 +445,7 @@ public class MAIN_GUI extends JFrame {
     adjust_panel(middle_panel,lightRed,loweredbevel,20,140,1340,700);
     constraints(c,0,2,3);
     c.insets =  new Insets(25, 0, 0, 0);
-    middle_panel.add(close_button,c);
+    middle_panel.add(Z_button,c);
 
     constraints(c, 0, 1, 3);
     //transactions_button.setPreferredSize(new Dimension(20,20));
