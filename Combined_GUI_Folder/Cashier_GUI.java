@@ -1088,12 +1088,14 @@ public class Cashier_GUI extends JFrame {
       public void actionPerformed(ActionEvent e) {
         // Define Cart Frame/Panel
         JFrame cart_frame = new JFrame();
-        cart_frame.setSize(600, 300);
+        cart_frame.setSize(500, 600);
         cart_frame.setLayout(new BorderLayout());
         cart_frame.setLocationRelativeTo(null);
-        JPanel cart_panel = new JPanel(new GridLayout(3, 2));
+        JPanel cart_panel = new JPanel(new GridLayout(0, 1));
         JButton close_cart_button = new JButton("Close Cart");
-        cart_frame.add(cart_panel, BorderLayout.CENTER);
+        buttonsettings(close_cart_button);
+        JScrollPane scroll_pane = new JScrollPane(cart_panel);
+        cart_frame.add(scroll_pane, BorderLayout.CENTER);
         close_cart_button.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent ae) {
             cart_frame.setVisible(false);
@@ -1112,19 +1114,34 @@ public class Cashier_GUI extends JFrame {
           cart_panel.remove(empty_cart);
           for (HashMap<Integer, String> item : cart) {
             String meal_type = item.get(2);
-            String entree1 = item.get(3);
-            String entree2 = item.get(4);
-            String entree3 = item.get(5);
-            String side1 = item.get(6);
-            String side2 = item.get(7);
-            String drink = item.get(8);
+            String entree1 = item.get(3); if (entree1 == "none") { entree1 = ""; };
+            String entree2 = item.get(4); if (entree2 == "none") { entree2 = ""; };
+            String entree3 = item.get(5); if (entree3 == "none") { entree3 = ""; };
+            String side1 = item.get(6);   if (side1   == "none") { side1   = ""; };
+            String side2 = item.get(7);   if (side2   == "none") { side2   = ""; };
+            String drink = item.get(8);   if (drink   == "none") { drink   = ""; };
 
             if (meal_type == null) {
               cart_panel.add(empty_cart);
             } else {
-              String item_displayed = meal_type + " " + entree1 + " " + entree2 + " " + entree3 + " " + side1 + " " + side2 + " " + drink;
-              JLabel item_list = new JLabel(item_displayed.replace(" none", ""));
+              String [] items = {meal_type, entree1, entree2, entree3, side1, side2, drink};
+              String html_list = "<html><ul style='list-style-type:none;'>";
+              for (int i = 0;i < items.length; i++) {
+                if (items[i] == "") {
+                  continue;
+                } else {
+                  if (i == 0) {
+                    html_list += "<li>" + items[i].replace("_", " ") + ":" + "</li>";
+                  } else {
+                    html_list += "<li><pre>" + "\t" +items[i].replace("_", " ") + "</pre></li>";
+                  }
+                }
+              }
+              html_list += "</ul></html>";
+              JLabel item_list = new JLabel(html_list);
               cart_panel.add(item_list);
+              cart_panel.revalidate();
+              cart_panel.repaint();
             }
           }
         }
