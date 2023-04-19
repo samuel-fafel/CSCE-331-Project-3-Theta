@@ -38,9 +38,10 @@ public class Cashier_GUI extends JFrame {
   static public int sides_index = 6;
   static public int meal_cap = 1;
 
-  private static HashMap<Integer, String> current_item_list;
+  private static HashMap<Integer, String> current_item_list; // single transaction
+  private static Vector<HashMap<Integer, String>> cart = new Vector<HashMap<Integer, String>>(); // cart of transactions (one order)
 
-  static java.util.List<String> menu_meals = new ArrayList<>(Arrays.asList(
+  static java.util.List<String> list_meals = new ArrayList<>(Arrays.asList(
     "Bowl",
     "Plate",
     "Bigger_Plate",
@@ -53,7 +54,7 @@ public class Cashier_GUI extends JFrame {
     "A_La_Carte_Side_Lg"
   ));
 
-  static java.util.List<String> menu_entrees = new ArrayList<>(Arrays.asList(
+  static java.util.List<String> list_entrees = new ArrayList<>(Arrays.asList(
     "Orange_Chicken",
     "Kung_Pao_Chicken",
     "Mushroom_Chicken",
@@ -69,7 +70,7 @@ public class Cashier_GUI extends JFrame {
     "SEASONAL"
   ));
 
-  static java.util.List<String> menu_sides = new ArrayList<>(Arrays.asList(
+  static java.util.List<String> list_sides = new ArrayList<>(Arrays.asList(
     "White_Rice",
     "Fried_Rice",
     "Brown_Rice",
@@ -79,7 +80,7 @@ public class Cashier_GUI extends JFrame {
     "Spring_Rolls"
   ));
 
-  static java.util.List<String> menu_drinks = new ArrayList<>(Arrays.asList(
+  static java.util.List<String> list_drinks = new ArrayList<>(Arrays.asList(
     "Sm_Drink",
     "Md_Drink",
     "Lg_Drink",
@@ -284,15 +285,15 @@ public class Cashier_GUI extends JFrame {
     // CREATE TRANSACTION
     double tax = Math.round(subtotal * 0.0825 * 100.0) / 100.0;
     double total = Math.round((subtotal + tax) * 100.0) / 100.0;
-    current_item_list.put(0,  Integer.toString(TRANSACTION_ID));
-    current_item_list.put(9,  current_date);
-    current_item_list.put(10, get_user());
-    current_item_list.put(11, payment_method);
-    current_item_list.put(12, Double.toString(subtotal));
-    current_item_list.put(13, Double.toString(tax));
-    current_item_list.put(14, Double.toString(total));
-    current_item_list.put(15, current_time);
-    current_item_list.put(16, Integer.toString(ORDER_ID));
+    item_list.put(0,  Integer.toString(TRANSACTION_ID));
+    item_list.put(9,  current_date);
+    item_list.put(10, get_user());
+    item_list.put(11, payment_method);
+    item_list.put(12, Double.toString(subtotal));
+    item_list.put(13, Double.toString(tax));
+    item_list.put(14, Double.toString(total));
+    item_list.put(15, current_time);
+    item_list.put(16, Integer.toString(ORDER_ID));
 
     // Assemble String
     String values_list = "";
@@ -302,7 +303,6 @@ public class Cashier_GUI extends JFrame {
       }
       else values_list += "'" + item_list.get(key) + "'";
     }
-
     System.out.println(values_list);
 
     // INSERT INTO DATABASE
@@ -325,33 +325,11 @@ public class Cashier_GUI extends JFrame {
     }
   }
 
-  /* ITEM PARSING
-    // Parse order_items
-      int meals_index = 2;
-      int entrees_index = 3;
-      int sides_index = 6;
-      int drinks_index = 8;
-    if (menu_meals.contains(item)) {
-      current_item_list.put(meals_index, item);
-    }
-    else if (menu_entrees.contains(item) && entrees_index < sides_index) {
-      current_item_list.put(entrees_index, item);
-      entrees_index++;
-    }
-    else if (menu_sides.contains(item) && sides_index < drinks_index) {
-      current_item_list.put(sides_index, item);
-      sides_index++;
-    }
-    else if (menu_drinks.contains(item)) {
-      current_item_list.put(drinks_index, item);
-    }
-  */
-
   public static void update_text(JTextArea textfield_items, Vector<Double> prices) {
     String item_list = "";
 
     //build item_list string
-    for( Map.Entry<Integer,String> elem : current_item_list.entrySet()){
+    for (Map.Entry<Integer,String> elem : current_item_list.entrySet()){
       if(elem.getKey() > 1 && elem.getKey() < 9){
         if(elem.getValue() != "none"){
           if(elem.getKey() > 2 && elem.getKey() < 6){
@@ -403,7 +381,7 @@ public class Cashier_GUI extends JFrame {
         g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, cornerRadius, cornerRadius);
         g2.dispose();
     }
-}
+  }
 
   /**
   *The contructor that is what makes our unique Cashier GUI.
@@ -428,7 +406,7 @@ public class Cashier_GUI extends JFrame {
 
     // INITIALIZATION OF PANELS & LABELS
     //Pannel Initiliztion
-    RoundedCornerPanel top_panel = new RoundedCornerPanel(20);                        // Interface Title
+    RoundedCornerPanel top_panel = new RoundedCornerPanel(20);     // Interface Title
     RoundedCornerPanel meal_panel = new RoundedCornerPanel(20);    // Meals
     meal_panel.setLayout(new GridBagLayout());
     RoundedCornerPanel entree_panel = new RoundedCornerPanel(20);  // Entrees
@@ -604,20 +582,18 @@ public class Cashier_GUI extends JFrame {
     JButton reset_order_button = new JButton("Reset Order");
     buttonsettings(reset_order_button);
     reset_order_button.setPreferredSize(new Dimension(80,20));
-    
-    JButton place_order_button = new JButton("Place Order");
-    buttonsettings(place_order_button);
-    place_order_button.setPreferredSize(new Dimension(80,20));
 
+    JButton add_to_cart_button = new JButton("Add to Cart");
+    buttonsettings(add_to_cart_button);
+    add_to_cart_button.setPreferredSize(new Dimension(80,20));
+    
     JButton view_cart_button = new JButton("View Cart");
      view_cart_button.setPreferredSize(new Dimension(80,20));
     buttonsettings(view_cart_button);
 
-    JButton add_to_order_button = new JButton("Add to Order");
-     add_to_order_button.setPreferredSize(new Dimension(80,20));
-    buttonsettings(add_to_order_button);
-
-    
+    JButton place_order_button = new JButton("Place Order");
+    buttonsettings(place_order_button);
+    place_order_button.setPreferredSize(new Dimension(80,20));
 
     // LABEL & BUTTON PLACEMENT
     {
@@ -891,8 +867,8 @@ public class Cashier_GUI extends JFrame {
       // Button Placement for Bottom Panel
       {
         bottom_panel.add(close_button);
-        bottom_panel.add(add_to_order_button);
         bottom_panel.add(reset_order_button);
+        bottom_panel.add(add_to_cart_button);
         bottom_panel.add(view_cart_button);
         bottom_panel.add(place_order_button);
       }
@@ -913,14 +889,13 @@ public class Cashier_GUI extends JFrame {
       put(9,  "N/A");
       put(10, get_user());
       put(11, "");
-      put(12, "$0.00");
-      put(13, "$0.00");
-      put(14, "$0.00");
+      put(12, "0.00");
+      put(13, "0.00");
+      put(14, "0.00");
       put(15, "00:00");
       put(16, Integer.toString(ORDER_ID));
     }};
 
-    //Vector<HashMap<Integer, String>> current_order = new Vector<HashMap<Integer, String>>();
     Vector<Double> current_price = new Vector<Double>();
     for(int i = 0; i < 15; i++){
       current_price.add(0.00);
@@ -1090,14 +1065,74 @@ public class Cashier_GUI extends JFrame {
         order_taxtotal.setText(String.format("$0.00"));
       }
     });
+    add_to_cart_button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        HashMap<Integer, String> copy_item_list = (HashMap<Integer, String>) current_item_list.clone();
+        if (list_meals.contains(copy_item_list.get(2))) { // Meal Type Selected
+          if (list_entrees.contains(copy_item_list.get(3))) { // At least one entree
+            if (list_sides.contains(copy_item_list.get(6))) { // At least one side
+              if (cart.add(copy_item_list)) {
+                JOptionPane.showMessageDialog(null, "Added to Cart!");
+              }
+            }
+          }
+        } 
+      }
+    });
+        
+    view_cart_button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        // Define Cart Frame/Panel
+        JFrame cart_frame = new JFrame();
+        cart_frame.setSize(600, 300);
+        cart_frame.setLayout(new BorderLayout());
+        cart_frame.setLocationRelativeTo(null);
+        JPanel cart_panel = new JPanel(new GridLayout(3, 2));
+        JButton close_cart_button = new JButton("Close Cart");
+        cart_frame.add(cart_panel, BorderLayout.CENTER);
+        close_cart_button.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent ae) {
+            cart_frame.setVisible(false);
+          }
+        });
+        cart_panel.add(close_cart_button);
+        
+        // Print Cart Items
+        JLabel empty_cart = new JLabel("Cart is Empty");
+        if (cart.isEmpty()) {
+          cart_panel.add(empty_cart); 
+        }
+        else {
+          cart_panel.remove(empty_cart);
+          for (HashMap<Integer, String> item : cart) {
+            String meal_type = item.get(2);
+            String entree1 = item.get(3);
+            String entree2 = item.get(4);
+            String entree3 = item.get(5);
+            String side1 = item.get(6);
+            String side2 = item.get(7);
+            String drink = item.get(8);
+
+            String item_displayed = meal_type + " " + entree1 + " " + entree2 + " " + entree3 + " " + side1 + " " + side2 + " " + drink;
+            JLabel item_list = new JLabel(item_displayed.replace(" none", ""));
+            cart_panel.add(item_list); 
+          }
+        }
+        cart_frame.setVisible(true);
+      }
+    });
     place_order_button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+        ORDER_ID++;
         double subtotal = update_total(order_subtotal, current_price, false);
         JRadioButton payment_method = radioButton1;
+        JOptionPane.showMessageDialog(null, "Payment method = " + payment_method.getText());
         if (!radioButton1.isSelected()) payment_method = radioButton2;
-        TRANSACTION_ID ++;
-        ORDER_ID ++;
-        add_transaction(current_item_list, payment_method.getText(), subtotal);
+        for (HashMap<Integer, String> item_list : cart) {
+          TRANSACTION_ID++;
+          add_transaction(item_list, payment_method.getText(), subtotal);
+        }
+        JOptionPane.showMessageDialog(null, "Order Placed!");
       }
     });
 
