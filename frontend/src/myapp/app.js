@@ -8,32 +8,13 @@ const port = 3000;
 
 //Create Pool
 const pool = new Pool({
-    user: 'csce315331_theta_master', //process.env.PSQL_USER,
-    host: 'csce-315-db.engr.tamu.edu', //process.env.PSQL_HOST,
-    database: 'csce315331_theta', //process.env.PSQL_DATABASE,
-    password: '3NHS', //process.env.PSQL_PASSWORD,
-    port: 5432, //process.env.PSQL_PORT,
+    user: process.env.PSQL_USER,
+    host: process.env.PSQL_HOST,
+    database: process.env.PSQL_DATABASE,
+    password: process.env.PSQL_PASSWORD,
+    port: process.env.PSQL_PORT,
     ssl: {rejectUnauthorized: false}
 });
-
-async function connect() {
-    try {
-        await pool.connect();
-        console.log('Connected to database');
-    } catch (error) {
-        console.error('Error connecting to database', error);
-    }
-}
-connect();
-
-async function getPrice(itemId) {
-    try {
-      const result = await pool.query(`SELECT price FROM products WHERE id = `, [itemId]);
-      console.log(`Price for item ${itemId}: ${result.rows[0].price}`);
-    } catch (error) {
-      console.error('Error executing query', error);
-    }
-}
 
 //Add process hook to shutdown pool
 process.on('SIGINT', function() {
@@ -52,9 +33,6 @@ app.get('/', (req, res) => {
 app.get('/order', (req, res) => {
     res.render('order');
 });
-
-
-
     
 app.listen(port, () => {
 console.log(`Example app listening at http://localhost:${port}`);

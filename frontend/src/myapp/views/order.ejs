@@ -11,70 +11,69 @@
       <div class="section1">Panda Express Ordering System</div>
       <div class="section2">Regular Meals
         <div class="meal-button-grid-container">
-            <button type="button" onclick='getPrice(1)'>Bowl</button>
-            
-            <button type = "button">Plate</button>
-            <button type = "button">Bigger Plate</button>
-            <button type = "button">Family Meal</button>
-            <button type = "button">Cub Meal</button>
-            <button type = "button">None</button>
+            <button type="button" onclick="set_meal(order, 'Bowl')">Bowl</button>
+            <button type="button" onclick="set_meal(order, 'Plate')">Plate</button>
+            <button type="button" onclick="set_meal(order,'Bigger_Plate')">Bigger Plate</button>
+            <button type="button" onclick="set_meal(order,'Family_Meal')">Family Meal</button>
+            <button type="button" onclick="set_meal(order,'Cub_Meal')">Cub Meal</button>
+            <button type="button" onclick="set_meal(order, '')">None</button>
         </div>
       </div>
       <div class="section3">A-La-Carte
         <div class="alc-button-grid-container">
-            <button type = "button">Small Entree</button>
-            <button type = "button">Medium Entree</button>
-            <button type = "button">Large Entree</button>
-            <button type = "button">Medium Side</button>
-            <button type = "button">Large Side</button>
-            <button type = "button">None</button>
+            <button type="button" onclick="set_meal(order, 'A_La_Carte_Entree_Sm')">Small Entree</button>
+            <button type="button" onclick="set_meal(order, 'A_La_Carte_Entree_Md')">Medium Entree</button>
+            <button type="button" onclick="set_meal(order, 'A_La_Carte_Entree_Lg')">Large Entree</button>
+            <button type="button" onclick="set_meal(order, 'A_La_Carte_Side_Md')">Medium Side</button>
+            <button type="button" onclick="set_meal(order, 'A_La_Carte_Side_Lg')">Large Side</button>
+            <button type="button" onclick="set_meal(order, '')">None</button>
         </div>
       </div>
 
       <div class="section4">Entrees
         <div class="entree-button-grid-container">
-            <button type = "button">Orange Chicken</button>
-            <button type = "button">Kung Pao Chicken</button>
-            <button type = "button">Mushroom Chicken</button>
-            <button type = "button">Beijing Beef</button>
-            <button type = "button">Brocolli Beef</button>
-            <button type = "button">Black Pepper<br>Angus Steak</button>
-            <button type = "button">Honey Walnut<br>Shrimp</button>
-            <button type = "button">Grilled Teriyaki<br>Chicken</button>
-            <button type = "button">Black Pepper<br>Chicken</button>
-            <button type = "button">Sweet Fire<br>Chicken Breast</button>
-            <button type = "button">Honey Sesame<br>Chicken Breast</button>
-            <button type = "button">String Bean<br>Chicken Breast</button>
-            <button type = "button">Seasonal Entree</button>
-            <button type = "button">None</button>
+            <button type="button" onclick="add_entree(order, 'Orange_Chicken')">Orange Chicken</button>
+            <button type="button" onclick="add_entree(order, 'Kung_Pao_Chicken')">Kung Pao Chicken</button>
+            <button type="button" onclick="add_entree(order, 'Mushroom_Chicken')">Mushroom Chicken</button>
+            <button type="button" onclick="add_entree(order, 'Beijing_Beef')">Beijing Beef</button>
+            <button type="button" onclick="add_entree(order, 'Broccoli_Beef')">Brocolli Beef</button>
+            <button type="button" onclick="add_entree(order, 'Black_Pepper_Angus_Steak')">Black Pepper<br>Angus Steak</button>
+            <button type="button" onclick="add_entree(order, 'Honey_Walnut_Shrimp')">Honey Walnut<br>Shrimp</button>
+            <button type="button" onclick="add_entree(order, 'Grilled_Teriyaki_Chicken')">Grilled Teriyaki<br>Chicken</button>
+            <button type="button" onclick="add_entree(order, 'Black_Pepper_Chicken')">Black Pepper<br>Chicken</button>
+            <button type="button" onclick="add_entree(order, 'Sweetfire_Chicken')">Sweet Fire<br>Chicken Breast</button>
+            <button type="button" onclick="add_entree(order, 'Honey_Sesame_Chicken')">Honey Sesame<br>Chicken Breast</button>
+            <button type="button" onclick="add_entree(order, 'String_Bean_Chicken')">String Bean<br>Chicken Breast</button>
+            <button type="button" onclick="add_entree(order, 'Seasonal Entree')">Seasonal Entree</button>
+            <button type="button" onclick="add_entree(order, '')">None</button>
         </div>
       </div>
       <div class="section5">Sides
         <div class="sides-button-grid-container">
-          <button type ="button">White Rice</button>
-          <button type ="button">Fride Rice</button>
-          <button type ="button">Brown Rice</button>
-          <button type ="button">Chow Mein</button>
-          <button type ="button">Super Greens</button>
-          <button type ="button">None</button>
+          <button type="button" onclick="add_side(order, 'White_Rice')">White Rice</button>
+          <button type="button" onclick="add_side(order, 'Fried_Rice')">Fried Rice</button>
+          <button type="button" onclick="add_side(order, 'Brown_Rice')">Brown Rice</button>
+          <button type="button" onclick="add_side(order, 'Chow_Mein')">Chow Mein</button>
+          <button type="button" onclick="add_side(order, 'Super_Greens')">Super Greens</button>
+          <button type="button" onclick="add_side(order, '')">None</button>
         </div>
       </div>
       <div class="section6">Appetizers
         <div class="app-button-grid-container">
-          <button type ="button">Veggie Egg Roll</button>
-          <button type ="button">Chicken Egg Roll</button>
-          <button type ="button">None</button>
+          <button type="button" onclick="add_appetizer(order, 'Spring_Rolls')">Veggie Spring Roll</button>
+          <button type="button" onclick="add_appetizer(order, 'Egg_Rolls')">Chicken Egg Roll</button>
+          <button type="button" onclick="add_appetizer(order, '')">None</button>
         </div>
       </div>
       <div class="section7">Drinks
         <div class="drink-button-grid-container">
-          <button type = "button">Small Fountain Drink</button>
-          <button type = "button">Medium Fountain Drink</button>
-          <button type = "button">Large Fountain Drink</button>
-          <button type = "button">Brewed Ice Tea</button>
-          <button type = "button">Water Bottle</button>
-          <button type = "button">Kid's Juice</button>
-          <button type = "button">None</button>
+          <button type="button" onclick="add_drink(order, 'Sm_Drink')">Small Fountain Drink</button>
+          <button type="button" onclick="add_drink(order, 'Md_Drink')">Medium Fountain Drink</button>
+          <button type="button" onclick="add_drink(order, 'Lg_Drink')">Large Fountain Drink</button>
+          <button type="button" onclick="add_drink(order, 'Iced_Tea')">Brewed Ice Tea</button>
+          <button type="button" onclick="add_drink(order, 'Bottled_Water')">Water Bottle</button>
+          <button type="button" onclick="add_drink(order, 'Juice')">Kid's Juice</button>
+          <button type="button" onclick="add_drink(order, '')">None</button>
         </div>
       </div>
       <div class="section8" id="order">Order Items:</div>
@@ -92,16 +91,15 @@
 
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-        <button class = "button_access" onclick="resize_def()">Default Interface</button>
-        <button class = "button_access" onclick="resize_large()">Larger Interface</button>
-        <button class = "button_access" onclick="resize_huge()">Much Larger Inteface</button>
+        <button class="button_access" onclick="resize_def()">Default Interface</button>
+        <button class="button_access" onclick="resize_large()">Larger Interface</button>
+        <button class="button_access" onclick="resize_huge()">Much Larger Inteface</button>
     </div>
     </div>
 
     <button><a href="/">Go to Another Page</a></button>
 
     <script>
-      const order = ["Bowl", "Orange Chicken", "Medium Fountain Drink"];
         let OLen = order.length;
         
         let text = "Order Items:<ul>";
@@ -111,7 +109,6 @@
         text += "</ul>";
         
         document.getElementById("order").innerHTML = text;
-
         </script>
   
       <script src="JS_functions.js"></script>
