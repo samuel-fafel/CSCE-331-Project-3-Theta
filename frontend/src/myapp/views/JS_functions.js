@@ -18,8 +18,8 @@ function resize_def(){
     //Check the current stylesheet file name. 
     var fileName = style_el.getAttribute("href");
     //Determine new stylesheet file name
-    var newFileName = "style.css";
-    if (fileName != "style.css"){
+    var newFileName = "order_style.css";
+    if (fileName != "order_style.css"){
         // replace stylesheet with new stylesheet
         style_el.setAttribute("href", newFileName);
     }
@@ -69,8 +69,8 @@ window.onload = function(){
         var style_element = localStorage.getItem("styleSheet");
         
         //Avoid null css file when first booting website
-        if ((style_element != "style.css") && (style_element != "style_big.css") && (style_element != "style_huge.css")){
-            style_element = "style.css";
+        if ((style_element != "order_style.css") && (style_element != "style_big.css") && (style_element != "style_huge.css")){
+            style_element = "order_style.css";
         }
         // get html style element by ID
         var element = document.getElementById("css");
