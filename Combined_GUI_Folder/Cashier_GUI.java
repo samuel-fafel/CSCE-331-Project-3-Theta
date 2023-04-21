@@ -512,13 +512,13 @@ public class Cashier_GUI extends JFrame {
     JButton kungPaoChicken = new JButton("<html><center>Kung Pao<br>Chicken</center></html>"); entree_buttons.add(kungPaoChicken);
     JButton mushChicken = new JButton("<html><center>Mushroom<br>Chicken</center></html>"); entree_buttons.add(mushChicken);
     JButton beijingBeef = new JButton("<html><center>Beijing<br>Beef</center></html>"); entree_buttons.add(beijingBeef);
-    JButton brocBeef = new JButton("<html><center>Brocolli<br>Beef</center></html>"); entree_buttons.add(brocBeef);
+    JButton brocBeef = new JButton("<html><center>Broccoli<br>Beef</center></html>"); entree_buttons.add(brocBeef);
     JButton blackPepperSteak = new JButton("<html><center>Black Pepper<br>Angus Steak</center></html>"); entree_buttons.add(blackPepperSteak);
     JButton walnutShrimp = new JButton("<html><center>Honey Walnut<br>Shrimp</center></html>"); entree_buttons.add(walnutShrimp);
     JButton grillTeriChicken = new JButton("<html><center>Grilled Teriyaki<br>Chicken</center></html>"); entree_buttons.add(grillTeriChicken);
     JButton blkPepChicken = new JButton("<html><center>Black Pepper<br>Chicken</center></html>"); entree_buttons.add(blkPepChicken);
-    JButton honeySesameChicken = new JButton("<html><center>Honey Sesame<br>Chicken Breast</center></html>"); entree_buttons.add(honeySesameChicken);
     JButton sweetFireChicken = new JButton("<html><center>Sweet Fire<br>Chicken Breast</center></html>"); entree_buttons.add(sweetFireChicken);
+    JButton honeySesameChicken = new JButton("<html><center>Honey Sesame<br>Chicken Breast</center></html>"); entree_buttons.add(honeySesameChicken);
     JButton stringBeanChicken = new JButton("<html><center>String Bean<br>Chicken Breast</center></html>"); entree_buttons.add(stringBeanChicken);
     JButton seasonal = new JButton("<html><center>Seasonal<br>Entree</center></html>"); entree_buttons.add(seasonal);
     JButton no_entree = new JButton("None"); entree_buttons.add(no_entree);
