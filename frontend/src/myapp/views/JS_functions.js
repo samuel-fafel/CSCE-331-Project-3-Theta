@@ -105,13 +105,88 @@ function print_order(){
     document.getElementById("order").innerHTML = text;
 }
 
-function add_to_order(order, item){
-    order.push(item);
+function add_entree(order, item){
+    if (order[0] == "Bowl" || order[0] == "Cub_Meal" || order[0].includes("A_La_Carte_Entree_")) {
+        order[1] = item;
+    }
+    else if (order[0] == "Plate") {
+        order[1] = item;
+        order[2] = item;
+    }
+    else if (order[0] == "Bigger_Plate") {
+        order[1] = item;
+        order[2] = item;
+        order[3] = item;
+    }
+    else if (order[0] == "Family_Meal") {
+        order[1] = item;
+        order[2] = item;
+        order[3] = item;
+    }
+    else if (order[0].includes("A_La_Carte_Side_")) {
+        order[1] = "Please choose from: Sides";
+    }
+    else {
+        order[0] = "First select from:"
+        order[1] = "Regular Meals"
+        order[2] = "or"
+        order[3] = "A-La-Carte"
+    }
+    print_order();
+}
+
+function add_side(order, item){
+    if (order[0] == "Bowl" || order[0] == "Cub_Meal") {
+        order[2] = item;
+    }
+    else if (order[0] == "Plate") {
+        order[3] = item;
+        order[4] = item;
+    }
+    else if (order[0] == "Bigger_Plate") {
+        order[4] = item;
+        order[5] = item;
+    }
+    else if (order[0] == "Family_Meal") {
+        order[4] = item;
+        order[5] = item;
+    }
+    else if (order[0].includes("A_La_Carte_Side_")) {
+        order[1] = item;
+    }
+    else if (order[0].includes("A_La_Carte_Entree_")) {
+        order[1] = "Please choose from: Entrees";
+    }
+    else {
+        order[0] = "First select from:"
+        order[1] = "Regular Meals"
+        order[2] = "or"
+        order[3] = "A-La-Carte"
+    }
+    print_order();
+}
+
+function add_appetizer(order, item) {
+    order[4] = item;
+    print_order();
+}
+
+function add_drink(order, item) {
+    order[5] = item;
+    print_order();
+}
+
+function set_meal(order, item) {
+    clear_order();
+    order[0] = item;
     print_order();
 }
 
 function clear_order(){
-    order = [];
+    if (order[0] == '') order = [];
+    for (let i = 0; i < order.length; i++) {
+        order[i] = [''];
+    } 
 }
 
 function add_to_price(order, item){
