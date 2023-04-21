@@ -85,3 +85,8 @@ li a:active {
     padding: 20px 0;
     font-size: 30px;
   }
+
+  #map{
+    height:500px;
+    width: 100%;
+  }
