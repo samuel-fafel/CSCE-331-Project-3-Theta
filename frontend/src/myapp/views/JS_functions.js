@@ -79,20 +79,6 @@ window.onload = function(){
 }
 
 //Other Functions
-/*function create_item(item){
-    if (item == 'Bowl'){
-        order_sec = ['entree1', 'side1', 'side2'];
-    }
-    else if (item == 'Plate'){
-        order_sec = ['entree1', 'entree2', 'side1', 'side2'];
-    }
-    else if (item == 'Bigger Plate'){
-        order_sec = ['entree1', 'entree2', 'entree3', 'side1', 'side2'];
-    }
-    else {
-        
-    }
-}*/
 function print_order(){
     let OLen = order.length;
         
@@ -218,3 +204,26 @@ function calc_total(price){
 
     return total;
 }
+
+//Google Maps Functionality
+let map;
+
+async function initMap() {
+  //@ts-ignore
+  const { Map } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+
+  map = new Map(document.getElementById("map"), {
+    center: { lat: 30.6125, lng: -96.341 },
+    zoom: 18,
+  });
+
+  // The marker, positioned at Panda
+  const marker = new AdvancedMarkerView({
+    map: map,
+    position: { lat: 30.6125, lng: -96.341 },
+    title: "Panda Express MSC",
+    });
+}
+
+initMap();

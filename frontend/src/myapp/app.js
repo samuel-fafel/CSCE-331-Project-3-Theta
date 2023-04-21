@@ -1,6 +1,7 @@
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config({ path: './database.env' });
+//const { Loader } = require('@googlemaps/js-api-loader');
 
 //Create express app
 const app = express();
@@ -25,6 +26,21 @@ async function connect() {
     }
 }
 connect();
+
+//Load Google Maps API
+/*const loader = new Loader({
+    apiKey: "AIzaSyDHMrXaSQ6ROeOPjYppOK1rorr5laqEBbg",
+    version: "weekly"
+  });
+  
+  loader.load().then(async () => {
+    const { Map } = await google.maps.importLibrary("maps");
+  
+    map = new Map(document.getElementById("map"), {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 15,
+    });
+  });*/
 
 //Add process hook to shutdown pool
 process.on('SIGINT', function() {
