@@ -1,6 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
-const dotenv = require('dotenv').config;
+const dotenv = require('dotenv').config({ path: './database.env' });
 
 //Create express app
 const app = express();
@@ -16,10 +16,20 @@ const pool = new Pool({
     ssl: {rejectUnauthorized: false}
 });
 
+async function connect() {
+    try {
+      await pool.connect();
+      console.log('Connected to database');
+    } catch (error) {
+      console.error('Error connecting to database', error);
+    }
+}
+connect();
+
 //Add process hook to shutdown pool
 process.on('SIGINT', function() {
     pool.end();
-    console.log('Application Successfully Shutdown');
+    console.log('\nApplication Successfully Shutdown');
     process.exit(0);
 });
 
