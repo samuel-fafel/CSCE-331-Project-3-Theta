@@ -7,7 +7,7 @@
 </head>
 <body>
   <nav>
-		
+
 		<ul>
 			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda">Worker?</a></li>
 			<li><a href="/order">Order</a></li>
@@ -108,20 +108,20 @@
 
     <script>
         let OLen = order.length;
-        
-        let text = "Order Items:<ul>";
+
+        let text = "Order Items:<ul class='no-bullet'>";
         for (let i = 0; i < OLen; i++) {
-          text += "<li>" + order[i] + "</li>";
+          text += "<li class='no-bullet'>" + order[i] + "</li>";
         }
         text += "</ul>";
-        
+
         document.getElementById("order").innerHTML = text;
         </script>
-        
-      
-      <script src="../app.js"></script>  
+
+
+      <script src="../app.js"></script>
       <script src="JS_functions.js"></script>
-  
+
       </body>
-  
+
       </html>

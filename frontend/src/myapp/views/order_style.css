@@ -56,7 +56,7 @@ body {
     padding: 20px 0;
     height: 130px;
   }
-  
+
 
   .meal-button-grid-container {
     display: grid;
@@ -171,23 +171,22 @@ body {
     font-size: 25px
   }
 
+  .no-bullet {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
   /* Naviagtion Bar */
   nav {
-    background-color: red; 
+    background-color: red;
     height: 100px;
     margin-bottom: 20px;
     margin-left: 1em;
     margin-right: 1em;
 }
 
-.welcome {
-    font: Verdana;
-    font-size: 12px;
-    font-weight: bold;
-    float: left;
-}
-
-ul {
+nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -195,13 +194,13 @@ ul {
     float: right;
 }
 
-li {
+nav li {
     float: right;
     border: 2px solid white;
-    
+
 }
 
-li a {
+nav li a {
     display: block;
     color: white;
     text-align: center;
@@ -210,15 +209,14 @@ li a {
     font-weight: bold;
     font-size: 24px;
 
-    
+
 }
 
-li a:hover {
+nav li a:hover {
     background-color: #FF9680; /* Darker shade of orange on hover */
 
 }
 
-li a:active {
+nav li a:active {
     background-color: #FF2C00; /* Even darker shade of orange when link is clicked */
-
 }
