@@ -72,7 +72,7 @@ li a:active {
     background-color: red;
     padding: 10px;
     height: 1000px;
-    grid-template-rows: 400px 280px ;
+    grid-template-rows: 400px 560px ;
     margin-left: 1em;
     margin-right: 1em;
   }
