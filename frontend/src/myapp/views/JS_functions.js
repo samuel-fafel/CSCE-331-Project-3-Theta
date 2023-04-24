@@ -185,10 +185,6 @@ function clear_order(){
     } 
 }
 
-function add_to_price(order, item){
-    price.push(item);
-}
-
 function print_price(){
     let PLen = prices.length;
         
