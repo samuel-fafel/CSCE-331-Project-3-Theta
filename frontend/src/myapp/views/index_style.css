@@ -7,7 +7,7 @@ body {
 }
 
 nav {
-    background-color: red; 
+    background-color: red;
     height: 100px;
     margin-bottom: 20px;
     margin-left: 1em;
@@ -21,7 +21,7 @@ nav {
     float: left;
 }
 
-ul {
+nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -29,37 +29,40 @@ ul {
     float: right;
 }
 
-li {
+nav li {
     float: right;
-    border: 2px solid white;
-    
+    border: 2px solid black;
+
 }
 
-li a {
+nav li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
-    padding: 34px 40px;
+    padding: 35px 42px;
     text-decoration: none;
     font-weight: bold;
     font-size: 24px;
 
-    
+
 }
 
-li a:hover {
+nav li a:hover {
     background-color: #FF9680; /* Darker shade of orange on hover */
 
 }
 
-li a:active {
+nav li a:active {
     background-color: #FF2C00; /* Even darker shade of orange when link is clicked */
 
 }
 
 .Logo{
-    width: 10%; 
+    width: 20%;
     height: auto;
+    float: left;
+    padding-left: 18%;
+    padding-top: 2%;
 }
 
 .grid-container {
@@ -76,7 +79,7 @@ li a:active {
     margin-left: 1em;
     margin-right: 1em;
   }
-  
+
   .grid-container > div {
     background-color: #f5dfdff1;
     border-radius: 10px;
@@ -87,6 +90,14 @@ li a:active {
   }
 
   #map{
-    height:500px;
-    width: 100%;
+    height:480px;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 10px;
+    outline: solid black;
+  }
+
+  #text {
+    padding-bottom: 10px;
+    font-style: italic;
   }
