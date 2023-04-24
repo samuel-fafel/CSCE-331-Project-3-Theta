@@ -90,12 +90,37 @@ async function get_price(id) {
 function print_order(){
     let OLen = order.length;
 
-    let text = "Order Items:<ul class='no-bullet'>";
+    let text = "Order Items<ul class='no-bullet'>";
     for (let i = 0; i < OLen; i++) {
       text += "<li class='no-bullet'>" + order[i] + "</li>";
     }
     text += "</ul>";
     document.getElementById("order").innerHTML = text;
+}
+
+function print_price(){
+    let PLen = prices.length;
+
+    let text = "Item Prices<ul class='no-bullet'>";
+    for (let i = 0; i < PLen; i++) {
+      text += "<li class='no-bullet'>" + prices[i] + "</li>";
+    }
+    text += "</ul>";
+
+    document.getElementById("prices").innerHTML = text;
+    update_total();
+}
+
+function update_total() {
+    let PLen = prices.length;
+    let total = 0.0;
+    for (let i = 0; i < PLen; i++) {
+        total += Number(prices[i]);
+    }
+    total += Number((total * 0.0825).toFixed(2));
+
+    let text = "Order Total<ul class='no-bullet'><li>" + total + "</li></ul>";
+    document.getElementById("total").innerHTML = text;
 }
 
 function add_meal(order, item, id) {
@@ -185,46 +210,11 @@ function clear_order(){
     }
 }
 
-function print_price(){
-    let PLen = prices.length;
-
-    let text = "Item Prices:<ul class='no-bullet'>";
-    for (let i = 0; i < PLen; i++) {
-      text += "<li class='no-bullet'>" + prices[i] + "</li>";
-    }
-    text += "</ul>";
-
-    document.getElementById("prices").innerHTML = text;
-    update_total();
-}
-
-function update_total() {
-    let PLen = prices.length;
-    let total = 0.0;
-    for (let i = 0; i < PLen; i++) {
-        total += Number(prices[i]);
-    }
-    total += Number((total * 0.0825).toFixed(2));
-
-    let text = "Order Total:<ul><li>" + total + "</li></ul>";
-    document.getElementById("total").innerHTML = text;
-}
-
 function clear_price(){
     if (prices[0] == '') prices = [];
     for (let i = 0; i < prices.length; i++) {
         prices[i] = [''];
     }
-}
-
-function calc_total(price){
-    let total = 0;
-
-    for (let i = 0; i < price.length; i++){
-        total += price[i];
-    }
-
-    return total;
 }
 
 //Google Maps Functionality
