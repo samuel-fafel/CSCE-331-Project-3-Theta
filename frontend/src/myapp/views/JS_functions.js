@@ -1,9 +1,8 @@
 //Global variables
 let order = [];
 let order_sec = [];
-let price = [];
+let prices = [];
 let items = [];
-
 
 /**
  * Resize Functions
@@ -23,7 +22,6 @@ function resize_def(){
         // replace stylesheet with new stylesheet
         style_el.setAttribute("href", newFileName);
     }
-
 
     //store new name
     localStorage.setItem("styleSheet", newFileName);
@@ -58,11 +56,9 @@ function resize_huge(){
         style_el.setAttribute("href", newFileName);
     }
 
-
     //store new name
     localStorage.setItem("styleSheet", newFileName);
 }
-
 
 window.onload = function(){
         // get stylesheet name from local storage hint: localStorage.getItem(name)
@@ -78,22 +74,42 @@ window.onload = function(){
         element.setAttribute("href", style_element);
 }
 
+async function get_price(id) {
+    try {
+        const response = await fetch('/get-price');
+        const data = await response.json();
+        const price = data[id-1].price;
+        prices[0] = price;
+    } catch (error) {
+        console.error('Error getting price', error);
+    }   
+    print_price();
+}
+
 //Other Functions
 function print_order(){
     let OLen = order.length;
-        
+    
     let text = "Order Items:<ul>";
     for (let i = 0; i < OLen; i++) {
       text += "<li>" + order[i] + "</li>";
     }
     text += "</ul>";
-    
     document.getElementById("order").innerHTML = text;
+}
+
+function add_meal(order, item, id) {
+    clear_order(); // Reset Order
+    clear_price(); // Reset Price
+    order[0] = item; // Set Name of Item
+    print_order(); // Print to Screen
+    get_price(id); // Get/Set/Print Price of Item
 }
 
 function add_entree(order, item){
     if (order[0] == "Bowl" || order[0] == "Cub_Meal" || order[0].includes("A_La_Carte_Entree_")) {
         order[1] = item;
+
     }
     else if (order[0] == "Plate") {
         order[1] = item;
@@ -162,12 +178,6 @@ function add_drink(order, item) {
     print_order();
 }
 
-function set_meal(order, item) {
-    clear_order();
-    order[0] = item;
-    print_order();
-}
-
 function clear_order(){
     if (order[0] == '') order = [];
     for (let i = 0; i < order.length; i++) {
@@ -180,19 +190,22 @@ function add_to_price(order, item){
 }
 
 function print_price(){
-    let PLen = price.length;
+    let PLen = prices.length;
         
-    let text = "Price:<ul>";
+    let text = "Item Prices:<ul>";
     for (let i = 0; i < PLen; i++) {
-      text += "<li>" + price[i] + "</li>";
+      text += "<li>" + prices[i] + "</li>";
     }
     text += "</ul>";
     
-    document.getElementById("price").innerHTML = text;
+    document.getElementById("prices").innerHTML = text;
 }
 
 function clear_price(){
-    price = [];
+    if (prices[0] == '') prices = [];
+    for (let i = 0; i < prices.length; i++) {
+        prices[i] = [''];
+    } 
 }
 
 function calc_total(price){
