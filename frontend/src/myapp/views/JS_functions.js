@@ -90,7 +90,7 @@ async function get_price(id) {
 function print_order(){
     let OLen = order.length;
     
-    let text = "Order Items:<ul>";
+    let text = "Order Items<ul>";
     for (let i = 0; i < OLen; i++) {
       text += "<li>" + order[i] + "</li>";
     }
@@ -188,13 +188,26 @@ function clear_order(){
 function print_price(){
     let PLen = prices.length;
         
-    let text = "Item Prices:<ul>";
+    let text = "Item Prices<ul>";
     for (let i = 0; i < PLen; i++) {
       text += "<li>" + prices[i] + "</li>";
     }
     text += "</ul>";
     
     document.getElementById("prices").innerHTML = text;
+    update_total();
+}
+
+function update_total() {
+    let PLen = prices.length;
+    let total = 0.0;
+    for (let i = 0; i < PLen; i++) {
+        total += Number(prices[i]);
+    }
+    total += Number((total * 0.0825).toFixed(2));
+
+    let text = "Order Total:<ul><li>" + total + "</li></ul>";
+    document.getElementById("total").innerHTML = text;
 }
 
 function clear_price(){
