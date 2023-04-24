@@ -211,19 +211,22 @@ let map;
 async function initMap() {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
 
   map = new Map(document.getElementById("map"), {
     center: { lat: 30.6125, lng: -96.341 },
-    zoom: 18,
+    zoom: 16,
   });
 
   // The marker, positioned at Panda
-  const marker = new AdvancedMarkerView({
-    map: map,
-    position: { lat: 30.6125, lng: -96.341 },
+  var marker = new google.maps.Marker({
+    position: { lat: 30.61225, lng: -96.34146 },
     title: "Panda Express MSC",
-    });
+    animation: google.maps.Animation.DROP,
+    //icon: {labelOrigin: new google.maps.Point(100,0)},
+    label: "Panda Express MSC",
+  })
+
+  marker.setMap(map);
 }
 
 initMap();
