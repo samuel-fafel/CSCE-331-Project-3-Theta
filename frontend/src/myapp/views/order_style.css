@@ -139,9 +139,9 @@ body {
       'button6',
       'button7';
     gap: 10px;
-    grid-template-columns: 210px;
+    /* grid-template-columns: 210px; */
     grid-template-rows: 60px 60px 60px 60px 60px 60px 60px;
-    width: 100%;
+    width: 90%;
     text-align: center;
     margin: auto;
     padding: 10px;
@@ -170,3 +170,55 @@ body {
     text-align: center;
     font-size: 25px
   }
+
+  /* Naviagtion Bar */
+  nav {
+    background-color: red; 
+    height: 100px;
+    margin-bottom: 20px;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.welcome {
+    font: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    float: right;
+}
+
+li {
+    float: right;
+    border: 2px solid white;
+    
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 34px 40px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 24px;
+
+    
+}
+
+li a:hover {
+    background-color: #FF9680; /* Darker shade of orange on hover */
+
+}
+
+li a:active {
+    background-color: #FF2C00; /* Even darker shade of orange when link is clicked */
+
+}
