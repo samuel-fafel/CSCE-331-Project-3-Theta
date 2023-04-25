@@ -196,15 +196,15 @@ nav ul {
 
 nav li {
     float: right;
-    border: 2px solid white;
+    border: 2px solid black;
 
 }
 
 nav li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
-    padding: 34px 40px;
+    padding: 35px 42px;
     text-decoration: none;
     font-weight: bold;
     font-size: 24px;
