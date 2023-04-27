@@ -9,7 +9,8 @@
 .section9 { grid-area: item_price; }
 .section10 { grid-area: order_subtotal; }
 .section11 { grid-area: payment; }
-.section12 { grid-area: footer; }
+.section12 { grid-area: accessbility; }
+.section13 { grid-area: cart; }
 
 body {
   background-color: black;
@@ -18,19 +19,19 @@ body {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'header header header header'
-    'meals entrees sides drinks'
-    'alc entrees apps drinks'
-    'order_items item_price order_subtotal payment'
-    'footer footer footer footer';
+    'header header header header header'
+    'accessbility meals entrees sides drinks'
+    'accessbility alc entrees apps drinks'
+    'order_items order_items item_price order_subtotal payment'
+    'cart cart cart cart cart';
   gap: 10px;
   border-radius: 20px;
   background-color: red;
   padding: 10px;
   height: 1120px;
   grid-template-rows: 80px 280px 280px 270px 50px;
-  margin-left: 3em;
-  margin-right: 3em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .grid-container > div {
@@ -51,6 +52,13 @@ body {
   }
 
   .grid-container > .section12 {
+    background-color:#f5dfdff1;
+    text-align: center;
+    padding: 20px 0;
+    /* height: 990px; */
+  }
+
+  .grid-container > .section13 {
     background-color:#f5dfdff1;
     text-align: center;
     padding: 20px 0;
@@ -103,12 +111,12 @@ body {
   .sides-button-grid-container {
     display: grid;
     grid-template-areas:
-      'button1 button2',
-      'button3 button4',
-      'button5 button6';
+    'button1 button2'
+    'button3 button4'
+    'button5';
     gap: 10px;
-    /*grid-template-columns: 100px 100px;*/
-    width: 90%;
+    grid-template-columns: 47% 47%;
+    
     text-align: center;
     margin: auto;
     padding: 10px;
@@ -147,6 +155,20 @@ body {
     padding: 10px;
   }
 
+  .access-button-grid-container {
+    display: grid;
+    grid-template-areas:
+      'button1',
+      'button2',
+      'button3'
+      ;
+    gap: 30px;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+  }
+
   button
   {
     font-size: 20px;
@@ -158,6 +180,7 @@ body {
     font-size: 50px;
     border-radius: 10px;
     font-weight: bold;
+    /* width: 90%; */
   }
 
   button:hover
@@ -184,6 +207,7 @@ body {
     margin-bottom: 20px;
     margin-left: 1em;
     margin-right: 1em;
+    position: relative;
 }
 
 nav ul {
@@ -219,4 +243,17 @@ nav li a:hover {
 
 nav li a:active {
     background-color: #FF2C00; /* Even darker shade of orange when link is clicked */
+}
+
+#google_translate_element
+{
+  background-color: #f5dfdff1;
+  border-color: black;
+  padding: 20px; 
+  text-align: center;
+  position: absolute;
+  border-radius:10px;
+  margin-top: 7px;
+  margin-left: 7px;
+
 }
