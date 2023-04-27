@@ -95,7 +95,18 @@
       <div class="section8" id="order">Order Items</div>
       <div class="section9" id="prices">Item Prices</div>
       <div class="section10" id="total">Order Total</div>
-      <div class="section11" id="payment">Payment Method</div>
+      <div class="section11" id="payment">Payment Method
+        <div class="radio-button-container">
+          <label>
+            <input type="radio" name="payment" value="meal_swipe">
+            Meal Swipes
+          </label>
+          <label>
+            <input type="radio" name="payment" value="dining">
+            Dining Dollars
+          </label>
+        </div>
+      </div>
       <div class="section12" id="accessibility">Accessibility
         <div class="access-button-grid-container">
           <button class="button_access" onclick="resize_def()">Default Interface</button>
@@ -103,11 +114,16 @@
           <button class="button_access" onclick="resize_huge()">Much Larger Inteface</button>
         </div>
       </div>
-      <div class="section13" id="footer">Pay Here</div>
+      <div class="section13" id="cart">Pay Here
+        <div class="pay-area-grid-container">
+          <button type="button" onclick="">Place Order</button>
+          <button type="button" onclick="">Clear Order</button>
+        </div>
+      </div>
 
     </div>
 
-   
+
 
     <script>
         let OLen = order.length;
