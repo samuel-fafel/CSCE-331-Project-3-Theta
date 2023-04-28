@@ -14,7 +14,7 @@ let items = [];
 function resize_def(){
     //Get style element by ID (hint: getElementById)
     var style_el = document.getElementById("css");
-    //Check the current stylesheet file name. 
+    //Check the current stylesheet file name.
     var fileName = style_el.getAttribute("href");
     //Determine new stylesheet file name
     var newFileName = "order_style.css";
@@ -30,7 +30,7 @@ function resize_def(){
 function resize_large(){
     //Get style element by ID (hint: getElementById)
     var style_el = document.getElementById("css");
-    //Check the current stylesheet file name. 
+    //Check the current stylesheet file name.
     var fileName = style_el.getAttribute("href");
     //Determine new stylesheet file name
     var newFileName = "style_big.css";
@@ -47,7 +47,7 @@ function resize_large(){
 function resize_huge(){
     //Get style element by ID (hint: getElementById)
     var style_el = document.getElementById("css");
-    //Check the current stylesheet file name. 
+    //Check the current stylesheet file name.
     var fileName = style_el.getAttribute("href");
     //Determine new stylesheet file name
     var newFileName = "style_huge.css";
@@ -63,7 +63,7 @@ function resize_huge(){
 window.onload = function(){
         // get stylesheet name from local storage hint: localStorage.getItem(name)
         var style_element = localStorage.getItem("styleSheet");
-        
+
         //Avoid null css file when first booting website
         if ((style_element != "order_style.css") && (style_element != "style_big.css") && (style_element != "style_huge.css")){
             style_element = "order_style.css";
@@ -82,20 +82,46 @@ async function get_price(id) {
         prices[0] = price;
     } catch (error) {
         console.error('Error getting price', error);
-    }   
+    }
     print_price();
 }
 
 //Other Functions
 function print_order(){
     let OLen = order.length;
-    
-    let text = "Order Items:<ul>";
+
+    let text = "Order Items<ul class='no-bullet'>";
     for (let i = 0; i < OLen; i++) {
-      text += "<li>" + order[i] + "</li>";
+      text += "<li class='no-bullet'>" + order[i] + "</li>";
     }
     text += "</ul>";
     document.getElementById("order").innerHTML = text;
+}
+
+function print_price(){
+    let PLen = prices.length;
+
+    let text = "Item Prices<ul class='no-bullet'>";
+    for (let i = 0; i < PLen; i++) {
+      text += "<li class='no-bullet'>" + prices[i] + "</li>";
+    }
+    text += "</ul>";
+
+    document.getElementById("prices").innerHTML = text;
+    update_total();
+}
+
+function update_total() {
+    let PLen = prices.length;
+    let total = 0.0;
+    for (let i = 0; i < PLen; i++) {
+        total += Number(prices[i]);
+    }
+    total += Number((total * 0.0825).toFixed(2));
+
+    if (total == 0) total = '';
+    let text = "Order Total<ul class='no-bullet'><li>" + total + "</li></ul>";
+    document.getElementById("total").innerHTML = text;
 }
 
 function add_meal(order, item, id) {
@@ -182,40 +208,14 @@ function clear_order(){
     if (order[0] == '') order = [];
     for (let i = 0; i < order.length; i++) {
         order[i] = [''];
-    } 
-}
-
-function add_to_price(order, item){
-    price.push(item);
-}
-
-function print_price(){
-    let PLen = prices.length;
-        
-    let text = "Item Prices:<ul>";
-    for (let i = 0; i < PLen; i++) {
-      text += "<li>" + prices[i] + "</li>";
     }
-    text += "</ul>";
-    
-    document.getElementById("prices").innerHTML = text;
 }
 
 function clear_price(){
     if (prices[0] == '') prices = [];
     for (let i = 0; i < prices.length; i++) {
         prices[i] = [''];
-    } 
-}
-
-function calc_total(price){
-    let total = 0;
-
-    for (let i = 0; i < price.length; i++){
-        total += price[i];
     }
-
-    return total;
 }
 
 //Google Maps Functionality
@@ -243,3 +243,18 @@ async function initMap() {
 }
 
 initMap();
+
+// get radio buttons and labels
+const radioButtons = document.querySelectorAll('input[type="radio"]');
+const labels = document.querySelectorAll('label');
+
+// add event listener to each radio button
+radioButtons.forEach((radioButton, index) => {
+  radioButton.addEventListener("change", () => {
+    // remove "selected" class from all labels
+    labels.forEach((label) => label.classList.remove("selected"));
+
+    // add "selected" class to the label of the selected radio button
+    labels[index].classList.add("selected");
+  });
+});

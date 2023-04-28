@@ -66,14 +66,13 @@ public class MAIN_GUI extends JFrame {
   * @param gridy The y-axis of where we want our item to be placed
   * @param gridwidth The width of how many grid spaced you want the item to take up
   */
-  public static void constraints(GridBagConstraints c,int gridx, int gridy, int gridwidth) {
-    //GridBagConstraints c = new GridBagConstraints();
+  public static GridBagConstraints constraints(GridBagConstraints c,int gridx, int gridy, int gridwidth) {
     c.gridx = gridx;
     c.gridy = gridy;
     c.gridwidth = gridwidth;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.anchor = GridBagConstraints.NORTH;
-
+    return c;
   }
 
   /**
@@ -116,7 +115,7 @@ public class MAIN_GUI extends JFrame {
 
   public static void login_frame_settings(JFrame frame) {
     frame.setTitle("Login");
-    frame.setSize(300, 200);
+    frame.setSize(600, 600);
     frame.setLayout(new BorderLayout());
     frame.setLocationRelativeTo(null);
   }
@@ -204,7 +203,7 @@ public class MAIN_GUI extends JFrame {
 
     // Initialize variables
     // String to return
-    String report_string = "Z Report for " + current_date + "\n";
+    String report_string = "<html>Z Report for " + current_date + "<br>";
     // Sales totals
     float total = 0;
     // Temp string for item names
@@ -242,14 +241,16 @@ public class MAIN_GUI extends JFrame {
 
         // add every entry to the report
         for(Map.Entry<String, Integer> duo : totals_map.entrySet() ){
-          report_string += duo.getKey() + ": " + duo.getValue() + "\n";
+          report_string += duo.getKey() + ": " + duo.getValue() + "<br>";
         }
 
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null,"Error accessing Database for Z Report:\n" + e);
+        JLabel error = new JLabel("<html>Error accessing Database for Z Report:<br>" + e + "</html>");
+        error.setFont(new Font("Verdana",Font.PLAIN,16));
+        JOptionPane.showMessageDialog(null, error);
     }
 
-    report_string += "Total Sales: $" + Float.toString(total) + "\n";
+    report_string += "Total Sales: $" + Float.toString(total) + "<br></html>";
 
     //update z report log & zero running totals
     run_command( "INSERT INTO z_reports(date,time) VALUES('" + current_date + "','" + current_time + "')" );
@@ -291,7 +292,7 @@ public class MAIN_GUI extends JFrame {
 
     // create a new frame
     f = new JFrame("MAIN GUI");
-     GridBagConstraints c = new GridBagConstraints();
+    GridBagConstraints c = new GridBagConstraints();
 
     //Pannel Initiliztion
     RoundedCornerPanel top_panel = new RoundedCornerPanel(20);
@@ -322,69 +323,93 @@ public class MAIN_GUI extends JFrame {
       Connection temp_conn = conn;
       Z_button.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          JOptionPane.showMessageDialog(null,generateZReport());
+          JLabel z_report_text = new JLabel(generateZReport());
+          z_report_text.setFont(new Font("Verdana",Font.PLAIN,16));
+          JOptionPane.showMessageDialog(null, z_report_text);
         }
       });
     // Login Button
       login_main_button.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-           // create a new frame
-        JFrame login_frame = new JFrame();
-        login_frame_settings(login_frame);
-        JPanel login_panel = new JPanel(new GridLayout(3, 2));
-        JLabel user_label, pin_label;
-        JTextField user_field, pin_field;
-        JButton login_button = new JButton("Login");
+          // create a new frame
+          JFrame login_frame = new JFrame();
+          login_frame_settings(login_frame);
+          JPanel login_panel = new JPanel(new GridLayout(3, 2));
+          JLabel user_label, pin_label;
+          JTextField user_field, pin_field;
+          JButton login_button = new JButton("Login");
 
-        login_frame.add(login_panel, BorderLayout.CENTER);
+          // Username
+          user_label = new JLabel("Username: ");
+          user_field = new JTextField("", 15);
+          pin_label = new JLabel("PIN: ");
+          pin_field = new JTextField("", 15);
 
-        // Username
-        user_label = new JLabel("Username: ");
-        user_field = new JTextField();
-        pin_label = new JLabel("PIN: ");
-        pin_field = new JTextField();
-        login_panel.add(user_label);
-        login_panel.add(user_field);
-        login_panel.add(pin_label);
-        login_panel.add(pin_field);
+          // Set font for all components
+          Font font_BOLD = new Font("Verdana", Font.BOLD, 24);
+          Font font_PLAIN = new Font("Verdana", Font.PLAIN ,24);
+          user_label.setFont(font_BOLD);
+          user_field.setFont(font_PLAIN);
+          pin_label.setFont(font_BOLD);
+          pin_field.setFont(font_PLAIN);
 
-        login_button.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent ae) {
-            String user = user_field.getText();
-            String pin = pin_field.getText();
-            int pin_value = Integer.parseInt(pin);
-            Connection conn = null;
-            try {
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_theta",
-              "csce315331_theta_master","3NHS");
-            String sql = "SELECT * FROM employees WHERE name = ? and pin = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, user);
-            statement.setInt(2, pin_value);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-              String role = rs.getString("position");
-              role = role.replaceAll("\\s", "");
-              login_frame.setVisible(false);
-              set_user(user);
-              set_auth(role);
-              System.out.println(role);
-              System.out.println(get_auth());
-              JOptionPane.showMessageDialog(null, "Welcome " + get_user() + "!");
-              f.setVisible(true);
-            } else {
-              JOptionPane.showMessageDialog(null, "Please enter a VALID username");
+          // Center text both vertically and horizontally
+          user_label.setHorizontalAlignment(SwingConstants.RIGHT);
+          pin_label.setHorizontalAlignment(SwingConstants.RIGHT);
+
+          // Add all to panel
+          login_panel.add(user_label, constraints(c,0,0,1));
+          login_panel.add(user_field, constraints(c,1,0,1));
+          login_panel.add(pin_label, constraints(c,0,1,1));
+          login_panel.add(pin_field, constraints(c,1,1,1));
+          login_button.setFont(new Font("Verdana",Font.BOLD,24));
+          login_panel.add(login_button, constraints(c,0,2,2));
+
+          login_frame.add(login_panel, BorderLayout.CENTER);
+          login_frame.getRootPane().setDefaultButton(login_button);
+          login_frame.pack();
+          login_frame.setVisible(true);
+
+          login_button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+              String user = user_field.getText();
+              String pin = pin_field.getText();
+              int pin_value = Integer.parseInt(pin);
+              Connection conn = null;
+              try {
+              Class.forName("org.postgresql.Driver");
+              conn = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_theta",
+                "csce315331_theta_master","3NHS");
+              String sql = "SELECT * FROM employees WHERE name = ? and pin = ?";
+              PreparedStatement statement = conn.prepareStatement(sql);
+              statement.setString(1, user);
+              statement.setInt(2, pin_value);
+              ResultSet rs = statement.executeQuery();
+              if (rs.next()) {
+                String role = rs.getString("position");
+                role = role.replaceAll("\\s", "");
+                login_frame.setVisible(false);
+                set_user(user);
+                set_auth(role);
+                System.out.println(role);
+                System.out.println(get_auth());
+                JLabel welcome = new JLabel("Welcome " + get_user() + "!");
+                welcome.setFont(new Font("Verdana",Font.BOLD,24));
+                JOptionPane.showMessageDialog(null, welcome);
+                f.setVisible(true);
+              } else {
+                JLabel unwelcome = new JLabel("Login Attempt Failed");
+                unwelcome.setFont(new Font("Verdana",Font.BOLD,24));
+                JOptionPane.showMessageDialog(null, unwelcome);
+              }
+              } catch (Exception e) {
+              e.printStackTrace();
+              System.err.println(e.getClass().getName()+": "+e.getMessage());
+              JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
+              //System.exit(0);
+              }
             }
-            } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
-            JOptionPane.showMessageDialog(null, e.getClass().getName()+": "+e.getMessage());
-            //System.exit(0);
-            }
-          }
         });
-        login_panel.add(login_button);
         login_frame.setVisible(true);
         }
 
@@ -471,6 +496,7 @@ public class MAIN_GUI extends JFrame {
 
     //f.add(middle_panel);
     //Color customColor = new Color(204, 255, 204);
+    f.getRootPane().setDefaultButton(login_main_button);
     f.getContentPane().setBackground(Color.red);
     // top_panel.setOpaque(false);
     // middle_panel.setOpaque(false);

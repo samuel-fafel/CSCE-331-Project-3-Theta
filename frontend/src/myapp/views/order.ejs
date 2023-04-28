@@ -2,18 +2,27 @@
 <html lang="en-US">
 
 <head>
-    <title>Customer Order Page</title>
+    <title>Order Page</title>
     <link id="css" rel="stylesheet" type="text/css" href="order_style.css">
     <meta name="viewport" user-scalable="yes" maximum-scale="10">
 </head>
 <body>
   <nav>
-		
+
 		<ul>
 			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda">Worker?</a></li>
 			<li><a href="/order">Order</a></li>
-			<li><a href="#">Home</a></li>
+			<li><a href="/">Home</a></li>
 		</ul>
+    <div id="google_translate_element">
+
+      <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+      }
+      </script>
+      <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    </div>
 	</nav>
     <div class="grid-container">
       <div class="section1">Panda Express Ordering System</div>
@@ -24,7 +33,7 @@
             <button type="button" onclick="add_meal(order, 'Bigger_Plate',3)">Bigger Plate</button>
             <button type="button" onclick="add_meal(order, 'Family_Meal', 4)">Family Meal</button>
             <button type="button" onclick="add_meal(order, 'Cub_Meal',    5)">Cub Meal</button>
-            <button type="button" onclick="add_meal(order, '',            0)">None</button>
+            <!-- <button type="button" onclick="add_meal(order, '',            0)">None</button> -->
         </div>
       </div>
       <div class="section3">A-La-Carte
@@ -34,7 +43,7 @@
             <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Lg')">Large Entree</button>
             <button type="button" onclick="add_meal(order, 'A_La_Carte_Side_Md')">Medium Side</button>
             <button type="button" onclick="add_meal(order, 'A_La_Carte_Side_Lg')">Large Side</button>
-            <button type="button" onclick="add_meal(order, '')">None</button>
+            <!-- <button type="button" onclick="add_meal(order, '')">None</button> -->
         </div>
       </div>
 
@@ -53,24 +62,24 @@
             <button type="button" onclick="add_entree(order, 'Honey_Sesame_Chicken')">Honey Sesame<br>Chicken</button>
             <button type="button" onclick="add_entree(order, 'String_Bean_Chicken')">String Bean<br>Chicken</button>
             <button type="button" onclick="add_entree(order, 'Seasonal Entree')">Seasonal Entree</button>
-            <button type="button" onclick="add_entree(order, '')">None</button>
+            <!-- <button type="button" onclick="add_entree(order, '')">None</button> -->
         </div>
       </div>
       <div class="section5">Sides
         <div class="sides-button-grid-container">
-          <button type="button" onclick="add_side(order, 'White_Rice')">White Rice</button>
-          <button type="button" onclick="add_side(order, 'Fried_Rice')">Fried Rice</button>
-          <button type="button" onclick="add_side(order, 'Brown_Rice')">Brown Rice</button>
-          <button type="button" onclick="add_side(order, 'Chow_Mein')">Chow Mein</button>
-          <button type="button" onclick="add_side(order, 'Super_Greens')">Super Greens</button>
-          <button type="button" onclick="add_side(order, '')">None</button>
+          <button type="button" onclick="add_side(order, 'White_Rice')">White<br>Rice</button>
+          <button type="button" onclick="add_side(order, 'Fried_Rice')">Fried<br>Rice</button>
+          <button type="button" onclick="add_side(order, 'Brown_Rice')">Brown<br>Rice</button>
+          <button type="button" onclick="add_side(order, 'Chow_Mein')">Chow<br>Mein</button>
+          <button type="button" onclick="add_side(order, 'Super_Greens')">Super<br>Greens</button>
+          <!-- <button type="button" onclick="add_side(order, '')">None</button> -->
         </div>
       </div>
       <div class="section6">Appetizers
         <div class="app-button-grid-container">
           <button type="button" onclick="add_appetizer(order, 'Spring_Rolls')">Veggie Spring Roll</button>
           <button type="button" onclick="add_appetizer(order, 'Egg_Rolls')">Chicken Egg Roll</button>
-          <button type="button" onclick="add_appetizer(order, '')">None</button>
+          <!-- <button type="button" onclick="add_appetizer(order, '')">None</button> -->
         </div>
       </div>
       <div class="section7">Drinks
@@ -81,48 +90,58 @@
           <button type="button" onclick="add_drink(order, 'Iced_Tea')">Brewed Ice Tea</button>
           <button type="button" onclick="add_drink(order, 'Bottled_Water')">Water Bottle</button>
           <button type="button" onclick="add_drink(order, 'Juice')">Kid's Juice</button>
-          <button type="button" onclick="add_drink(order, '')">None</button>
+          <!-- <button type="button" onclick="add_drink(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section8" id="order">Order Items:</div>
-      <div class="section9" id="prices">Item Prices:</div>
-      <div class="section10">Order Subtotal</div>
-      <div class="section11">Payment Method</div>
-      <div class="section12">Accessibility
-        <div id="google_translate_element"></div>
+      <div class="section8" id="order">Order Items</div>
+      <div class="section9" id="prices">Item Prices</div>
+      <div class="section10" id="total">Order Total</div>
+      <div class="section11" id="payment">Payment Method
+        <div class="radio-button-container">
+          <label>
+            <input type="radio" name="payment" value="meal_swipe">
+            Meal Swipes
+          </label>
+          <label>
+            <input type="radio" name="payment" value="dining">
+            Dining Dollars
+          </label>
+        </div>
+      </div>
+      <div class="section12" id="accessibility">Accessibility
+        <div class="access-button-grid-container">
+          <button class="button_access" onclick="resize_def()">Default Interface</button>
+          <button class="button_access" onclick="resize_large()">Larger Interface</button>
+          <button class="button_access" onclick="resize_huge()">Much Larger Inteface</button>
+        </div>
+      </div>
+      <div class="section13" id="cart">Pay Here
+        <div class="pay-area-grid-container">
+          <button type="button" onclick="">Place Order</button>
+          <button type="button" onclick="">Clear Order</button>
+        </div>
+      </div>
 
-        <script type="text/javascript">
-        function googleTranslateElementInit() {
-          new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-        }
-        </script>
-
-        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-        <button class="button_access" onclick="resize_def()">Default Interface</button>
-        <button class="button_access" onclick="resize_large()">Larger Interface</button>
-        <button class="button_access" onclick="resize_huge()">Much Larger Inteface</button>
     </div>
-    </div>
 
-    <button><a href="/">Go to Another Page</a></button>
+
 
     <script>
         let OLen = order.length;
-        
-        let text = "Order Items:<ul>";
+
+        let text = "Order Items:<ul class='no-bullet'>";
         for (let i = 0; i < OLen; i++) {
-          text += "<li>" + order[i] + "</li>";
+          text += "<li class='no-bullet'>" + order[i] + "</li>";
         }
         text += "</ul>";
-        
+
         document.getElementById("order").innerHTML = text;
         </script>
-        
-      
-      <script src="../app.js"></script>  
+
+
+      <script src="../app.js"></script>
       <script src="JS_functions.js"></script>
-  
+
       </body>
-  
+
       </html>
