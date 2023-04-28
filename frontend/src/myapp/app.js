@@ -5,24 +5,10 @@ const dotenv = require('dotenv').config({ path: './database.env' });
 
 //Create express app
 const app = express();
-const port = 3000;
+const session = require('express-session');
+const port =  process.env.PORT || 3000;
 
-//Load Google Maps API
-/*const loader = new Loader({
-    apiKey: "AIzaSyDHMrXaSQ6ROeOPjYppOK1rorr5laqEBbg",
-    version: "weekly"
-  });
-  
-  loader.load().then(async () => {
-    const { Map } = await google.maps.importLibrary("maps");
-  
-    map = new Map(document.getElementById("map"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 15,
-    });
-  });*/
-
-  //Create Pool
+//Create Pool
 const pool = new Pool({
     user: process.env.PSQL_USER,
     host: process.env.PSQL_HOST,
@@ -52,6 +38,11 @@ async function connect() {
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/views'));
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET' 
+}));
 
 app.get('/', (req, res) => {
     res.render('index');
@@ -59,6 +50,14 @@ app.get('/', (req, res) => {
 
 app.get('/order', (req, res) => {
     res.render('order');
+});
+
+app.get('/auth', (req, res) =>{
+    res.render('auth');
+});
+
+app.get('/success', (req, res) =>{
+  res.render('success');
 });
 
 app.get('/get-price', async (req, res) => {
@@ -73,5 +72,53 @@ app.get('/get-price', async (req, res) => {
 });
     
 app.listen(port, () => {
-console.log(`Example app listening at http://localhost:${port}`);
+console.log(`App listening at http://localhost:${port}`);
 });
+
+
+//Passport for OAuth 
+//(see https://www.loginradius.com/blog/engineering/google-authentication-with-nodejs-and-passportjs/)
+const passport = require('passport');
+var userProfile;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.set('view engine', 'ejs');
+
+app.get('/success', (req, res) => res.send(userProfile));
+app.get('/error', (req, res) => res.send("error logging in"));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+/*  Google AUTH  */
+ 
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GOOGLE_CLIENT_ID = '418130719038-tdrrf2gggsmkabeg10p0lgvq0cihv1b9.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
+      return done(null, userProfile);
+  }
+));
+ 
+app.get('/auth/google', 
+  passport.authenticate('google', { scope : ['profile', 'email'] }));
+ 
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    // Successful authentication, redirect success.
+    res.redirect('/');
+  });
