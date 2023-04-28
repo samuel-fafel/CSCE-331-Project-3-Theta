@@ -119,6 +119,7 @@ function update_total() {
     }
     total += Number((total * 0.0825).toFixed(2));
 
+    if (total == 0) total = '';
     let text = "Order Total<ul class='no-bullet'><li>" + total + "</li></ul>";
     document.getElementById("total").innerHTML = text;
 }
@@ -242,3 +243,18 @@ async function initMap() {
 }
 
 initMap();
+
+// get radio buttons and labels
+const radioButtons = document.querySelectorAll('input[type="radio"]');
+const labels = document.querySelectorAll('label');
+
+// add event listener to each radio button
+radioButtons.forEach((radioButton, index) => {
+  radioButton.addEventListener("change", () => {
+    // remove "selected" class from all labels
+    labels.forEach((label) => label.classList.remove("selected"));
+
+    // add "selected" class to the label of the selected radio button
+    labels[index].classList.add("selected");
+  });
+});

@@ -360,8 +360,16 @@ public class Cashier_GUI extends JFrame {
     return total;
   }
 
-  public static void adjust_text_area (JTextArea my_area) {
-    my_area.setBackground(Color.LIGHT_GRAY);
+  public static void adjust_text_area (JTextArea my_area, int fontsize) {
+    Color lightRed = new Color(252, 217, 217);
+    my_area.setBackground(lightRed);
+    my_area.setFont(new Font("Verdana", Font.PLAIN, fontsize));
+  }
+
+  public static void adjust_radiobutton (JRadioButton my_radiobutton, int fontsize) {
+    Color lightRed = new Color(252, 217, 217);
+    my_radiobutton.setBackground(lightRed);
+    my_radiobutton.setFont(new Font("Verdana", Font.PLAIN, fontsize));
   }
 
   public class RoundedCornerPanel extends JPanel {
@@ -447,32 +455,32 @@ public class Cashier_GUI extends JFrame {
       top_panel.add(top_label);
 
       // Meals/A-La-Carte Panel Frame Settings
-      meal_panel.setBounds(20,100,360,480);
+      meal_panel.setBounds(20,100,360,460);
       meal_panel.setBackground(lightRed);
       //meal_panel.setBorder(loweredbevel);
 
       // Entrees Panel Frame Settings
-      entree_panel.setBounds(400,100,360,480);
+      entree_panel.setBounds(400,100,360,460);
       entree_panel.setBackground(lightRed);
       //entree_panel.setBorder(loweredbevel);
 
       // Sides/Apps Panel Frame Settings
-      side_panel.setBounds(780,100,300,480);
+      side_panel.setBounds(780,100,300,460);
       side_panel.setBackground(lightRed);
       //side_panel.setBorder(loweredbevel);
 
       // Drinks Panel Frame Settings
-      drink_panel.setBounds(1100,100,260,480);
+      drink_panel.setBounds(1100,100,260,460);
       drink_panel.setBackground(lightRed);
       //drink_panel.setBorder(loweredbevel);
 
       // View Panel Frame Settings
-      view_panel.setBounds(20,600,740,170);
+      view_panel.setBounds(20,580,740,190);
       view_panel.setBackground(lightRed);
       //view_panel.setBorder(loweredbevel);
 
       // Payment Panel Frame Settings
-      payment_panel.setBounds(780,600,580,170);
+      payment_panel.setBounds(780,580,580,190);
       payment_panel.setBackground(lightRed);
       //payment_panel.setBorder(loweredbevel);
 
@@ -500,8 +508,6 @@ public class Cashier_GUI extends JFrame {
     JButton lg_entree = new JButton("Large Entree"); meal_alacarte_buttons.add(lg_entree);
     JButton md_side = new JButton("Medium Side"); meal_alacarte_buttons.add(md_side);
     JButton lg_side = new JButton("Large Side"); meal_alacarte_buttons.add(lg_side);
-    JButton no_meal = new JButton("None"); meal_alacarte_buttons.add(no_meal);
-    JButton no_alacarte = new JButton("None"); meal_alacarte_buttons.add(no_alacarte);
     for (int i = 0; i < meal_alacarte_buttons.size(); i++) {
       buttonsettings(meal_alacarte_buttons.get(i));
     }
@@ -521,7 +527,6 @@ public class Cashier_GUI extends JFrame {
     JButton honeySesameChicken = new JButton("<html><center>Honey Sesame<br>Chicken Breast</center></html>"); entree_buttons.add(honeySesameChicken);
     JButton stringBeanChicken = new JButton("<html><center>String Bean<br>Chicken Breast</center></html>"); entree_buttons.add(stringBeanChicken);
     JButton seasonal = new JButton("<html><center>Seasonal<br>Entree</center></html>"); entree_buttons.add(seasonal);
-    JButton no_entree = new JButton("None"); entree_buttons.add(no_entree);
     for (int i = 0; i < entree_buttons.size(); i++) {
       buttonsettings(entree_buttons.get(i));
     }
@@ -533,7 +538,6 @@ public class Cashier_GUI extends JFrame {
     JButton brown_rice = new JButton("Brown Rice"); side_buttons.add(brown_rice);
     JButton chow_mein = new JButton("Chow Mein"); side_buttons.add(chow_mein);
     JButton super_greens = new JButton("Super Greens"); side_buttons.add(super_greens);
-    JButton no_side = new JButton("None"); side_buttons.add(no_side);
     for (int i = 0; i < side_buttons.size(); i++) {
       buttonsettings(side_buttons.get(i));
     }
@@ -542,7 +546,6 @@ public class Cashier_GUI extends JFrame {
     Vector<JButton> apps_buttons = new Vector<JButton>();
     JButton chicken_roll = new JButton("<html><center>Chicken<br>Egg Roll</center></html>"); apps_buttons.add(chicken_roll);
     JButton veggie_roll = new JButton("<html><center>Veggie<br>Spring Roll</center></html>"); apps_buttons.add(veggie_roll);
-    JButton no_apps = new JButton("None"); apps_buttons.add(no_apps);
     for (int i = 0; i < apps_buttons.size(); i++) {
       buttonsettings(apps_buttons.get(i));
     }
@@ -555,7 +558,6 @@ public class Cashier_GUI extends JFrame {
     JButton tea = new JButton("Brewed Ice Tea"); drinks_buttons.add(tea);
     JButton water_bottle = new JButton("Water Bottle"); drinks_buttons.add(water_bottle);
     JButton kid_juice = new JButton("Kid's Juice"); drinks_buttons.add(kid_juice);
-    JButton no_drink = new JButton("None"); drinks_buttons.add(no_drink);
     for (int i = 0; i < drinks_buttons.size(); i++) {
       buttonsettings(drinks_buttons.get(i));
     }
@@ -565,14 +567,18 @@ public class Cashier_GUI extends JFrame {
     JTextArea order_subtotal = new JTextArea("",1,25);
     JTextArea order_taxtotal = new JTextArea("",1,25);
 
-    adjust_text_area(order_items);
-    adjust_text_area(order_subtotal);
-    adjust_text_area(order_taxtotal);
+    adjust_text_area(order_items, 16);
+    adjust_text_area(order_subtotal, 16);
+    adjust_text_area(order_taxtotal, 16);
 
     // Initializing Payment Method Buttons
     ButtonGroup payment_buttons = new ButtonGroup();
     JRadioButton radioButton1 = new JRadioButton("Dining Dollars");
     JRadioButton radioButton2 = new JRadioButton("Debit / Credit");
+    radioButton1.setFont(new Font("Verdana", Font.BOLD, 20));
+    radioButton2.setFont(new Font("Verdana", Font.BOLD, 20));
+    adjust_radiobutton(radioButton1, 30);
+    adjust_radiobutton(radioButton2, 30);
 
     // Initializing Bottom Buttons
     JButton close_button = new JButton("Close");
@@ -628,10 +634,6 @@ public class Cashier_GUI extends JFrame {
         c.gridx = 1;
         c.gridy = 2;
         meal_panel.add(cub_size, c);
-
-        c.gridx = 2;
-        c.gridy = 2;
-        meal_panel.add(no_meal, c);
       }
 
       // Label/Button Placement for A-La-Carte
@@ -665,10 +667,6 @@ public class Cashier_GUI extends JFrame {
         c.gridx = 1;
         c.gridy = 8;
         meal_panel.add(lg_side, c);
-
-        c.gridx = 2;
-        c.gridy = 8;
-        meal_panel.add(no_alacarte, c);
       }
 
       // Label/Button Placement for Entree
@@ -734,10 +732,6 @@ public class Cashier_GUI extends JFrame {
         c.gridx = 0;
         c.gridy = 5;
         entree_panel.add(seasonal, c);
-
-        c.gridx = 1;
-        c.gridy = 5;
-        entree_panel.add(no_entree, c);
       }
 
       // Label/Button Placement for Side
@@ -771,10 +765,6 @@ public class Cashier_GUI extends JFrame {
         c.gridx = 0;
         c.gridy = 3;
         side_panel.add(super_greens, c);
-
-        c.gridx = 1;
-        c.gridy = 3;
-        side_panel.add(no_side, c);
       }
 
       // Label/Button Placement for Apps
@@ -797,9 +787,6 @@ public class Cashier_GUI extends JFrame {
         c.gridy = 7;
         side_panel.add(veggie_roll, c);
 
-        c.gridx = 0;
-        c.gridy = 8;
-        side_panel.add(no_apps, c);
       }
 
       // Label/Button Placement for Drink
@@ -836,10 +823,6 @@ public class Cashier_GUI extends JFrame {
         c.gridx = 0;
         c.gridy = 6;
         drink_panel.add(kid_juice, c);
-
-        c.gridx = 0;
-        c.gridy = 7;
-        drink_panel.add(no_drink, c);
       }
 
       // Label & JTextArea Placement for View Panel

@@ -20,36 +20,55 @@ import java.util.*;
  */
 
 public class Product_GUI extends JFrame {
-    static JFrame f;
-    public static String selected_product; //make global string variable
-    public static String current_table;
-    public static Vector<String> product_list = new Vector<>();
-    public static Vector<String> column_names = new Vector<>();
-    public static Vector<String> results = new Vector<>();
-    public static JList<String> product_jlist = new JList<>(product_list);
-    public static JList<String> column_jlist = new JList<>(column_names);
-    public static JList<String> results_jlist = new JList<>(results);
-    public static Vector<JLabel> Jlabels = new Vector<>();
-    public static int TRANSACTION_ID = 200000;
+  static JFrame f;
+  public static String selected_product; //make global string variable
+  public static String current_table;
+  public static Vector<String> product_list = new Vector<>();
+  public static Vector<String> column_names = new Vector<>();
+  public static Vector<String> results = new Vector<>();
+  public static JList<String> product_jlist = new JList<>(product_list);
+  public static JList<String> column_jlist = new JList<>(column_names);
+  public static JList<String> results_jlist = new JList<>(results);
+  public static Vector<JLabel> Jlabels = new Vector<>();
+  public static int TRANSACTION_ID = 200000;
 
-    /**
-     * The constraints function creates the necessary constraints for the GridBag layout
-     * @param gridx
-     * @param gridy
-     * @param gridwidth
-     * @return
-     */
-    public static GridBagConstraints constraints(int gridx, int gridy, int gridwidth) {
-      GridBagConstraints c = new GridBagConstraints();
-      c.gridx = gridx;
-      c.gridy = gridy;
-      c.gridwidth = gridwidth;
-      c.fill = GridBagConstraints.HORIZONTAL;
-      c.anchor = GridBagConstraints.NORTH;
-      return c;
-    }
+  /**
+   * The constraints function creates the necessary constraints for the GridBag layout
+   * @param gridx
+   * @param gridy
+   * @param gridwidth
+   * @return
+   */
+  public static GridBagConstraints constraints(int gridx, int gridy, int gridwidth) {
+    GridBagConstraints c = new GridBagConstraints();
+    c.gridx = gridx;
+    c.gridy = gridy;
+    c.gridwidth = gridwidth;
+    c.fill = GridBagConstraints.HORIZONTAL;
+    c.anchor = GridBagConstraints.NORTH;
+    return c;
+  }
 
-    /**
+  /**
+  *Manipulates the physical feature of a Java labels.
+  *<p>
+  *This method is constantly used in assigning labels their look on the front end
+  *and it conveniently keeps all the labels in use with a uniform look.
+  *
+  * @param inputLabel The label that will be assigned the different attributes
+  */
+  public static void labelsettings(JLabel inputLabel) {
+    inputLabel.setFont(new Font("Verdana",Font.BOLD,32));
+    inputLabel.setPreferredSize(new Dimension(330,40));
+    inputLabel.setHorizontalAlignment(JLabel.CENTER);
+    inputLabel.setVerticalAlignment(JLabel.CENTER);
+    inputLabel.setBackground(Color.black);
+    inputLabel.setForeground(Color.white);
+    inputLabel.setOpaque(true);
+    inputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+  }
+
+  /**
   *Manipulates the physical feature of a Java buttons.
   *<p>
   *This method is constantly used in assigning buttons their look on the front end
@@ -58,8 +77,8 @@ public class Product_GUI extends JFrame {
   * @param inputButton The button that will be assigned the different attributes
   */
   public static void buttonsettings(JButton inputButton) {
-    inputButton.setFont(new Font("Verdana",Font.BOLD,12));
-    inputButton.setPreferredSize(new Dimension(110,40));
+    inputButton.setFont(new Font("Verdana",Font.BOLD,16));
+    inputButton.setPreferredSize(new Dimension(120,40));
     inputButton.setHorizontalAlignment(JButton.CENTER);
     inputButton.setVerticalAlignment(JButton.CENTER);
     inputButton.setBackground(Color.white);
@@ -278,23 +297,19 @@ public class Product_GUI extends JFrame {
         //search_panel.setSize(100, 700);
 
         JLabel product_label = new JLabel("Products");
-        //product_label.setFont(new Font("Verdana",1,30));
+        labelsettings(product_label);
         search_panel.add(product_label, constraints(0, 0, 2));
 
         //Create a lists and combo box of all menu items
         String products[] = {"Choose List","Menu_Meals","Menu_Drinks","Menu_Entrees","Menu_Sides","Perishable", "Non_perishable", "Positions", "Schedules", "Employees"};
         JComboBox<String> comb_box = new JComboBox<>(products);
+        comb_box.setFont(new Font("Verdana",Font.PLAIN,16));
         search_panel.add(comb_box, constraints(0, 1, 2));
 
-        //Actionlistener with combo box, change list given in search_panel
-        //Create show button for actionlistener
-        //JButton show_button = new JButton("Show");
-        //search_panel.add(show_button, constraints(0, 2, 2));
-
         //Add JList object to add to search panel
+        product_jlist.setFont(new Font("Verdana",Font.PLAIN,16));
         search_panel.add(product_jlist, constraints(0, 3, 2));
         
-
         //Create Apply Button for list of products
         JButton delete_button = new JButton("Delete");
         buttonsettings(delete_button);
@@ -327,21 +342,14 @@ public class Product_GUI extends JFrame {
         JLabel info_label = new JLabel("Product Info:");
         
         info_label.setHorizontalAlignment(JLabel.CENTER);
-        // info_label.setBorder(loweredbevel);
         column_jlist.setBorder(loweredbevel);
         results_jlist.setBorder(loweredbevel);
 
         Dimension infoDimension = new Dimension(850,100);
         Dimension infoHalfDimension = new Dimension(420,440);
 
-        c.anchor = GridBagConstraints.NORTH;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 2;
-        info_label.setBackground(Color.black);
-        info_label.setPreferredSize(infoDimension);
-        info_label.setFont(new Font("Verdana",Font.BOLD,32));
-        info_panel.add(info_label, c);
+        labelsettings(info_label);
+        info_panel.add(info_label, constraints(0,0,2));
 
         c.insets =  new Insets(5, 5, 5, 5);
         c.gridx = 0;
@@ -510,14 +518,7 @@ public class Product_GUI extends JFrame {
               column_names.add("Pin");
             }
 
-            /*for (int i = 0; i < column_names.size(); i++){
-              Jlabels.add(new JLabel(column_names.get(i)+ ": "));
-            }*/
             column_jlist.setListData(column_names);
-
-            /*for (int i = 0; i< Jlabels.size(); i++){
-              info_panel.add(Jlabels.get(i), constraints(0, i+1, 2));
-            }*/
 
             //closing the connection
             try {
