@@ -119,6 +119,7 @@ function update_total() {
     }
     total += Number((total * 0.0825).toFixed(2));
 
+    if (total == 0) total = '';
     let text = "Order Total<ul class='no-bullet'><li>" + total + "</li></ul>";
     document.getElementById("total").innerHTML = text;
 }
