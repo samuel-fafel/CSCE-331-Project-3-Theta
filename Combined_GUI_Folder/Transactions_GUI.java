@@ -425,7 +425,7 @@ public class Transactions_GUI extends JFrame {
 
     // Initialize variables
     // String to return
-    String report_string = "X Report for " + current_date + "\n";
+    String report_string = "<html>X Report for " + current_date + "<br>";
     // Sales totals
     float total = 0;
     // Temp string for item names
@@ -450,7 +450,7 @@ public class Transactions_GUI extends JFrame {
         }else{
           z_time = "00:00:00";
         }
-        report_string += "since " + z_time + "\n";
+        report_string += "since " + z_time + "<br>";
 
         // Get responses from database
         String query = "SELECT * FROM transactions WHERE date='" + current_date + "' AND time>='" + z_time + "'";  // create an SQL query
@@ -473,10 +473,10 @@ public class Transactions_GUI extends JFrame {
 
         // add every entry to the report & update database
         for(Map.Entry<String, Integer> duo : totals_map.entrySet() ){
-          report_string += duo.getKey() + ": " + duo.getValue() + "\n";
+          report_string += duo.getKey() + ": " + duo.getValue() + "<br>";
           run_command("UPDATE menu_full SET running_total=" + duo.getValue() + " WHERE name='" + duo.getKey() + "'");
         }
-
+        report_string += "</html>";
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null,"Error accessing Database for X Report:\n" + e);
     }
@@ -901,7 +901,9 @@ public class Transactions_GUI extends JFrame {
     buttonsettings(x_button);
     x_button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(null,generateXReport());
+        JLabel x_report_text = new JLabel(generateXReport());
+        x_report_text.setFont(new Font("Verdana",Font.PLAIN,16));
+        JOptionPane.showMessageDialog(null,x_report_text);
       }
     });
   
