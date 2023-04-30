@@ -403,7 +403,7 @@ public class Cashier_GUI extends JFrame {
 
     set_user(user_input);
 
-    f = new JFrame("DB GUI");
+    f = new JFrame("Cashier Ordering Interface");
 
     //border initialization
     Border loweredbevel = BorderFactory.createLoweredBevelBorder();

@@ -291,7 +291,7 @@ public class MAIN_GUI extends JFrame {
     }
 
     // create a new frame
-    f = new JFrame("MAIN GUI");
+    f = new JFrame("Employee Home & Login");
     GridBagConstraints c = new GridBagConstraints();
 
     //Pannel Initiliztion
@@ -306,7 +306,7 @@ public class MAIN_GUI extends JFrame {
     Border loweredbevel;
     Border empty;
 
-    JLabel top_label = new JLabel("Main Guided User Interface");
+    JLabel top_label = new JLabel("Employee Home & Login");
 
     blackline = BorderFactory.createLineBorder(Color.black);
     raisedbevel = BorderFactory.createRaisedBevelBorder();

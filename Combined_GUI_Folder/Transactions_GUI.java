@@ -108,6 +108,12 @@ public class Transactions_GUI extends JFrame {
     return c;
   }
 
+  public static JLabel createLabel(String text, Font font) {
+    JLabel label = new JLabel(text);
+    label.setFont(font);
+    return label;
+  }
+
   /**
     *Manipulates the physical feature of a Java panal.
     *<p>
@@ -122,14 +128,14 @@ public class Transactions_GUI extends JFrame {
     * @param bound2x The x dimension of the panel size
     * @param bound2y The y dimension of the panel size
     */
-  public static void adjust_panel(JPanel my_panel, Color color, Border border, int bound1x, int bound1y, int bound2x, int bound2y) {
+  public static void adjust_panel(JPanel my_panel, int bound1x, int bound1y, int bound2x, int bound2y) {
     Color lightRed = new Color(252, 217, 217);
     my_panel.setBackground(lightRed);
-    //my_panel.setBorder(border);
     my_panel.setBounds(bound1x,bound1y,bound2x,bound2y);
   }
 
   public static void adjust_text_area(JTextArea my_area) {
+    my_area.setFont(new Font("Verdana",Font.PLAIN,16));
     my_area.setBorder(new BevelBorder(BevelBorder.LOWERED));
     my_area.setBackground(Color.WHITE);
   }
@@ -143,8 +149,8 @@ public class Transactions_GUI extends JFrame {
   * @param inputButton The button that will be assigned the different attributes
   */
   public static void buttonsettings(JButton inputButton) {
-    inputButton.setFont(new Font("Verdana",Font.BOLD,12));
-    inputButton.setPreferredSize(new Dimension(110,40));
+    inputButton.setFont(new Font("Verdana",Font.BOLD,16));
+    inputButton.setPreferredSize(new Dimension(160,40));
     inputButton.setHorizontalAlignment(JButton.CENTER);
     inputButton.setVerticalAlignment(JButton.CENTER);
     inputButton.setBackground(Color.white);
@@ -188,7 +194,6 @@ public class Transactions_GUI extends JFrame {
         g2.dispose();
     }
 }
-
 
   // GET THE LATEST TRANSACTION ID
   public static int get_latest_transaction() {
@@ -545,8 +550,8 @@ public class Transactions_GUI extends JFrame {
     JPanel sales_report_panel = new JPanel(new GridBagLayout());
     JLabel sales_report_label = new JLabel("Sales Report for Dates: " + start_date + " - " + end_date);
     sales_report_frame.setTitle("Sales Report");
-    adjust_panel(sales_report_panel, Color.white, BorderFactory.createLoweredBevelBorder(), 100,100,100,100);
-    sales_report_label.setFont(new Font("Verdana",1,15));
+    adjust_panel(sales_report_panel, 100,100,100,100);
+    sales_report_label.setFont(new Font("Verdana",Font.BOLD,24));
     sales_report_panel.add(sales_report_label, constraints(0, 0, 20));
 
     // Print out sales for each item
@@ -554,12 +559,12 @@ public class Transactions_GUI extends JFrame {
       String key = menu_combined.get(i);
       Integer value = sales_by_item.get(key);
       if (key != "none") {
-        sales_report_panel.add(new JLabel(Integer.toString(value)), constraints(0, i+1, 1));
-        sales_report_panel.add(new JLabel(" | " + key), constraints(1, i+1, 1));
+        sales_report_panel.add(createLabel(Integer.toString(value), font16), constraints(0, i+1, 1));
+        sales_report_panel.add(createLabel(" | " + key, font16), constraints(1, i+1, 1));
       }
     }
 
-    sales_report_frame.setSize(650, 700);
+    sales_report_frame.setSize(750, 850);
     sales_report_frame.add(sales_report_panel, BorderLayout.CENTER);
     sales_report_frame.setVisible(true);
 
@@ -676,17 +681,17 @@ public class Transactions_GUI extends JFrame {
     JPanel excess_report_panel = new JPanel(new GridBagLayout());
     JLabel excess_report_label = new JLabel("Excess Report for Dates: " + start_date + " - " + end_date);
     excess_report_frame.setTitle("Excess Report");
-    adjust_panel(excess_report_panel, Color.white, BorderFactory.createLoweredBevelBorder(), 100,100,100,100);
-    excess_report_label.setFont(new Font("Verdana",1,15));
+    adjust_panel(excess_report_panel, 100,100,100,100);
+    excess_report_label.setFont(new Font("Verdana",Font.BOLD,24));
     excess_report_panel.add(excess_report_label, constraints(0, 0, 20));
 
     // Print out excess for each item
     for (int i = 0; i < items.size(); i++) {
-      excess_report_panel.add(new JLabel(items.get(i)), constraints(0, i+1, 1));
-      excess_report_panel.add(new JLabel(" | " + percentages.get(i) + "% Sold"), constraints (1, i+1, 1));
+      excess_report_panel.add(createLabel(items.get(i), font16), constraints(0, i+1, 1));
+      excess_report_panel.add(createLabel(" | " + percentages.get(i) + "% Sold", font16), constraints (1, i+1, 1));
     }
 
-    excess_report_frame.setSize(650, 700);
+    excess_report_frame.setSize(750, 850);
     excess_report_frame.add(excess_report_panel, BorderLayout.CENTER);
     excess_report_frame.setVisible(true);
 
@@ -714,7 +719,7 @@ public class Transactions_GUI extends JFrame {
     }
 
     // create a new frame
-    f = new JFrame("DB GUI");
+    f = new JFrame("Transactions & Reports");
     Color lightRed = new Color(252, 217, 217);
     //Pannel Initiliztion
     RoundedCornerPanel top_panel = new RoundedCornerPanel(20);
@@ -738,16 +743,144 @@ public class Transactions_GUI extends JFrame {
     loweredbevel = BorderFactory.createLoweredBevelBorder();
     empty = BorderFactory.createEmptyBorder();
 
-    // Make X Report Button & add action listener
-    JButton x_button = new JButton("X Report");
-    x_button.addActionListener(new ActionListener() {
+    // TOP PANEL
+    adjust_panel(top_panel, 20,20,1340,60);
+    f.add(top_panel); // add panel to frame
+    JLabel top_label = new JLabel("Transactions & Reports");
+    top_label.setFont(new Font("Verdana",1,30));
+    top_panel.add(top_label); // add label to panel
+
+    // LIST PANEL
+    adjust_panel(list_panel, 20,100,600,650);
+    f.add(list_panel);
+    JLabel list_label = new JLabel("Reports");
+    labelsettings(list_label);
+    list_panel.add(list_label, constraints(0,0,99));
+
+    // SALES REPORT BUTTON
+    list_panel.add(createLabel("Start Date/Time:", font16), constraints(0,1,1));
+    list_panel.add(createLabel("End Date/Time:", font16), constraints(1,1,1));
+    JTextArea sales_report_startdate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea sales_report_enddate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea sales_report_starttime = new JTextArea("HH:MM:SS", 1,12);
+    JTextArea sales_report_endtime = new JTextArea("HH:MM:SS", 1,12);
+
+    adjust_text_area(sales_report_startdate);
+    adjust_text_area(sales_report_enddate);
+    adjust_text_area(sales_report_starttime);
+    adjust_text_area(sales_report_endtime);
+
+    JButton sales_report_generate = new JButton("Sales Report");
+    buttonsettings(sales_report_generate);
+    list_panel.add(sales_report_startdate, constraints(0,2,1));
+    list_panel.add(sales_report_enddate, constraints(1,2,1));
+    list_panel.add(sales_report_starttime, constraints(0,3,1));
+    list_panel.add(sales_report_endtime, constraints(1,3,1));
+    list_panel.add(sales_report_generate, constraints(2,2,2));
+    sales_report_generate.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(null,generateXReport());
+        generate_sales_report(sales_report_startdate.getText(), sales_report_starttime.getText(), sales_report_enddate.getText(), sales_report_endtime.getText());
       }
     });
 
+    // EXCESS REPORT BUTTON
+    list_panel.add(createLabel("Start Date/Time:", font16), constraints(0,9,1));
+    list_panel.add(createLabel("End Date/Time:", font16), constraints(1,9,1));
+    JTextArea excess_report_startdate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea excess_report_enddate = new JTextArea("MM/DD/YYYY", 1,12);
+    JTextArea excess_report_starttime = new JTextArea("HH:MM:SS", 1,12);
+    JTextArea excess_report_endtime = new JTextArea("HH:MM:SS", 1,12);
+
+    adjust_text_area(excess_report_startdate);
+    adjust_text_area(excess_report_enddate);
+    adjust_text_area(excess_report_starttime);
+    adjust_text_area(excess_report_endtime);
+
+    JButton excess_report_generate = new JButton("Excess Report");
+    buttonsettings(excess_report_generate);
+    list_panel.add(excess_report_startdate, constraints(0,10,1));
+    list_panel.add(excess_report_enddate, constraints(1,10,1));
+    list_panel.add(excess_report_starttime, constraints(0,11,1));
+    list_panel.add(excess_report_endtime, constraints(1,11,1));
+    list_panel.add(excess_report_generate, constraints(2,10,1));
+    excess_report_generate.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        generate_excess_report(excess_report_startdate.getText(), excess_report_starttime.getText(), excess_report_enddate.getText(), excess_report_endtime.getText());
+      }
+    });
+
+    for (int i = 4; i < 30; i++) {
+      list_panel.add(new JLabel(" "), constraints(0,i,1));
+    }
+
+    // RESTOCK REPORT BUTTON
+    JButton restock_report_generate = new JButton("Restock Report");
+    buttonsettings(restock_report_generate);
+    list_panel.add(restock_report_generate, constraints(2, 17, 2));
+    restock_report_generate.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        try{
+          Restock_Report restock_report = new Restock_Report();
+        } catch(Exception a) {
+          JOptionPane.showMessageDialog(null,"Error opening Restock Report: " + a);
+        }
+      }
+    });
+
+    // INFO PANEL
+    adjust_panel(info_panel, 640,100,720,650);
+    f.add(info_panel);
+    JLabel info_label = new JLabel("Receipt Info");
+    labelsettings(info_label);
+    info_label.setFont(new Font("Verdana",1,20));
+    info_panel.add(info_label, constraints(0, 0, 20));
+    String[] fieldnames = new String[] {"ID", "Order Type", "Meal Size", "Entree 1", "Entree 2", "Entree 3",
+    "Side 1", "Side 2", "Drink", "Date", "Conducted By", "Payment Method  ", "Subtotal", "Tax", "Total", "Time"};
+    Vector<JTextArea> textfields = new Vector<JTextArea>();
+    for (int i = 0; i < fieldnames.length; i++) {
+      JTextArea temp = new JTextArea(fieldnames[i], 1, 25);
+      adjust_text_area(temp);
+      textfields.add(temp);
+      info_panel.add(createLabel(fieldnames[i], font16), constraints(0, i+1, 1));
+      info_panel.add(textfields.get(i), constraints(1, i+1, 1));
+    }
+
+    // MANUAL TRANSACTION LOOKUP
+    list_panel.add(createLabel("Manual Transaction Lookup:", font16), constraints(0,23,1));
+    JTextArea manual_lookup = new JTextArea("Enter Transaction ID", 1,12);
+    adjust_text_area(manual_lookup);
+    JButton request_transaction = new JButton("Display Transaction");
+    buttonsettings(request_transaction);
+    list_panel.add(manual_lookup, constraints(0,24,1));
+    list_panel.add(request_transaction, constraints(1,24,1));
+    request_transaction.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        int id = Integer.parseInt(manual_lookup.getText());
+        Vector<String> update_info = button_query(id);
+        for (int i = 0; i < textfields.size(); i++) {
+          textfields.get(i).setText(update_info.get(i));
+        }
+      }
+    });
+
+    // LATEST TRANSACTION BUTTON
+    JButton latest_button = new JButton("View Latest Transaction");
+    buttonsettings(latest_button);
+    latest_button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        int id = get_latest_transaction();
+        Vector<String> update_info = button_query(id);
+        for (int i = 0; i < textfields.size(); i++) {
+          textfields.get(i).setText(update_info.get(i));
+        }
+      }
+    });
+    list_panel.add(latest_button, constraints(0,25,2));
+
+    // BOTTOM PANEL
     // Make Close Button & add action listener
     JButton close_button = new JButton("Close");
+    buttonsettings(close_button);
     for (int i = 0; i < 1; i++) {
       Connection temp_conn = conn;
       close_button.addActionListener(new ActionListener() {
@@ -763,151 +896,39 @@ public class Transactions_GUI extends JFrame {
       });
     }
 
-    // TOP PANEL
-    adjust_panel(top_panel, Color.gray, loweredbevel, 20,20,1340,60);
-    f.add(top_panel); // add panel to frame
-    JLabel top_label = new JLabel("Manage Receipts Interface");
-    top_label.setFont(new Font("Verdana",1,30));
-    top_panel.add(top_label); // add label to panel
-
-    // LIST PANEL
-    adjust_panel(list_panel, Color.white, loweredbevel, 20,100,600,650);
-    f.add(list_panel);
-    JLabel list_label = new JLabel("Reports");
-    labelsettings(list_label);
-    list_panel.add(list_label, constraints(0,0,99));
-
-    // SALES REPORT BUTTON
-    list_panel.add(new JLabel("Start Date/Time:"), constraints(0,1,1));
-    list_panel.add(new JLabel("End Date/Time:"), constraints(1,1,1));
-    JTextArea sales_report_startdate = new JTextArea("MM/DD/YYYY", 1,12);
-    JTextArea sales_report_enddate = new JTextArea("MM/DD/YYYY", 1,12);
-    JTextArea sales_report_starttime = new JTextArea("HH:MM:SS", 1,12);
-    JTextArea sales_report_endtime = new JTextArea("HH:MM:SS", 1,12);
-
-    adjust_text_area(sales_report_startdate);
-    adjust_text_area(sales_report_enddate);
-    adjust_text_area(sales_report_starttime);
-    adjust_text_area(sales_report_endtime);
-
-    JButton sales_report_generate = new JButton("Generate Sales Report");
-    list_panel.add(sales_report_startdate, constraints(0,2,1));
-    list_panel.add(sales_report_enddate, constraints(1,2,1));
-    list_panel.add(sales_report_starttime, constraints(0,3,1));
-    list_panel.add(sales_report_endtime, constraints(1,3,1));
-    list_panel.add(sales_report_generate, constraints(2,2,1));
-    sales_report_generate.addActionListener(new ActionListener() {
+    // Make X Report Button & add action listener
+    JButton x_button = new JButton("X Report");
+    buttonsettings(x_button);
+    x_button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        generate_sales_report(sales_report_startdate.getText(), sales_report_starttime.getText(), sales_report_enddate.getText(), sales_report_endtime.getText());
+        JOptionPane.showMessageDialog(null,generateXReport());
       }
     });
-
-    // EXCESS REPORT BUTTON
-    list_panel.add(new JLabel("Start Date/Time:"), constraints(0,4,1));
-    list_panel.add(new JLabel("End Date/Time:"), constraints(1,4,1));
-    JTextArea excess_report_startdate = new JTextArea("MM/DD/YYYY", 1,12);
-    JTextArea excess_report_enddate = new JTextArea("MM/DD/YYYY", 1,12);
-    JTextArea excess_report_starttime = new JTextArea("HH:MM:SS", 1,12);
-    JTextArea excess_report_endtime = new JTextArea("HH:MM:SS", 1,12);
-
-    adjust_text_area(excess_report_startdate);
-    adjust_text_area(excess_report_enddate);
-    adjust_text_area(excess_report_starttime);
-    adjust_text_area(excess_report_endtime);
-
-    JButton excess_report_generate = new JButton("Excess Sales Report");
-    list_panel.add(excess_report_startdate, constraints(0,5,1));
-    list_panel.add(excess_report_enddate, constraints(1,5,1));
-    list_panel.add(excess_report_starttime, constraints(0,6,1));
-    list_panel.add(excess_report_endtime, constraints(1,6,1));
-    list_panel.add(excess_report_generate, constraints(2,5,1));
-    excess_report_generate.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        generate_excess_report(excess_report_startdate.getText(), excess_report_starttime.getText(), excess_report_enddate.getText(), excess_report_endtime.getText());
-      }
-    });
-
-    for (int i = 4; i < 30; i++) {
-      list_panel.add(new JLabel(" "), constraints(0,i,1));
-    }
-
-    // RESTOCK REPORT BUTTON
-    JButton restock_report_generate = new JButton("Restock Report");
-    list_panel.add(restock_report_generate, constraints(2, 8, 1));
-    restock_report_generate.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        try{
-          Restock_Report restock_report = new Restock_Report();
-        } catch(Exception a) {
-          JOptionPane.showMessageDialog(null,"Error opening Restock Report: " + a);
-        }
-      }
-    });
-
-    // INFO PANEL
-    adjust_panel(info_panel, Color.white, loweredbevel, 640,100,720,650);
-    f.add(info_panel);
-    JLabel info_label = new JLabel("Receipt Info");
-    labelsettings(info_label);
-    info_label.setFont(new Font("Verdana",1,20));
-    info_panel.add(info_label, constraints(0, 0, 20));
-    String[] fieldnames = new String[] {"ID", "Order Type", "Meal Size", "Entree 1", "Entree 2", "Entree 3",
-    "Side 1", "Side 2", "Drink", "Date", "Conducted By", "Payment Method  ", "Subtotal", "Tax", "Total", "Time"};
-    Vector<JTextArea> textfields = new Vector<JTextArea>();
-    for (int i = 0; i < fieldnames.length; i++) {
-      JTextArea temp = new JTextArea(fieldnames[i], 1, 25);
-      adjust_text_area(temp);
-      textfields.add(temp);
-      info_panel.add(new JLabel(fieldnames[i]), constraints(0, i+1, 1));
-      info_panel.add(textfields.get(i), constraints(1, i+1, 1));
-    }
-
-    // MANUAL TRANSACTION LOOKUP
-    list_panel.add(new JLabel("Manual Transaction Lookup:"), constraints(0,33,1));
-    JTextArea manual_lookup = new JTextArea("Enter Transaction ID", 1,12);
-    adjust_text_area(manual_lookup);
-    JButton request_transaction = new JButton("Display Transaction");
-    list_panel.add(manual_lookup, constraints(0,34,1));
-    list_panel.add(request_transaction, constraints(1,34,1));
-    request_transaction.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        int id = Integer.parseInt(manual_lookup.getText());
-        Vector<String> update_info = button_query(id);
-        for (int i = 0; i < textfields.size(); i++) {
-          textfields.get(i).setText(update_info.get(i));
-        }
-      }
-    });
-
-    // LATEST TRANSACTION BUTTON
-    JButton latest_button = new JButton("View Latest Transaction");
-    latest_button.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        int id = get_latest_transaction();
-        Vector<String> update_info = button_query(id);
-        for (int i = 0; i < textfields.size(); i++) {
-          textfields.get(i).setText(update_info.get(i));
-        }
-      }
-    });
-    list_panel.add(latest_button, constraints(0,35,2));
-
-    // BOTTOM PANEL
-    adjust_panel(bottom_panel, Color.gray, loweredbevel, 20,770,1340,70);
-    f.add(bottom_panel);
-    bottom_panel.add(close_button, constraints(0,0,1));
-    bottom_panel.add(x_button);
-    JTextArea query_box = new JTextArea("", 1,75);
+  
+    JTextArea query_box = new JTextArea("", 1,50);
     adjust_text_area(query_box);
-    JButton query_button = new JButton("submit query");
+
+    JButton query_button = new JButton("Submit Query ");
+    buttonsettings(query_button);
     query_button.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          run_command(query_box.getText());
-          query_box.setText("");
-        }
-      });
+      public void actionPerformed(ActionEvent e) {
+        run_command(query_box.getText());
+        query_box.setText("");
+      }
+    });
+
+    adjust_panel(bottom_panel, 20,770,1340,70);
+
+    bottom_panel.add(close_button, constraints(0,0,1));
+    bottom_panel.add(new JLabel(" "), constraints(1,0,1));
+    bottom_panel.add(x_button, constraints(2,0,1));
     bottom_panel.add(query_button, constraints(0,1,1));
-    bottom_panel.add(query_box, constraints(1,1,1));
+    for(int i = 0; i < 150; i++) {
+      bottom_panel.add(new JLabel(" "), constraints(i+3,0,1));
+    }
+    bottom_panel.add(query_box, constraints(2,1,150));
+
+    f.add(bottom_panel);
 
     // BORDER PANEL (Required for coherence)
     f.getContentPane().setBackground(Color.red);

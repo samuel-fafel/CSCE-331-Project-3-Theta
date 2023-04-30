@@ -254,7 +254,7 @@ public class Product_GUI extends JFrame {
 
     public Product_GUI() {
       Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-      f = new JFrame("Product Info GUI");
+      f = new JFrame("Product Manipulation");
 
       //Building the connection
       Connection conn = null;
@@ -298,7 +298,7 @@ public class Product_GUI extends JFrame {
         RoundedCornerPanel title_panel = new RoundedCornerPanel(20); 
         title_panel.setLayout(new GridBagLayout());
         adjust_panel(title_panel, lightRed, BorderFactory.createLoweredBevelBorder(), 20, 20, 1340, 60);
-        JLabel title_label = new JLabel("Products");
+        JLabel title_label = new JLabel("Product Manipulation");
         title_label.setFont(new Font("Verdana",1,30));
         title_panel.add(title_label);
 
