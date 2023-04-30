@@ -104,6 +104,13 @@ public class Product_GUI extends JFrame {
       my_panel.setBounds(bound1x,bound1y,bound2x,bound2y);
     }
 
+    public static JLabel createLabel(String text, Font font) {
+      JLabel label = new JLabel(text);
+      label.setFont(font);
+      return label;
+    }
+
+
     public class RoundedCornerPanel extends JPanel {
     private int cornerRadius;
 
@@ -174,7 +181,8 @@ public class Product_GUI extends JFrame {
             product_list.add(result.getString("name"));
         }
       } catch (Exception e){
-        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+        Font font = new Font("Verdana", Font.PLAIN, 16);
+        JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
       }
       product_jlist.setListData(product_list);
     }
@@ -199,13 +207,15 @@ public class Product_GUI extends JFrame {
           results.add(result1.getString("price"));
         }
       } catch (Exception e){
-        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+        Font font = new Font("Verdana", Font.PLAIN, 16);
+        JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
       }
     }
 
     public static void update_item(Connection conn, String table){
-      String column = JOptionPane.showInputDialog(f, "Updated Column: ");
-      String value = JOptionPane.showInputDialog(f, "Updated Value: ");
+      Font font = new Font("Verdana",Font.PLAIN,16);
+      String column = JOptionPane.showInputDialog(f, createLabel("Updated Column: ", font));
+      String value = JOptionPane.showInputDialog(f, createLabel("Updated Value: ", font));
       //Add to database
       try{
         //create a statement object
@@ -217,7 +227,9 @@ public class Product_GUI extends JFrame {
         //send statement to DBMS
         int rows = stmt.executeUpdate(sqlStatement);
       } catch (Exception e){
-        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+        JLabel error = new JLabel("Error accessing Database.");
+        error.setFont(new Font("Verdana",Font.PLAIN,16));
+        JOptionPane.showMessageDialog(null, error);
       }
     }
 
@@ -232,7 +244,8 @@ public class Product_GUI extends JFrame {
         //send statement to DBMS
         int rows = stmt.executeUpdate(sqlStatement);
       } catch (Exception e){
-        JOptionPane.showMessageDialog(null,"Error accessing Database.");
+        Font font = new Font("Verdana", Font.PLAIN, 16);
+        JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
       }
 
       //Add elements to product list from database
@@ -569,7 +582,8 @@ public class Product_GUI extends JFrame {
                   results.add(result1.getString("price"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
                 //closing the connection
                 try {
@@ -596,7 +610,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("buy_price"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //closing the connection
@@ -623,7 +638,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("admin"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //closing the connection
@@ -654,7 +670,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("clock_out"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //closing the connection
@@ -681,7 +698,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("pin"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //closing the connection
@@ -726,13 +744,14 @@ public class Product_GUI extends JFrame {
               //System.exit(0);
             }
             if(current_table == "Menu_Meals"){
-              String name = JOptionPane.showInputDialog(f, "Item name: ");
-              String perish1 = JOptionPane.showInputDialog(f, "Item perishable 1: ");
-              String perish2 = JOptionPane.showInputDialog(f, "Item perishable 2: ");
-              String nonperish1 = JOptionPane.showInputDialog(f, "Item non_perishable 1: ");
-              String nonperish2 = JOptionPane.showInputDialog(f, "Item non_perishable 2: ");
-              String nonperish3 = JOptionPane.showInputDialog(f, "Item non_perishable 3: ");
-              String price = JOptionPane.showInputDialog(f, "Item price: ");
+              Font font = new Font("Verdana", Font.PLAIN, 16);
+              String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+              String perish1 = JOptionPane.showInputDialog(f, createLabel("Item perishable 1: ", font));
+              String perish2 = JOptionPane.showInputDialog(f, createLabel("Item perishable 2: ", font));
+              String nonperish1 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 1: ", font));
+              String nonperish2 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 2: ", font));
+              String nonperish3 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 3: ", font));
+              String price = JOptionPane.showInputDialog(f, createLabel("Item price: ", font));
               //Add to database
               try{
                 //create a statement object
@@ -745,7 +764,7 @@ public class Product_GUI extends JFrame {
                 //send statement to DBMS
                 int rows = stmt.executeUpdate(sqlStatement);
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //Add elements to product list from database
@@ -753,13 +772,14 @@ public class Product_GUI extends JFrame {
 
             }
             if(current_table == "Menu_Drinks"){
-              String name = JOptionPane.showInputDialog(f, "Item name: ");
-              String perish1 = JOptionPane.showInputDialog(f, "Item perishable 1: ");
-              String perish2 = JOptionPane.showInputDialog(f, "Item perishable 2: ");
-              String nonperish1 = JOptionPane.showInputDialog(f, "Item non_perishable 1: ");
-              String nonperish2 = JOptionPane.showInputDialog(f, "Item non_perishable 2: ");
-              String nonperish3 = JOptionPane.showInputDialog(f, "Item non_perishable 3: ");
-              String price = JOptionPane.showInputDialog(f, "Item price: ");
+              Font font = new Font("Verdana", Font.PLAIN, 16);
+              String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+              String perish1 = JOptionPane.showInputDialog(f, createLabel("Item perishable 1: ", font));
+              String perish2 = JOptionPane.showInputDialog(f, createLabel("Item perishable 2: ", font));
+              String nonperish1 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 1: ", font));
+              String nonperish2 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 2: ", font));
+              String nonperish3 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 3: ", font));
+              String price = JOptionPane.showInputDialog(f, createLabel("Item price: ", font));
               //Add to database
               try{
                 //create a statement object
@@ -772,7 +792,7 @@ public class Product_GUI extends JFrame {
                 //send statement to DBMS
                 int rows = stmt.executeUpdate(sqlStatement);
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //Add elements to product list from database
@@ -780,13 +800,14 @@ public class Product_GUI extends JFrame {
 
             }
             if(current_table == "Menu_Entrees"){
-              String name = JOptionPane.showInputDialog(f, "Item name: ");
-              String perish1 = JOptionPane.showInputDialog(f, "Item perishable 1: ");
-              String perish2 = JOptionPane.showInputDialog(f, "Item perishable 2: ");
-              String nonperish1 = JOptionPane.showInputDialog(f, "Item non_perishable 1: ");
-              String nonperish2 = JOptionPane.showInputDialog(f, "Item non_perishable 2: ");
-              String nonperish3 = JOptionPane.showInputDialog(f, "Item non_perishable 3: ");
-              String price = JOptionPane.showInputDialog(f, "Item price: ");
+              Font font = new Font("Verdana", Font.PLAIN, 16);
+              String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+              String perish1 = JOptionPane.showInputDialog(f, createLabel("Item perishable 1: ", font));
+              String perish2 = JOptionPane.showInputDialog(f, createLabel("Item perishable 2: ", font));
+              String nonperish1 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 1: ", font));
+              String nonperish2 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 2: ", font));
+              String nonperish3 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 3: ", font));
+              String price = JOptionPane.showInputDialog(f, createLabel("Item price: ", font));
               //Add to database
               try{
                 //create a statement object
@@ -799,20 +820,21 @@ public class Product_GUI extends JFrame {
                 //send statement to DBMS
                 int rows = stmt.executeUpdate(sqlStatement);
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //Add elements to product list from database
               make_product_list(conn, current_table);
             }
             if(current_table == "Menu_Sides"){
-              String name = JOptionPane.showInputDialog(f, "Item name: ");
-              String perish1 = JOptionPane.showInputDialog(f, "Item perishable 1: ");
-              String perish2 = JOptionPane.showInputDialog(f, "Item perishable 2: ");
-              String nonperish1 = JOptionPane.showInputDialog(f, "Item non_perishable 1: ");
-              String nonperish2 = JOptionPane.showInputDialog(f, "Item non_perishable 2: ");
-              String nonperish3 = JOptionPane.showInputDialog(f, "Item non_perishable 3: ");
-              String price = JOptionPane.showInputDialog(f, "Item price: ");
+              Font font = new Font("Verdana", Font.PLAIN, 16);
+              String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+              String perish1 = JOptionPane.showInputDialog(f, createLabel("Item perishable 1: ", font));
+              String perish2 = JOptionPane.showInputDialog(f, createLabel("Item perishable 2: ", font));
+              String nonperish1 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 1: ", font));
+              String nonperish2 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 2: ", font));
+              String nonperish3 = JOptionPane.showInputDialog(f, createLabel("Item non_perishable 3: ", font));
+              String price = JOptionPane.showInputDialog(f, createLabel("Item price: ", font));
               //Add to database
               try{
                 //create a statement object
@@ -825,7 +847,7 @@ public class Product_GUI extends JFrame {
                 //send statement to DBMS
                 int rows = stmt.executeUpdate(sqlStatement);
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
 
               //Add elements to product list from database
@@ -833,14 +855,15 @@ public class Product_GUI extends JFrame {
 
             }
           if(current_table == "Perishable"){
+            Font font = new Font("Verdana", Font.PLAIN, 16);
             int id_num = get_latest_transaction("perishable");
             String id = Integer.toString(id_num);
-            String name = JOptionPane.showInputDialog(f, "Item name: ");
-            String stock = JOptionPane.showInputDialog(f, "Item stock amount: ");
-            String reorder = JOptionPane.showInputDialog(f, "Item reorder level: ");
-            String reorder_date = JOptionPane.showInputDialog(f, "Item reorder_date: ");
-            String serving = JOptionPane.showInputDialog(f, "Item serving size: ");
-            String price = JOptionPane.showInputDialog(f, "Item price: ");
+            String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+            String stock = JOptionPane.showInputDialog(f, createLabel("Item stock amount: ", font));
+            String reorder = JOptionPane.showInputDialog(f, createLabel("Item reorder level: ", font));
+            String reorder_date = JOptionPane.showInputDialog(f, createLabel("Item reorder_date: ", font));
+            String serving = JOptionPane.showInputDialog(f, createLabel("Item serving size: ", font));
+            String price = JOptionPane.showInputDialog(f, createLabel("Item price: ", font));
             //Add to database
             try{
               //create a statement object
@@ -853,7 +876,7 @@ public class Product_GUI extends JFrame {
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
             } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
             }
 
               //Add elements to product list from database
@@ -862,12 +885,13 @@ public class Product_GUI extends JFrame {
           }
           if(current_table == "Non_perishable"){
             //Collect info
+            Font font = new Font("Verdana", Font.PLAIN, 16);
             int id_num = get_latest_transaction("non_perishable");
             String id = Integer.toString(id_num);
-            String name = JOptionPane.showInputDialog(f, "Item name: ");
-            String stock = JOptionPane.showInputDialog(f, "Item stock amount: ");
-            String reorder_date = JOptionPane.showInputDialog(f, "Item reorder_date: ");
-            String price = JOptionPane.showInputDialog(f, "Item price: ");
+            String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+            String stock = JOptionPane.showInputDialog(f, createLabel("Item stock amount: ", font));
+            String reorder_date = JOptionPane.showInputDialog(f, createLabel("Item reorder_date: ", font));
+            String price = JOptionPane.showInputDialog(f, createLabel("Item price: ", font));
 
             //Add to database
             try{
@@ -881,7 +905,7 @@ public class Product_GUI extends JFrame {
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
             } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
             }
 
               //Add elements to list from database
@@ -891,11 +915,12 @@ public class Product_GUI extends JFrame {
 
           if(current_table == "Positions"){
             //Collect info
+            Font font = new Font("Verdana", Font.PLAIN, 16);
             int id_num = get_latest_transaction("positions");
             String id = Integer.toString(id_num);
-            String name = JOptionPane.showInputDialog(f, "Item name: ");
-            String hourly_pay = JOptionPane.showInputDialog(f, "Item Hourly_Pay: ");
-            String admin = JOptionPane.showInputDialog(f, "Item admin: ");
+            String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+            String hourly_pay = JOptionPane.showInputDialog(f, createLabel("Item Hourly_Pay: ", font));
+            String admin = JOptionPane.showInputDialog(f, createLabel("Item admin: ", font));
 
             //Add to database
             try{
@@ -909,7 +934,7 @@ public class Product_GUI extends JFrame {
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
             } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
             }
 
             //Add elements to list from database
@@ -918,13 +943,14 @@ public class Product_GUI extends JFrame {
 
           if(current_table == "Schedules"){
             //Collect info
-            String shift_name = JOptionPane.showInputDialog(f, "Item shift name: ");
-            String employee = JOptionPane.showInputDialog(f, "Item employee: ");
-            String date = JOptionPane.showInputDialog(f, "Item date: ");
-            String start_time = JOptionPane.showInputDialog(f, "Item start time: ");
-            String end_time = JOptionPane.showInputDialog(f, "Item end time: ");
-            String clock_in = JOptionPane.showInputDialog(f, "Item clock in: ");
-            String clock_out = JOptionPane.showInputDialog(f, "Item clock out ");
+            Font font = new Font("Verdana", Font.PLAIN, 16);
+            String shift_name = JOptionPane.showInputDialog(f, createLabel("Item shift name: ", font));
+            String employee = JOptionPane.showInputDialog(f, createLabel("Item employee: ", font));
+            String date = JOptionPane.showInputDialog(f, createLabel("Item date: ", font));
+            String start_time = JOptionPane.showInputDialog(f, createLabel("Item start time: ", font));
+            String end_time = JOptionPane.showInputDialog(f, createLabel("Item end time: ", font));
+            String clock_in = JOptionPane.showInputDialog(f, createLabel("Item clock in: ", font));
+            String clock_out = JOptionPane.showInputDialog(f, createLabel("Item clock out ", font));
 
             //Add to database
             try{
@@ -938,7 +964,7 @@ public class Product_GUI extends JFrame {
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
             } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
             }
 
             //Add elements to list from database
@@ -947,11 +973,12 @@ public class Product_GUI extends JFrame {
 
           if(current_table == "Employees"){
             //Collect info
+            Font font = new Font("Verdana", Font.PLAIN, 16);
             int id_num = get_latest_transaction("positions");
             String id = Integer.toString(id_num);
-            String name = JOptionPane.showInputDialog(f, "Item name: ");
-            String position = JOptionPane.showInputDialog(f, "Item position: ");
-            String pin = JOptionPane.showInputDialog(f, "Item pin: ");
+            String name = JOptionPane.showInputDialog(f, createLabel("Item name: ", font));
+            String position = JOptionPane.showInputDialog(f, createLabel("Item position: ", font));
+            String pin = JOptionPane.showInputDialog(f, createLabel("Item pin: ", font));
 
             //Add to database
             try{
@@ -965,7 +992,7 @@ public class Product_GUI extends JFrame {
               //send statement to DBMS
               int rows = stmt.executeUpdate(sqlStatement);
             } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
             }
 
             //Add elements to list from database
@@ -1047,7 +1074,8 @@ public class Product_GUI extends JFrame {
                 results.add(result1.getString("price"));
               }
             } catch (Exception e){
-              JOptionPane.showMessageDialog(null,"Error accessing Database.");
+              Font font = new Font("Verdana", Font.PLAIN, 16);
+              JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
             }
           }
             if(current_table == "Non_perishable"){
@@ -1071,7 +1099,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("buy_price"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
             }
 
@@ -1094,7 +1123,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("admin"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
             }
 
@@ -1120,7 +1150,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("clock_out"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
             }
 
@@ -1143,7 +1174,8 @@ public class Product_GUI extends JFrame {
                   results.add(result2.getString("pin"));
                 }
               } catch (Exception e){
-                JOptionPane.showMessageDialog(null,"Error accessing Database.");
+                Font font = new Font("Verdana", Font.PLAIN, 16);
+                JOptionPane.showMessageDialog(null, createLabel("Error accessing Database.", font));
               }
             }
 

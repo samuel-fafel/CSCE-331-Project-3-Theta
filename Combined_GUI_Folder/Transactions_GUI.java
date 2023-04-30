@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Transactions_GUI extends JFrame {
+  static Font font16 = new Font("Verdana",Font.PLAIN,16);
+  static Font font24 = new Font("Verdana",Font.PLAIN,24);
+  static Font font32 = new Font("Verdana",Font.PLAIN,32);
   static java.util.List<String> menu_combined = new ArrayList<>(Arrays.asList(
     "Bowl",
     "Plate",
@@ -81,15 +84,15 @@ public class Transactions_GUI extends JFrame {
   ));
 
   /**
-  *Gives constraint dimensions to a layout constraint varaible.
-  *<p>
-  *This method is constantly used in ordering and placing different labels and buttons
-  *on a grid with the passed on parameters.
-  *
-  * @param gridx The x-axis of where we want our item to be placed
-  * @param gridy The y-axis of where we want our item to be placed
-  * @param gridwidth The width of how many grid spaced you want the item to take up
-  * @return c The constraint variable that is configured
+    *Gives constraint dimensions to a layout constraint varaible.
+    *<p>
+    *This method is constantly used in ordering and placing different labels and buttons
+    *on a grid with the passed on parameters.
+    *
+    * @param gridx The x-axis of where we want our item to be placed
+    * @param gridy The y-axis of where we want our item to be placed
+    * @param gridwidth The width of how many grid spaced you want the item to take up
+    * @return c The constraint variable that is configured
   */
   public static GridBagConstraints constraints(int gridx, int gridy, int gridwidth) {
     GridBagConstraints c = new GridBagConstraints();
@@ -128,15 +131,34 @@ public class Transactions_GUI extends JFrame {
 
   public static void adjust_text_area(JTextArea my_area) {
     my_area.setBorder(new BevelBorder(BevelBorder.LOWERED));
-    my_area.setBackground(Color.LIGHT_GRAY);
+    my_area.setBackground(Color.WHITE);
   }
+
   /**
-  *Manipulates the physical feature of a Java labels.
+  *Manipulates the physical feature of a Java buttons.
   *<p>
-  *This method is constantly used in assigning labels their look on the front end
-  *and it conveniently keeps all the labels in use with a uniform look.
+  *This method is constantly used in assigning buttons their look on the front end
+  *and it conveniently keeps all the buttons in use with a uniform look.
   *
-  * @param inputLabel The label that will be assigned the different attributes
+  * @param inputButton The button that will be assigned the different attributes
+  */
+  public static void buttonsettings(JButton inputButton) {
+    inputButton.setFont(new Font("Verdana",Font.BOLD,12));
+    inputButton.setPreferredSize(new Dimension(110,40));
+    inputButton.setHorizontalAlignment(JButton.CENTER);
+    inputButton.setVerticalAlignment(JButton.CENTER);
+    inputButton.setBackground(Color.white);
+    inputButton.setOpaque(true);
+    inputButton.setBorder(BorderFactory.createLineBorder(Color.black));
+  }
+
+  /**
+    *Manipulates the physical feature of a Java labels.
+    *<p>
+    *This method is constantly used in assigning labels their look on the front end
+    *and it conveniently keeps all the labels in use with a uniform look.
+    *
+    * @param inputLabel The label that will be assigned the different attributes
   */
   public static void labelsettings(JLabel inputLabel) {
     inputLabel.setFont(new Font("Verdana",Font.BOLD,16));

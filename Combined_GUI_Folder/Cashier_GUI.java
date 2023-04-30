@@ -1059,7 +1059,9 @@ public class Cashier_GUI extends JFrame {
           if (list_entrees.contains(copy_item_list.get(3))) { // At least one entree
             if (list_sides.contains(copy_item_list.get(6))) { // At least one side
                 if (cart.add(copy_item_list)) {
-                  JOptionPane.showMessageDialog(null, "Added to Cart!");
+                  JLabel feedback = new JLabel("Added to Cart!");
+                  feedback.setFont(new Font("Verdana",Font.PLAIN,24));
+                  JOptionPane.showMessageDialog(null, feedback);
                 }
             }
           }
@@ -1077,6 +1079,7 @@ public class Cashier_GUI extends JFrame {
         JPanel cart_panel = new JPanel(new GridLayout(0, 1));
         JButton close_cart_button = new JButton("Close Cart");
         buttonsettings(close_cart_button);
+        close_cart_button.setFont(new Font("Verdana",Font.PLAIN,24));
         JScrollPane scroll_pane = new JScrollPane(cart_panel);
         cart_frame.add(scroll_pane, BorderLayout.CENTER);
         close_cart_button.addActionListener(new ActionListener() {
@@ -1088,6 +1091,7 @@ public class Cashier_GUI extends JFrame {
 
         // Print Cart Items
         JLabel empty_cart = new JLabel("Cart is Empty");
+        empty_cart.setFont(new Font("Verdana",Font.PLAIN,24));
         empty_cart.setHorizontalAlignment(JLabel.CENTER);
         empty_cart.setVerticalAlignment(JLabel.CENTER);
         if (cart.isEmpty()) {
@@ -1122,12 +1126,14 @@ public class Cashier_GUI extends JFrame {
               }
               html_list += "</ul></html>";
               JLabel item_list = new JLabel(html_list);
+              item_list.setFont(new Font("Verdana",Font.PLAIN,24));
               cart_panel.add(item_list);
               cart_panel.revalidate();
               cart_panel.repaint();
             }
           }
         }
+        cart_frame.getRootPane().setDefaultButton(close_cart_button);
         cart_frame.setVisible(true);
       }
     });
@@ -1141,7 +1147,9 @@ public class Cashier_GUI extends JFrame {
           TRANSACTION_ID++;
           add_transaction(item_list, payment_method.getText(), subtotal);
         }
-        JOptionPane.showMessageDialog(null, "Order Placed!");
+        JLabel feedback = new JLabel("Order Placed!");
+        feedback.setFont(new Font("Verdana",Font.PLAIN,24));
+        JOptionPane.showMessageDialog(null, feedback);
       }
     });
 
