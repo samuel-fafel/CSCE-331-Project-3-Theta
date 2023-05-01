@@ -113,21 +113,6 @@ async function get_drink_price(id) {
 }
 
 /**
- * get_latest_transaction
- * This function fetches the latest transaction id
- */
-async function get_latest_transaction() {
-    try {
-        const response = await fetch('/get-latest-transactions');
-        const data = await response.json();
-        const latest_id = data[0].id;
-        TRANSACTION_ID = latest_id + 1;
-    } catch (error) {
-        console.error('Error getting price', error);
-    }
-}
-
-/**
  * print_order
  * This function prints the current order to the "Order Items" panel
  * Does not return anything
@@ -149,6 +134,30 @@ function print_order(){
 }
 
 /**
+ * update_total
+ * This function updates the Total price in the "Order Total" panel
+ * Returns the total price, including tax
+ */
+function update_total() {
+    let PLen = prices.length;
+    let total = Number(0.0);
+    for (let i = 0; i < PLen; i++) {
+        total += Number(prices[i]);
+    }
+    total += Number((total * 0.0825).toFixed(2));
+    total = Number(total.toFixed(2));
+
+    let text = "<u>Order Total</u><ul class='no-bullet'><li>$" + total + "</li></ul>";
+    if (total == 0) {
+        total = '';
+        text = "<u>Order Total</u><ul class='no-bullet'><li>" + total + "</li></ul>";
+    }
+    
+    document.getElementById("total").innerHTML = text;
+    return total;
+}
+
+/**
  * print_price
  * This function prints the current order's price to the "Subtotal" panel
  * Calls the update_total() function
@@ -167,30 +176,6 @@ function print_price(){
 
     document.getElementById("prices").innerHTML = text;
     update_total();
-}
-
-/**
- * update_total
- * This function updates the Total price in the "Order Total" panel
- * Returns the total price, including tax
- */
-function update_total() {
-    let PLen = prices.length;
-    let total = Number(0.0);
-    for (let i = 0; i < PLen; i++) {
-        total += Number(prices[i]);
-    }
-    total += Number((total * 0.0825).toFixed(2));
-    total = Number(total.toFixed(3));
-
-    let text = "<u>Order Total</u><ul class='no-bullet'><li>$" + total + "</li></ul>";
-    if (total == 0) {
-        total = '';
-        text = "<u>Order Total</u><ul class='no-bullet'><li>" + total + "</li></ul>";
-    }
-    
-    document.getElementById("total").innerHTML = text;
-    //return total;
 }
 
 /**
@@ -387,20 +372,58 @@ function alter_payment_method(method) {
     PAYMENT_METHOD = method;
 }
 
+
+/**
+ * get_latest_transaction
+ * This function fetches the latest transaction id
+ */
+async function get_latest_transaction() {
+    try {
+        const response = await fetch('/get-latest-transaction');
+        const data = await response.json();
+        const id = data[0].id;
+        TRANSACTION_ID = id + 1;
+    } catch (error) {
+        console.error('Error getting price', error);
+    }
+}
+
+/**
+ * insert_query
+ * This function inserts the given query into the AWS Database
+ */
+async function insert_query(my_query) {
+    try {
+        const response = await fetch('/insert-query', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ my_query })
+        });
+        const data = await response.text();
+        console.log(data);
+    } catch (error) {
+        console.error('Error inserting query', error);
+    }
+}
+
+
 /**
  * place_order
  * This function sends a complete transaction to the database and clears the current order.
  * Does not return anything
  */
-function place_order(){
-    get_latest_transaction();
-    let OLen = order.length;
+async function place_order(){
+    await get_latest_transaction();
+    //let OLen = order.length;
     let PLen = prices.length;
     let taxtotal = update_total();
-    let subtotal = Number(0.0);
+    let subtotal = 0.0;
     for (let p = 0; p < PLen; p++) { // sum prices for subtotal entree
-        subtotal += Number(prices[p]).toFixed(2);
+        subtotal += Number(prices[p]);
     }
+    subtotal = Number(subtotal.toFixed(2));
     let tax = taxtotal-subtotal;
 
     const currentDate = new Date();
@@ -415,45 +438,45 @@ function place_order(){
 
     let queryString = "INSERT INTO transactions VALUES('";
     queryString += TRANSACTION_ID + "', 'Sale', ";
-    for (let o = 0; o < OLen; o++) {
-        switch (order[0]) {
-            case "Bowl":
-                if (!order[3]) {order[3] = "none";}
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Plate":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Bigger Plate":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Family Meal":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Cub Meal":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Small Entree A-La-Carte":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Medium Entree A-La-Carte":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Large Entree A-La-Carte":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Medium Side A-La-Carte":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            case "Large Side A-La-Carte":
-                queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3];
-                break;
-            default:
-                queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', "
-        }
-        queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + tax + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "'";
-        document.getElementById("cart").innerHTML = queryString;
+    switch (order[0]) {
+        case "Bowl":
+            if (!order[3]) {order[3] = "none";}
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + order[3] + "', ";
+            break;
+        case "Plate":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Bigger Plate":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Family Meal":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Cub Meal":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Small Entree A-La-Carte":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Medium Entree A-La-Carte":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Large Entree A-La-Carte":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Medium Side A-La-Carte":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        case "Large Side A-La-Carte":
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            break;
+        default:
+            queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', "
     }
+    queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2) 
+    + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
+    document.getElementById("cart").innerHTML = queryString;
+    insert_query(queryString);
 }
 
 //Google Maps Functionality
