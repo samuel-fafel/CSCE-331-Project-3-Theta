@@ -42,14 +42,6 @@ app.get('/order', (req, res) => {
     res.render('order');
 });
 
-app.get('/auth', (req, res) =>{
-    res.render('auth');
-});
-
-app.get('/success', (req, res) =>{
-  res.render('success');
-});
-
 app.get('/get-price', async (req, res) => {
     try {
       const queryString = 'SELECT price FROM menu_meals ORDER BY id';
@@ -136,7 +128,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://project-3-theta-panda-express.onrender.com/auth/google/callback"
+    callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -151,5 +143,5 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
     // Successful authentication, redirect success.
-    res.redirect('/');
+    res.redirect('/success');
   });
