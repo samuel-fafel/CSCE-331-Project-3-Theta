@@ -194,8 +194,8 @@ body {
     grid-template-areas:
       'button1 button2';
     gap: 40px;
-    grid-template-rows: 100px;
-    width: 80%;
+    grid-template-rows: 80px;
+    width: 85%;
     text-align: center;
     margin: auto;
     padding: 10px;
@@ -345,4 +345,18 @@ button:hover .tooltip {
   height: auto;
   display: block;
   margin-bottom: 5px;
+}
+
+h1 {
+  background-color: black;
+  width: 85%;
+  text-align: center;
+  color: white;
+  position: relative;
+  display: inline-block;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border-radius: 10px;
+  
 }
