@@ -504,18 +504,3 @@ async function initMap() {
 }
 
 initMap();
-
-// get radio buttons and labels
-const radioButtons = document.querySelectorAll('input[type="radio"]');
-const labels = document.querySelectorAll('label');
-
-// add event listener to each radio button
-radioButtons.forEach((radioButton, index) => {
-  radioButton.addEventListener("change", () => {
-    // remove "selected" class from all labels
-    labels.forEach((label) => label.classList.remove("selected"));
-
-    // add "selected" class to the label of the selected radio button
-    labels[index].classList.add("selected");
-  });
-});
