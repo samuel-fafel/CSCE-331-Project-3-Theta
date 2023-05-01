@@ -8,9 +8,10 @@
 </head>
 <body>
 	<nav>
-
 		<ul>
-			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda">Employee</a></li>
+			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda">
+        <%= username?.user?.displayName ?? "Employee" %>
+      </a></li>
 			<li><a href="/order">Order</a></li>
 			<li><a href="/">Home</a></li>
 		</ul>
