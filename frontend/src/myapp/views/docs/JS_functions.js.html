@@ -1,4 +1,32 @@
-//Global variables
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: JS_functions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: JS_functions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//Global variables
 let order = [];
 let prices = [];
 let items = [];
@@ -69,7 +97,7 @@ window.onload = function(){
         var style_element = localStorage.getItem("styleSheet");
 
         //Avoid null css file when first booting website
-        if ((style_element != "order_style.css") && (style_element != "style_big.css") && (style_element != "style_huge.css")){
+        if ((style_element != "order_style.css") &amp;&amp; (style_element != "style_big.css") &amp;&amp; (style_element != "style_huge.css")){
             style_element = "order_style.css";
         }
         // get html style element by ID
@@ -120,16 +148,16 @@ async function get_drink_price(id) {
 function print_order(){
     let OLen = order.length;
 
-    let text = "<h1>Order Items</h1><ul class='no-bullet overflow-fix'>";
-    for (let i = 0; i < OLen; i++) {
+    let text = "&lt;h1>Order Items&lt;/h1>&lt;ul class='no-bullet overflow-fix'>";
+    for (let i = 0; i &lt; OLen; i++) {
         if (i == 0) {
-            text += "<li class='no-bullet'><u>" + order[i] + "</u></li>";
+            text += "&lt;li class='no-bullet'>&lt;u>" + order[i] + "&lt;/u>&lt;/li>";
         }
         else {
-            text += "<li class='no-bullet'>" + order[i] + "</li>";
+            text += "&lt;li class='no-bullet'>" + order[i] + "&lt;/li>";
         }
     }
-    text += "</ul>";
+    text += "&lt;/ul>";
     document.getElementById("order").innerHTML = text;
 }
 
@@ -141,16 +169,16 @@ function print_order(){
 function update_total() {
     let PLen = prices.length;
     let total = Number(0.0);
-    for (let i = 0; i < PLen; i++) {
+    for (let i = 0; i &lt; PLen; i++) {
         total += Number(prices[i]);
     }
     total += Number((total * 0.0825).toFixed(2));
     total = Number(total.toFixed(2));
 
-    let text = "<h1>Order Total</h1><ul class='no-bullet'><li>$" + total + "</li></ul>";
+    let text = "&lt;h1>Order Total&lt;/h1>&lt;ul class='no-bullet'>&lt;li>$" + total + "&lt;/li>&lt;/ul>";
     if (total == 0) {
         total = '';
-        text = "<h1>Order Total</h1><ul class='no-bullet'><li>" + total + "</li></ul>";
+        text = "&lt;h1>Order Total&lt;/h1>&lt;ul class='no-bullet'>&lt;li>" + total + "&lt;/li>&lt;/ul>";
     }
 
     document.getElementById("total").innerHTML = text;
@@ -166,13 +194,13 @@ function update_total() {
 function print_price(){
     let PLen = prices.length;
 
-    let text = "<h1>Item Prices</h1><ul class='no-bullet'>";
+    let text = "&lt;h1>Item Prices&lt;/h1>&lt;ul class='no-bullet'>";
     if (prices[0] != '') {
-        for (let i = 0; i < PLen; i++) {
-            text += "<li class='no-bullet'>$" + prices[i] + "</li>";
+        for (let i = 0; i &lt; PLen; i++) {
+            text += "&lt;li class='no-bullet'>$" + prices[i] + "&lt;/li>";
         }
     }
-    text += "</ul>";
+    text += "&lt;/ul>";
 
     document.getElementById("prices").innerHTML = text;
     update_total();
@@ -292,7 +320,7 @@ function add_side(order, item){
         order[current_side] = item;
     }
     else if (order[0] == "Family Meal") {
-        if (current_side < 4 || current_side > 5) {current_side = 4};
+        if (current_side &lt; 4 || current_side > 5) {current_side = 4};
         order[current_side++] = item;
     }
     else if (order[0].includes("Side")) {
@@ -316,7 +344,7 @@ function add_side(order, item){
  * Depending on the meal type selected, behavior changes slightly
  */
 function add_appetizer(order, item) {
-    if (order[0] != "" && !order[0].includes() != "First select from:") {
+    if (order[0] != "" &amp;&amp; !order[0].includes() != "First select from:") {
         order[current_drink+1] = item;
         print_order();
     }
@@ -328,7 +356,7 @@ function add_appetizer(order, item) {
  * Depending on the meal type selected, behavior changes slightly
  */
 function add_drink(order, item, id) {
-    if (order[0] != "" && !order[0].includes("First select from:") ) {
+    if (order[0] != "" &amp;&amp; !order[0].includes("First select from:") ) {
         order[current_drink] = item;
         print_order();
         print_price();
@@ -348,7 +376,7 @@ function clear_order(){
     current_side = 2;
     current_drink = 3;
     document.getElementById("place_order").innerHTML = "Place Order";
-    for (let i = 0; i < order.length; i++) {
+    for (let i = 0; i &lt; order.length; i++) {
         order[i] = [''];
     }
 }
@@ -359,7 +387,7 @@ function clear_order(){
  * Does not return anything
  */
 function clear_price(){
-    for (let i = 0; i < prices.length; i++) {
+    for (let i = 0; i &lt; prices.length; i++) {
         prices[i] = [''];
     }
 }
@@ -422,7 +450,7 @@ async function place_order(){
     let taxtotal = update_total();
     let subtotal = 0.0;
     let valid = 0;
-    for (let p = 0; p < PLen; p++) { // sum prices for subtotal entree
+    for (let p = 0; p &lt; PLen; p++) { // sum prices for subtotal entree
         subtotal += Number(prices[p]);
     }
     subtotal = Number(subtotal.toFixed(2));
@@ -488,11 +516,11 @@ async function place_order(){
     }
     queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
-    for (let i = 0; i < OLen; i++) {
+    for (let i = 0; i &lt; OLen; i++) {
         if (order[i].includes("Please choose from:") || order[i].includes("First select from:")) {
             valid = 0;
         }
-        if (i > 0 && (order[i].includes("Side") || order[i].includes("Entree"))) {
+        if (i > 0 &amp;&amp; (order[i].includes("Side") || order[i].includes("Entree"))) {
             valid = 0;
         }
     }
@@ -528,4 +556,26 @@ async function initMap() {
 
   marker.setMap(map);
 }
-initMap();
+initMap();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#add_appetizer">add_appetizer</a></li><li><a href="global.html#add_drink">add_drink</a></li><li><a href="global.html#add_entree">add_entree</a></li><li><a href="global.html#add_meal">add_meal</a></li><li><a href="global.html#add_side">add_side</a></li><li><a href="global.html#alter_payment_method">alter_payment_method</a></li><li><a href="global.html#clear_order">clear_order</a></li><li><a href="global.html#clear_price">clear_price</a></li><li><a href="global.html#get_drink_price">get_drink_price</a></li><li><a href="global.html#get_latest_transaction">get_latest_transaction</a></li><li><a href="global.html#get_price">get_price</a></li><li><a href="global.html#insert_query">insert_query</a></li><li><a href="global.html#place_order">place_order</a></li><li><a href="global.html#print_order">print_order</a></li><li><a href="global.html#print_price">print_price</a></li><li><a href="global.html#resize_def">resize_def</a></li><li><a href="global.html#update_total">update_total</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 01 2023 15:33:42 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
