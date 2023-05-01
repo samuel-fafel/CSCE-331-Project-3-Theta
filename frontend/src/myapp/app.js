@@ -2,6 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config({ path: './database.env' });
+const my_path = require('path');
 //const { Loader } = require('@googlemaps/js-api-loader');
 
 //Create express app
@@ -36,6 +37,10 @@ app.use(session({
 
 app.get('/', (req, res) => {
     res.render('index');
+});
+
+app.get('/index2', (req, res) => {
+  res.render('index2');
 });
 
 app.get('/order', (req, res) => {
@@ -90,7 +95,6 @@ app.use(bodyParser.json());
 app.post('/insert-query', async (req, res) => {
   try {
     console.log(req.body);
-    console.log("WE MADE IT HERE!");
     const { my_query } = req.body;
     const queryString = `${my_query}`;
     await pool.query(queryString);
@@ -136,7 +140,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://project-3-theta-panda-express.onrender.com/auth/google/callback"
+    callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -144,12 +148,21 @@ passport.use(new GoogleStrategy({
   }
 ));
  
-app.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile', 'email'] }));
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
  
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/error' }),
-  function(req, res) {
-    // Successful authentication, redirect success.
-    res.redirect('/');
-  });
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/error' }), function(req, res) {
+  // Successful authentication, redirect success.
+  res.render('index2', { user: req.user });
+});
+
+app.get('/auth/google/index_style.css', function(req, res) {
+  res.type('text/css');
+  const filePath = my_path.join(__dirname, 'views', 'index_style.css');
+  res.sendFile(filePath);
+});
+
+app.get('/auth/google/Panda_Express_logo.png', function(req, res) {
+  res.type('text/css');
+  const filePath = my_path.join(__dirname, 'views', 'Panda_Express_logo.png');
+  res.sendFile(filePath);
+});
