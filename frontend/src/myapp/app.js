@@ -133,7 +133,7 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 /*  Google AUTH  */
- 
+
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const GOOGLE_CLIENT_ID = '418130719038-tdrrf2gggsmkabeg10p0lgvq0cihv1b9.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
