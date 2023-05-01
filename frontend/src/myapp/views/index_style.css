@@ -115,7 +115,7 @@ nav li a:active {
 
   }
 
-  .auth-button {
+  .auth-button-area {
     height:480px;
     width: 95%;
     margin: 0 auto;
@@ -131,4 +131,23 @@ nav li a:active {
     text-align: left;
     padding-right: 200px;
     font-style: italic;
+  }
+
+  .auth-button {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+    color: #fff;
+    background-color: #ff2c55;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .auth-button:hover {
+    background-color: #d5004c;
   }
