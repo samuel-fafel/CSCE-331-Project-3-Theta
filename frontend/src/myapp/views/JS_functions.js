@@ -120,7 +120,7 @@ async function get_drink_price(id) {
 function print_order(){
     let OLen = order.length;
 
-    let text = "<u>Order Items</u><ul class='no-bullet'>";
+    let text = "<u><h1>Order Items</h1></u><ul class='no-bullet'>";
     for (let i = 0; i < OLen; i++) {
         if (i == 0) {
             text += "<li class='no-bullet'><b>" + order[i] + "</b></li>";
@@ -147,12 +147,12 @@ function update_total() {
     total += Number((total * 0.0825).toFixed(2));
     total = Number(total.toFixed(2));
 
-    let text = "<u>Order Total</u><ul class='no-bullet'><li>$" + total + "</li></ul>";
+    let text = "<u><h1>Order Total</h1></u><ul class='no-bullet'><li>$" + total + "</li></ul>";
     if (total == 0) {
         total = '';
         text = "<u>Order Total</u><ul class='no-bullet'><li>" + total + "</li></ul>";
     }
-    
+
     document.getElementById("total").innerHTML = text;
     return total;
 }
@@ -166,7 +166,7 @@ function update_total() {
 function print_price(){
     let PLen = prices.length;
 
-    let text = "<u>Subtotal</u><ul class='no-bullet'>";
+    let text = "<u><h1>Subtotal</h1></u><ul class='no-bullet'>";
     if (prices[0] != '') {
         for (let i = 0; i < PLen; i++) {
             text += "<li class='no-bullet'>$" + prices[i] + "</li>";
@@ -319,7 +319,7 @@ function add_appetizer(order, item) {
     if (order[0] != "" && !order[0].includes() != "First select from:") {
         order[current_drink+1] = item;
         print_order();
-    }   
+    }
 }
 
 /**
@@ -335,7 +335,7 @@ function add_drink(order, item, id) {
         if (id) {
             get_drink_price(id);
         }
-    }  
+    }
 }
 
 /**
@@ -473,7 +473,7 @@ async function place_order(){
         default:
             queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', "
     }
-    queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2) 
+    queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
     document.getElementById("cart").innerHTML = queryString;
     insert_query(queryString);
