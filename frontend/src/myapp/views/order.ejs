@@ -4,14 +4,15 @@
 <head>
     <title>Order Page</title>
     <link id="css" rel="stylesheet" type="text/css" href="order_style.css">
+    <meta name="viewport" user-scalable="yes" maximum-scale="10">
 </head>
 <body>
   <nav>
 
 		<ul>
-			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda">Worker?</a></li>
-			<li><a href="/order">Order</a></li>
-			<li><a href="/">Home</a></li>
+			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda" title="Link to Employee Interface">Worker?</a></li>
+			<li><a href="/order" title="Link to Customer Order Interface">Order</a></li>
+			<li><a href="/" title="Link to Panda Express MSC Home Page">Home</a></li>
 		</ul>
     <div id="google_translate_element">
 
@@ -30,35 +31,35 @@
           <button type="button" onclick="add_meal(order, 'Bowl', 1)">
             Bowl
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/menu_options/bowl.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/menu_options/bowl.png" alt="Image of a bowl with one entree and one side.">
               <span class="tooltip-text">$7.50</span>
             </span>
           </button>
           <button type="button" onclick="add_meal(order, 'Plate', 2)">
             Plate
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/menu_options/plate.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/menu_options/plate.png" alt="Image of a plate with two entrees and two sides.">
               <span class="tooltip-text">$9.00</span>
             </span>
           </button>
           <button type="button" onclick="add_meal(order, 'Bigger Plate', 3)">
             Bigger Plate
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/menu_options/bigger_plate.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/menu_options/bigger_plate.png" alt="Image of a plate with two entress and two sides, and a bowl with one entree.">
               <span class="tooltip-text">$10.50</span>
             </span>
           </button>
           <button type="button" onclick="add_meal(order, 'Family Meal', 4)">
             Family Meal
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/menu_options/family_meal.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/menu_options/family_meal.png" alt="Image of three to-go containers with two entrees and a side along with a plate with an entree and a side.">
               <span class="tooltip-text">$40.00</span>
             </span>
           </button>
           <button type="button" onclick="add_meal(order, 'Cub Meal', 5)">
             Cub Meal
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/menu_options/cub_meal.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/menu_options/cub_meal.png" alt="Image of a small plate with an entree and two sides, a water bottle, and a bag of chips.">
               <span class="tooltip-text">$6.00</span>
             </span>
           </button>
@@ -106,84 +107,84 @@
           <button type="button" onclick="add_entree(order, 'Orange Chicken')">
             Orange Chicken
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_OrangeChicken.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_OrangeChicken.png" alt="Crispy chicken wok-tossed in a sweet and spicy orange sauce.">
               <span class="tooltip-text">Our signature dish. Crispy chicken wok-tossed in a sweet and spicy orange sauce.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Kung Pao Chicken')">
             Kung Pao Chicken
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_KungPaoChicken.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_KungPaoChicken.png" alt="Image of a bowl with chicken, peanuts, vegetables, and chili peppers.">
               <span class="tooltip-text">A Sichuan-inspired dish with chicken, peanuts and vegetables, finished with chili peppers.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Mushroom Chicken')">
             Mushroom Chicken
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_MushroomChicken.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_MushroomChicken.png" alt="Image of a bowl with chicken, mushrooms, zucchini, and soy sauce.">
               <span class="tooltip-text">A delicate combination of chicken, mushrooms and zucchini wok-tossed with a light ginger soy sauce.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Beijing Beef')">
             Beijing Beef
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_BeijingBeef.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_BeijingBeef.png" alt="Image of a bowl with beef, bell peppers, and onions.">
               <span class="tooltip-text">Crispy beef, bell peppers and onions in a sweet-tangy sauce.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Broccoli Beef')">
             Brocolli Beef
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_BroccoliBeef.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_BroccoliBeef.png" alt="Image of a bowl with beef and fresh broccoli.">
               <span class="tooltip-text">A classic favorite. Tender beef and fresh broccoli in a ginger soy sauce.</span>
             </span>
             </button>
           <button type="button" onclick="add_entree(order, 'Black Pepper Angus Steak')">
             Black Pepper<br>Angus Steak
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_ShanghaiAngusSteak.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_ShanghaiAngusSteak.png" alt="Image of a bowl with steak, broccoli, onions, red bell pepers, and mushrooms.">
               <span class="tooltip-text">Angus steak wok-seared with baby broccoli, onions, red bell peppers and mushrooms in a savory black pepper sauce.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Honey Walnut Shrimp')">
             Honey Walnut<br>Shrimp
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Seafood_HoneyWalnutShrimp.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Seafood_HoneyWalnutShrimp.png" alt="Image of a bowl with tempura shrimp and glazed walnuts.">
               <span class="tooltip-text">Large tempura-battered shrimp, wok-tossed in a honey sauce and topped with glazed walnuts.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Grilled Teriyaki Chicken')">
             Grilled Teriyaki
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_GrilledTeriyakiChicken.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_GrilledTeriyakiChicken.png" alt="Image of a plate with grilled chicken and teriyaki sauce on the side.">
               <span class="tooltip-text">Grilled chicken thigh hand-sliced to order and served with teriyaki sauce.</span>
             </span>
             <br>Chicken</button>
           <button type="button" onclick="add_entree(order, 'Black Pepper Chicken')">
             Black Pepper<br>Chicken
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_BlackPepperChicken.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_BlackPepperChicken.png" alt="Image of a bowl with chicken, celery, and onions.">
               <span class="tooltip-text">Marinated chicken, celery and onions in a bold black pepper sauce.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Sweetfire Chicken')">
             Sweet Fire<br>Chicken
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/ChickenBreast_SweetFireChickenBreast.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/ChickenBreast_SweetFireChickenBreast.png" alt="Image of a bowl with crispy chicken, bell peppers, onions, and pineapples.">
               <span class="tooltip-text">Crispy, white-meat chicken, red bell peppers, onions and pineapples in a bright and sweet chili sauce.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'Honey Sesame Chicken')">
             Honey Sesame<br>Chicken
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/ChickenBreast_HoneySesameChickenBreast.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/ChickenBreast_HoneySesameChickenBreast.png" alt="Image of a bowl with crispy chicken and veggies with a sweet sauce and honey.">
               <span class="tooltip-text">Crispy strips of white-meat chicken with veggies in a mildly sweet sauce with organic honey.</span>
             </span>
           </button>
           <button type="button" onclick="add_entree(order, 'String Bean Chicken')">
             String Bean<br>Chicken
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_OrangeChicken.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_OrangeChicken.png" alt="Image of a bowl with chicken, string beans, and onions.">
               <span class="tooltip-text">Chicken breast, string beans and onions wok-tossed in a mild ginger soy sauce.</span>
             </span>
           </button>
@@ -198,35 +199,35 @@
           <button type="button" onclick="add_side(order, 'White Rice')">
             White<br>Rice
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_WhiteSteamedRice.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_WhiteSteamedRice.png" alt="Image of a plate with white rice.">
               <span class="tooltip-text">Regular steamed white rice.</span>
             </span>
           </button>
           <button type="button" onclick="add_side(order, 'Fried Rice')">
             Fried<br>Rice
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_FriedRice.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_FriedRice.png" alt="Image of a plate with fried rice.">
               <span class="tooltip-text">Prepared steamed white rice with soy sauce, eggs, peas, carrots and green onions.</span>
             </span>
           </button>
           <button type="button" onclick="add_side(order, 'Brown Rice')">
             Brown<br>Rice
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_BrownSteamedRice.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_BrownSteamedRice.png" alt="Image of a plate with brown rice.">
               <span class="tooltip-text">Regular steamed brown rice.</span>
             </span>
           </button>
           <button type="button" onclick="add_side(order, 'Chow Mein')">
             Chow<br>Mein
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_ChowMein.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_ChowMein.png" alt="Image of a plate with noodles, onions, celery, and cabbage.">
               <span class="tooltip-text">Stir-fried wheat noodles with onions, celery and cabbage.</span>
             </span>
           </button>
           <button type="button" onclick="add_side(order, 'Super Greens')">
             Super<br>Greens
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/sides/Vegetables_SuperGreens.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Vegetables_SuperGreens.png" alt="Image of a plate with broccoli, kale, and cabbage.">
               <span class="tooltip-text">A healthful medley of broccoli, kale, and cabbage.</span>
             </span>
           </button>
@@ -238,14 +239,14 @@
           <button type="button" onclick="add_appetizer(order, 'Spring Rolls')">
             Veggie Spring Roll
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/appetizers/veggie_spring_rolls.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/appetizers/veggie_spring_rolls.png" alt="Image of a roll with cabbage, celery, carrots, green onions, and noodles.">
               <span class="tooltip-text">Cabbage, celery, carrots, green onions and Chinese noodles in a crispy wonton wrapper.</span>
             </span>
           </button>
           <button type="button" onclick="add_appetizer(order, 'Egg Rolls')">
             Chicken Egg Roll
             <span class="tooltip">
-              <img src="./Panda_Express_Images/Customer_GUI/appetizers/chicken_egg_rolls.png" alt="Image could not be loaded">
+              <img src="./Panda_Express_Images/Customer_GUI/appetizers/chicken_egg_rolls.png" alt="Image of a roll with cabbage, carrots, green onions, and chicken.">
               <span class="tooltip-text">Cabbage, carrots, green onions and chicken in a crispy wonton wrapper.</span>
             </span>
           </button>
