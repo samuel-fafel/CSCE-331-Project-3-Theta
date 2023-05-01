@@ -62,25 +62,31 @@ body {
 
   .grid-container > .section2 {
     font-size: 70px;
+    position: relative;
   }
 
   .grid-container > .section3 {
     font-size: 70px;
+    position: relative;
   }
 
   .grid-container > .section4 {
     font-size: 70px;
+    position: relative;
   }
 
   .grid-container > .section5 {
     font-size: 70px;
+    position: relative;
   }
 
   .grid-container > .section6 {
     font-size: 70px;
+    position: relative;
   }
   .grid-container > .section7 {
     font-size: 70px;
+    position: relative;
   }
 
   .grid-container > .section8 {
@@ -297,6 +303,14 @@ body {
       list-style: none;
       padding: 0;
       margin: 0;
+      overflow: auto;
+    }
+
+    .overflow-fix {
+      max-height: 400px;
+      overflow: auto;
+      line-height: 1.2;
+      padding: 5px;
     }
 
     /* Naviagtion Bar */
@@ -389,4 +403,54 @@ body {
   .radio-button-container input[type="radio"]:checked + label:before {
     background-color: #007bff;
     border-color: #007bff;
+  }
+
+
+  .tooltip {
+    position: absolute;
+    z-index: 1;
+    padding: 16px;
+    margin: 10px 0px 0px -265px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 32px;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    width: 20%;
+    pointer-events: none;
+  }
+
+  button:hover .tooltip {
+    opacity: 1;
+  }
+
+  .tooltip-text {
+    position: relative;
+    margin-bottom: 5px;
+  }
+
+  .tooltip img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  h1 {
+    background-color: black;
+    width: 89%;
+    text-align: center;
+    color: white;
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-radius: 10px;
+
+  }
+
+  button {
+    font-size: 40px;
   }

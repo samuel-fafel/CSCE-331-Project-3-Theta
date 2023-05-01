@@ -62,7 +62,7 @@ public class Restock_Report{
       SimpleAttributeSet att_set = new SimpleAttributeSet();
 
       text_pane.setCharacterAttributes(att_set, true);
-      //text_pane.setText("Report\n");
+      text_pane.setFont(new Font("Verdana", Font.PLAIN, 16));
 
       Document doc = text_pane.getStyledDocument();
       for (int i = 0; i < results.size(); i++){
@@ -73,6 +73,9 @@ public class Restock_Report{
       JScrollPane scrollPane = new JScrollPane(text_pane);
       f.getContentPane().add(scrollPane, BorderLayout.CENTER);
       
+      Color lightRed = new Color(252, 217, 217);
+      text_pane.setBackground(lightRed);
+      scrollPane.setBackground(lightRed);
       f.setSize(400, 300);
       f.setVisible(true);
     }
