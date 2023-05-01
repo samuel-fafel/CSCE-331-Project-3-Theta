@@ -120,7 +120,7 @@ async function get_drink_price(id) {
 function print_order(){
     let OLen = order.length;
 
-    let text = "<u><h1>Order Items</h1></u><ul class='no-bullet'>";
+    let text = "<u><h1>Order Items</h1></u><ul class='no-bullet overflow-fix'>";
     for (let i = 0; i < OLen; i++) {
         if (i == 0) {
             text += "<li class='no-bullet'><b>" + order[i] + "</b></li>";
