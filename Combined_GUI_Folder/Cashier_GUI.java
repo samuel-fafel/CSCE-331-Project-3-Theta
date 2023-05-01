@@ -107,7 +107,7 @@ public class Cashier_GUI extends JFrame {
     // QUERY DATABASE FOR LASTEST TRANSACTION ID
     try{
       Statement stmt = conn.createStatement(); // create a statement object
-      String query = "SELECT id,order_number FROM transactions ORDER BY id DESC LIMIT 1";  // create an SQL statement
+      String query = "SELECT id, order_number FROM transactions ORDER BY id DESC LIMIT 1";  // create an SQL statement
       ResultSet result = stmt.executeQuery(query); // send statement to DBMS
       if(result.next()) { // Get responses from database
         TRANSACTION_ID = result.getInt("id");

@@ -70,6 +70,17 @@ app.get('/get-price', async (req, res) => {
       res.status(500).send('Internal server error');
     }
 });
+
+app.get('/get-drink-price', async (req, res) => {
+  try {
+    const queryString = 'SELECT price FROM menu_drinks ORDER BY id';
+    const result = await pool.query(queryString);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).send('Internal server error');
+  }
+});
     
 app.listen(port, () => {
 console.log(`App listening at http://localhost:${port}`);
