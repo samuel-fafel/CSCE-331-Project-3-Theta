@@ -122,6 +122,8 @@ nav li a:active {
     border-radius: 10px;
     border-width: 1px;
     outline: solid black;
+    background: url('./Panda_Express_Images/Home_Page/Panda_Express_Cover_Image.jpg');
+    background-size: cover;
   }
 
   .mission-statement {
@@ -135,16 +137,17 @@ nav li a:active {
 
   .auth-button {
     display: inline-block;
-    font-size: 16px;
+    font-size: 48px;
     font-weight: bold;
     text-decoration: none;
+    font-family: Verdana;
     padding: 12px 24px;
-    border-radius: 5px;
+    border-radius: 10px;
     transition: background-color 0.3s ease-in-out;
     color: #fff;
     background-color: #ff2c55;
     border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 1);
     text-align: center;
   }
 
