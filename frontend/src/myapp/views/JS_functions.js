@@ -1,5 +1,3 @@
-const { query } = require("express");
-
 //Global variables
 let order = [];
 let prices = [];
@@ -8,7 +6,7 @@ let current_entree = 1;
 let current_side = 2;
 let current_drink = 3;
 let TRANSACTION_ID = 300000;
-//let PAYMENT_METHOD = "Dining Dollars";
+let PAYMENT_METHOD = "Dining Dollars";
 
 /**
  * Resize Functions
@@ -16,6 +14,7 @@ let TRANSACTION_ID = 300000;
  * This helps with accessibility.
  *
  */
+
 function resize_def(){
     //Get style element by ID (hint: getElementById)
     var style_el = document.getElementById("css");
@@ -66,17 +65,17 @@ function resize_huge(){
 }
 
 window.onload = function(){
-    // get stylesheet name from local storage hint: localStorage.getItem(name)
-    var style_element = localStorage.getItem("styleSheet");
+        // get stylesheet name from local storage hint: localStorage.getItem(name)
+        var style_element = localStorage.getItem("styleSheet");
 
-    //Avoid null css file when first booting website
-    if ((style_element != "order_style.css") && (style_element != "style_big.css") && (style_element != "style_huge.css")){
-        style_element = "order_style.css";
-    }
-    // get html style element by ID
-    var element = document.getElementById("css");
-    // replace href attribute of html element.
-    element.setAttribute("href", style_element);
+        //Avoid null css file when first booting website
+        if ((style_element != "order_style.css") && (style_element != "style_big.css") && (style_element != "style_huge.css")){
+            style_element = "order_style.css";
+        }
+        // get html style element by ID
+        var element = document.getElementById("css");
+        // replace href attribute of html element.
+        element.setAttribute("href", style_element);
 }
 
 /**
@@ -97,7 +96,7 @@ async function get_price(id) {
 }
 
 /**
- * get_price
+ * get_drink_price
  * This function fetches the price of a drink with the given id
  * calls the print_price() function after retrieval.
  */
@@ -117,7 +116,6 @@ async function get_drink_price(id) {
  * get_latest_transaction
  * This function fetches the latest transaction id
  */
-/*
 async function get_latest_transaction() {
     try {
         const response = await fetch('/get-latest-transactions');
@@ -128,7 +126,6 @@ async function get_latest_transaction() {
         console.error('Error getting price', error);
     }
 }
-*/
 
 /**
  * print_order
@@ -381,7 +378,6 @@ function clear_price(){
     }
 }
 
-
 /**
  * alter_payment_method
  * This function is used to set the payment method
@@ -396,7 +392,6 @@ function alter_payment_method(method) {
  * This function sends a complete transaction to the database and clears the current order.
  * Does not return anything
  */
-
 function place_order(){
     get_latest_transaction();
     let OLen = order.length;
@@ -461,9 +456,9 @@ function place_order(){
     }
 }
 
-
 //Google Maps Functionality
 let map;
+
 async function initMap() {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
@@ -484,6 +479,7 @@ async function initMap() {
 
   marker.setMap(map);
 }
+
 initMap();
 
 // get radio buttons and labels
