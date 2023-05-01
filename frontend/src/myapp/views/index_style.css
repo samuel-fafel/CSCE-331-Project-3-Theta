@@ -75,7 +75,7 @@ nav li a:active {
     background-color: red;
     padding: 10px;
     height: 1000px;
-    grid-template-rows: 400px 560px ;
+    grid-template-rows: 400px 590px ;
     margin-left: 1em;
     margin-right: 1em;
   }
@@ -122,4 +122,8 @@ nav li a:active {
     border-radius: 10px;
     border-width: 1px;
     outline: solid black;
+  }
+
+  h1{
+    font-size: 25px;
   }
