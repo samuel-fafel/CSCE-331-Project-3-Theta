@@ -1,5 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config({ path: './database.env' });
 //const { Loader } = require('@googlemaps/js-api-loader');
 
@@ -70,6 +71,47 @@ app.get('/get-price', async (req, res) => {
       res.status(500).send('Internal server error');
     }
 });
+
+app.get('/get-drink-price', async (req, res) => {
+  try {
+    const queryString = 'SELECT price FROM menu_drinks ORDER BY id';
+    const result = await pool.query(queryString);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.get('/get-latest-transaction', async (req, res) => {
+  try {
+    const queryString = 'SELECT id FROM transactions ORDER BY id DESC LIMIT 1';
+    const result = await pool.query(queryString);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
+// Configure body-parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.post('/insert-query', async (req, res) => {
+  try {
+    console.log(req.body);
+    console.log("WE MADE IT HERE!");
+    const { my_query } = req.body;
+    const queryString = `${my_query}`;
+    await pool.query(queryString);
+    res.status(200).send('Query inserted successfully');
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
     
 app.listen(port, () => {
 console.log(`App listening at http://localhost:${port}`);
