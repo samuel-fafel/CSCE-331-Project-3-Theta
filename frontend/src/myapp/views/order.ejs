@@ -27,68 +27,269 @@
       <div class="section1">Panda Express Ordering System</div>
       <div class="section2">Regular Meals
         <div class="meal-button-grid-container">
-            <button type="button" onclick="add_meal(order, 'Bowl',        1)">Bowl</button>
-            <button type="button" onclick="add_meal(order, 'Plate',       2)">Plate</button>
-            <button type="button" onclick="add_meal(order, 'Bigger_Plate',3)">Bigger Plate</button>
-            <button type="button" onclick="add_meal(order, 'Family_Meal', 4)">Family Meal</button>
-            <button type="button" onclick="add_meal(order, 'Cub_Meal',    5)">Cub Meal</button>
+            <button type="button" onclick="add_meal(order, 'Bowl',        1)">
+              Bowl
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/menu_options/bowl.png" alt="Image could not be loaded">
+                <span class="tooltip-text">$7.50</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'Plate',       2)">
+              Plate
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/menu_options/plate.png" alt="Image could not be loaded">
+                <span class="tooltip-text">$9.00</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'Bigger_Plate',3)">
+              Bigger Plate
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/menu_options/bigger_plate.png" alt="Image could not be loaded">
+                <span class="tooltip-text">$10.50</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'Family_Meal', 4)">
+              Family Meal
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/menu_options/family_meal.png" alt="Image could not be loaded">
+                <span class="tooltip-text">$40.00</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'Cub_Meal',    5)">
+              Cub Meal
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/menu_options/cub_meal.png" alt="Image could not be loaded">
+                <span class="tooltip-text">$6.00</span>
+              </span>
+            </button>
             <!-- <button type="button" onclick="add_meal(order, '',            0)">None</button> -->
         </div>
       </div>
       <div class="section3">A-La-Carte
         <div class="alc-button-grid-container">
-            <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Sm')">Small Entree</button>
-            <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Md')">Medium Entree</button>
-            <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Lg')">Large Entree</button>
-            <button type="button" onclick="add_meal(order, 'A_La_Carte_Side_Md')">Medium Side</button>
-            <button type="button" onclick="add_meal(order, 'A_La_Carte_Side_Lg')">Large Side</button>
+            <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Sm')">
+              Small Entree
+              <span class="tooltip">
+                <span class=tooltip-text>$4.90</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Md')">
+              Medium Entree
+              <span class="tooltip">
+                <span class=tooltip-text>$8.20</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Lg')">
+              Large Entree
+              <span class="tooltip">
+                <span class=tooltip-text>$10.90</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'A_La_Carte_Side_Md')">
+              Medium Side
+              <span class="tooltip">
+                <span class=tooltip-text>$4.40</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_meal(order, 'A_La_Carte_Side_Lg')">
+              Large Side
+              <span class="tooltip">
+                <span class=tooltip-text>$5.40</span>
+              </span>
+            </button>
             <!-- <button type="button" onclick="add_meal(order, '')">None</button> -->
         </div>
       </div>
 
       <div class="section4">Entrees
         <div class="entree-button-grid-container">
-            <button type="button" onclick="add_entree(order, 'Orange_Chicken')">Orange Chicken</button>
-            <button type="button" onclick="add_entree(order, 'Kung_Pao_Chicken')">Kung Pao Chicken</button>
-            <button type="button" onclick="add_entree(order, 'Mushroom_Chicken')">Mushroom Chicken</button>
-            <button type="button" onclick="add_entree(order, 'Beijing_Beef')">Beijing Beef</button>
-            <button type="button" onclick="add_entree(order, 'Broccoli_Beef')">Brocolli Beef</button>
-            <button type="button" onclick="add_entree(order, 'Black_Pepper_Angus_Steak')">Black Pepper<br>Angus Steak</button>
-            <button type="button" onclick="add_entree(order, 'Honey_Walnut_Shrimp')">Honey Walnut<br>Shrimp</button>
-            <button type="button" onclick="add_entree(order, 'Grilled_Teriyaki_Chicken')">Grilled Teriyaki<br>Chicken</button>
-            <button type="button" onclick="add_entree(order, 'Black_Pepper_Chicken')">Black Pepper<br>Chicken</button>
-            <button type="button" onclick="add_entree(order, 'Sweetfire_Chicken')">Sweet Fire<br>Chicken</button>
-            <button type="button" onclick="add_entree(order, 'Honey_Sesame_Chicken')">Honey Sesame<br>Chicken</button>
-            <button type="button" onclick="add_entree(order, 'String_Bean_Chicken')">String Bean<br>Chicken</button>
-            <button type="button" onclick="add_entree(order, 'Seasonal Entree')">Seasonal Entree</button>
+            <button type="button" onclick="add_entree(order, 'Orange_Chicken')">
+              Orange Chicken
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_OrangeChicken.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Our signature dish. Crispy chicken wok-tossed in a sweet and spicy orange sauce.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Kung_Pao_Chicken')">
+              Kung Pao Chicken
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_KungPaoChicken.png" alt="Image could not be loaded">
+                <span class="tooltip-text">A Sichuan-inspired dish with chicken, peanuts and vegetables, finished with chili peppers.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Mushroom_Chicken')">
+              Mushroom Chicken
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_MushroomChicken.png" alt="Image could not be loaded">
+                <span class="tooltip-text">A delicate combination of chicken, mushrooms and zucchini wok-tossed with a light ginger soy sauce.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Beijing_Beef')">
+              Beijing Beef
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_BeijingBeef.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Crispy beef, bell peppers and onions in a sweet-tangy sauce.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Broccoli_Beef')">
+              Brocolli Beef
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_BroccoliBeef.png" alt="Image could not be loaded">
+                <span class="tooltip-text">A classic favorite. Tender beef and fresh broccoli in a ginger soy sauce.</span>
+              </span>
+              </button>
+            <button type="button" onclick="add_entree(order, 'Black_Pepper_Angus_Steak')">
+              Black Pepper<br>Angus Steak
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Beef_ShanghaiAngusSteak.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Angus steak wok-seared with baby broccoli, onions, red bell peppers and mushrooms in a savory black pepper sauce.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Honey_Walnut_Shrimp')">
+              Honey Walnut<br>Shrimp
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Seafood_HoneyWalnutShrimp.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Large tempura-battered shrimp, wok-tossed in a honey sauce and topped with glazed walnuts.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Grilled_Teriyaki_Chicken')">
+              Grilled Teriyaki
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_GrilledTeriyakiChicken.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Grilled chicken thigh hand-sliced to order and served with teriyaki sauce.</span>
+              </span>
+              <br>Chicken</button>
+            <button type="button" onclick="add_entree(order, 'Black_Pepper_Chicken')">
+              Black Pepper<br>Chicken
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_BlackPepperChicken.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Marinated chicken, celery and onions in a bold black pepper sauce.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Sweetfire_Chicken')">
+              Sweet Fire<br>Chicken
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/ChickenBreast_SweetFireChickenBreast.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Crispy, white-meat chicken, red bell peppers, onions and pineapples in a bright and sweet chili sauce.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Honey_Sesame_Chicken')">
+              Honey Sesame<br>Chicken
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/ChickenBreast_HoneySesameChickenBreast.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Crispy strips of white-meat chicken with veggies in a mildly sweet sauce with organic honey.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'String_Bean_Chicken')">
+              String Bean<br>Chicken
+              <span class="tooltip">
+                <img src="./Panda_Express_Images/Customer_GUI/entrees/Chicken_OrangeChicken.png" alt="Image could not be loaded">
+                <span class="tooltip-text">Chicken breast, string beans and onions wok-tossed in a mild ginger soy sauce.</span>
+              </span>
+            </button>
+            <button type="button" onclick="add_entree(order, 'Seasonal Entree')">
+              Seasonal Entree
+            </button>
             <!-- <button type="button" onclick="add_entree(order, '')">None</button> -->
         </div>
       </div>
       <div class="section5">Sides
         <div class="sides-button-grid-container">
-          <button type="button" onclick="add_side(order, 'White_Rice')">White<br>Rice</button>
-          <button type="button" onclick="add_side(order, 'Fried_Rice')">Fried<br>Rice</button>
-          <button type="button" onclick="add_side(order, 'Brown_Rice')">Brown<br>Rice</button>
-          <button type="button" onclick="add_side(order, 'Chow_Mein')">Chow<br>Mein</button>
-          <button type="button" onclick="add_side(order, 'Super_Greens')">Super<br>Greens</button>
+          <button type="button" onclick="add_side(order, 'White_Rice')">
+            White<br>Rice
+            <span class="tooltip">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_WhiteSteamedRice.png" alt="Image could not be loaded">
+              <span class="tooltip-text">Regular steamed white rice.</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_side(order, 'Fried_Rice')">
+            Fried<br>Rice
+            <span class="tooltip">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_FriedRice.png" alt="Image could not be loaded">
+              <span class="tooltip-text">Prepared steamed white rice with soy sauce, eggs, peas, carrots and green onions.</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_side(order, 'Brown_Rice')">
+            Brown<br>Rice
+            <span class="tooltip">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_BrownSteamedRice.png" alt="Image could not be loaded">
+              <span class="tooltip-text">Regular steamed brown rice.</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_side(order, 'Chow_Mein')">
+            Chow<br>Mein
+            <span class="tooltip">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Sides_ChowMein.png" alt="Image could not be loaded">
+              <span class="tooltip-text">Stir-fried wheat noodles with onions, celery and cabbage.</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_side(order, 'Super_Greens')">
+            Super<br>Greens
+            <span class="tooltip">
+              <img src="./Panda_Express_Images/Customer_GUI/sides/Vegetables_SuperGreens.png" alt="Image could not be loaded">
+              <span class="tooltip-text">A healthful medley of broccoli, kale, and cabbage.</span>
+            </span>
+          </button>
           <!-- <button type="button" onclick="add_side(order, '')">None</button> -->
         </div>
       </div>
       <div class="section6">Appetizers
         <div class="app-button-grid-container">
-          <button type="button" onclick="add_appetizer(order, 'Spring_Rolls')">Veggie Spring Roll</button>
-          <button type="button" onclick="add_appetizer(order, 'Egg_Rolls')">Chicken Egg Roll</button>
+          <button type="button" onclick="add_appetizer(order, 'Spring_Rolls')">
+            Veggie Spring Roll
+            <span class="tooltip">
+              <img src="./Panda_Express_Images/Customer_GUI/appetizers/veggie_spring_rolls.png" alt="Image could not be loaded">
+              <span class="tooltip-text">Cabbage, celery, carrots, green onions and Chinese noodles in a crispy wonton wrapper.</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_appetizer(order, 'Egg_Rolls')">
+            Chicken Egg Roll
+            <span class="tooltip">
+              <img src="./Panda_Express_Images/Customer_GUI/appetizers/chicken_egg_rolls.png" alt="Image could not be loaded">
+              <span class="tooltip-text">Cabbage, carrots, green onions and chicken in a crispy wonton wrapper.</span>
+            </span>
+          </button>
           <!-- <button type="button" onclick="add_appetizer(order, '')">None</button> -->
         </div>
       </div>
       <div class="section7">Drinks
         <div class="drink-button-grid-container">
-          <button type="button" onclick="add_drink(order, 'Sm_Drink')">Small Fountain Drink</button>
-          <button type="button" onclick="add_drink(order, 'Md_Drink')">Medium Fountain Drink</button>
-          <button type="button" onclick="add_drink(order, 'Lg_Drink')">Large Fountain Drink</button>
-          <button type="button" onclick="add_drink(order, 'Iced_Tea')">Brewed Ice Tea</button>
-          <button type="button" onclick="add_drink(order, 'Bottled_Water')">Water Bottle</button>
-          <button type="button" onclick="add_drink(order, 'Juice')">Kid's Juice</button>
+          <button type="button" onclick="add_drink(order, 'Sm_Drink')">
+            Small Fountain Drink
+            <span class="tooltip">
+              <span class=tooltip-text>$1.90</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_drink(order, 'Md_Drink')">
+            Medium Fountain Drink
+            <span class="tooltip">
+              <span class=tooltip-text>$2.10</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_drink(order, 'Lg_Drink')">
+            Large Fountain Drink
+            <span class="tooltip">
+              <span class=tooltip-text>$2.30</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_drink(order, 'Iced_Tea')">
+            Brewed Ice Tea
+            <span class="tooltip">
+              <span class=tooltip-text>$2.10</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_drink(order, 'Bottled_Water')">
+            Water Bottle
+            <span class="tooltip">
+              <span class=tooltip-text>$1.50</span>
+            </span>
+          </button>
+          <button type="button" onclick="add_drink(order, 'Juice')">
+            Kid's Juice
+            <span class="tooltip">
+              <span class=tooltip-text>$1.00</span>
+            </span>
+          </button>
           <!-- <button type="button" onclick="add_drink(order, '')">None</button> -->
         </div>
       </div>
@@ -111,7 +312,7 @@
         <div class="access-button-grid-container">
           <button class="button_access" onclick="resize_def()">Default Interface</button>
           <button class="button_access" onclick="resize_large()">Larger Interface</button>
-          <button class="button_access" onclick="resize_huge()">Much Larger Inteface</button>
+          <!--<button class="button_access" onclick="resize_huge()">Much Larger Inteface</button> -->
         </div>
       </div>
       <div class="section13" id="cart">Pay Here
