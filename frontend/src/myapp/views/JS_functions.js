@@ -347,6 +347,7 @@ function clear_order(){
     current_entree = 1;
     current_side = 2;
     current_drink = 3;
+    document.getElementById("place_order").innerHTML = "Place Order";
     for (let i = 0; i < order.length; i++) {
         order[i] = [''];
     }
@@ -416,10 +417,11 @@ async function insert_query(my_query) {
  */
 async function place_order(){
     await get_latest_transaction();
-    //let OLen = order.length;
+    let OLen = order.length;
     let PLen = prices.length;
     let taxtotal = update_total();
     let subtotal = 0.0;
+    let valid = 0;
     for (let p = 0; p < PLen; p++) { // sum prices for subtotal entree
         subtotal += Number(prices[p]);
     }
@@ -442,40 +444,66 @@ async function place_order(){
         case "Bowl":
             if (!order[3]) {order[3] = "none";}
             queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + order[3] + "', ";
+            valid = 1;
             break;
         case "Plate":
             queryString += "'" + order[0] + "', '" + order[1] + "', '" + order[2] + "', 'none', '" + order[3] + "', 'none', '" + order[4] + "', ";
+            valid = 1;
             break;
         case "Bigger Plate":
             queryString += "'" + order[0] + "', '" + order[1] + "', '" + order[2] + "', '" + order[3] + "', '" + order[4] + "', 'none', '" + order[5] + "', ";
+            valid = 1;
             break;
         case "Family Meal":
             queryString += "'" + order[0] + "', '" + order[1] + "', '" + order[2] + "', '" + order[3] + "', '" + order[4] + "', '" + order[5] + "', '" + order[6] + "', ";
+            valid = 1;
             break;
         case "Cub Meal":
             queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
+            valid = 1;
             break;
         case "Small Entree A-La-Carte":
             queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
+            valid = 1;
             break;
         case "Medium Entree A-La-Carte":
             queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
+            valid = 1;
             break;
         case "Large Entree A-La-Carte":
             queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
+            valid = 1;
             break;
         case "Medium Side A-La-Carte":
             queryString += "'" + order[0] + "', 'none', 'none', 'none', '"+order[1]+"', 'none', '" + order[3] + "', ";
+            valid = 1;
             break;
         case "Large Side A-La-Carte":
             queryString += "'" + order[0] + "', 'none', 'none', 'none', '"+order[1]+"', 'none', '" + order[3] + "', ";
+            valid = 1;
             break;
         default:
             queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', ";
+            valid = 0;
     }
     queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
-    insert_query(queryString);
+    for (let i = 0; i < OLen; i++) {
+        if (order[i].includes("Please choose from:") || order[i].includes("First select from:")) {
+            valid = 0;
+        }
+        if (i > 0 && (order[i].includes("Side") || order[i].includes("Entree"))) {
+            valid = 0;
+        }
+    }
+    if (valid) {
+        insert_query(queryString);
+        clear_order();
+        order[0] = "Order Placed!";
+        print_order();
+    } else {
+        document.getElementById("place_order").innerHTML = "Place Order: Invalid Order!";
+    }
 }
 
 //Google Maps Functionality
