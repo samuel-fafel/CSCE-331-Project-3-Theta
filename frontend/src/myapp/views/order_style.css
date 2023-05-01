@@ -51,6 +51,30 @@ body {
     font-weight: bold;
   }
 
+  .grid-container > .section2 {
+    position: relative;
+  }
+
+  .grid-container > .section3 {
+    position: relative;
+  }
+
+  .grid-container > .section4 {
+    position: relative;
+  }
+
+  .grid-container > .section5 {
+    position: relative;
+  }
+
+  .grid-container > .section6 {
+    position: relative;
+  }
+
+  .grid-container > .section7 {
+    position: relative;
+  }
+
   .grid-container > .section12 {
     background-color:#f5dfdff1;
     text-align: center;
@@ -70,7 +94,7 @@ body {
     display: grid;
     grid-template-areas:
       'button1 button2 button3'
-      'button4 button5 button6';
+      'button4 button5 empty';
     gap: 10px;
     grid-template-rows: 70px 70px;
     width: 90%;
@@ -170,8 +194,8 @@ body {
     grid-template-areas:
       'button1 button2';
     gap: 40px;
-    grid-template-rows: 100px;
-    width: 80%;
+    grid-template-rows: 80px;
+    width: 85%;
     text-align: center;
     margin: auto;
     padding: 10px;
@@ -288,4 +312,51 @@ nav li a:active {
 .radio-button-container input[type="radio"]:checked + label:before {
   background-color: #007bff;
   border-color: #007bff;
+}
+
+/* Button Hover */
+
+.tooltip {
+  position: absolute;
+  z-index: 1;
+  padding: 16px;
+  margin: 10px 0px 0px -250px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 32px;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  width: 60%;
+  pointer-events: none;
+}
+
+button:hover .tooltip {
+  opacity: 1;
+}
+
+.tooltip-text {
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.tooltip img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 5px;
+}
+
+h1 {
+  background-color: black;
+  width: 85%;
+  text-align: center;
+  color: white;
+  position: relative;
+  display: inline-block;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border-radius: 10px;
+  
 }
