@@ -120,10 +120,10 @@ async function get_drink_price(id) {
 function print_order(){
     let OLen = order.length;
 
-    let text = "<u><h1>Order Items</h1></u><ul class='no-bullet overflow-fix'>";
+    let text = "<h1>Order Items</h1><ul class='no-bullet overflow-fix'>";
     for (let i = 0; i < OLen; i++) {
         if (i == 0) {
-            text += "<li class='no-bullet'><b>" + order[i] + "</b></li>";
+            text += "<li class='no-bullet'><u>" + order[i] + "</u></li>";
         }
         else {
             text += "<li class='no-bullet'>" + order[i] + "</li>";
@@ -147,7 +147,7 @@ function update_total() {
     total += Number((total * 0.0825).toFixed(2));
     total = Number(total.toFixed(2));
 
-    let text = "<u><h1>Order Total</h1></u><ul class='no-bullet'><li>$" + total + "</li></ul>";
+    let text = "<h1>Order Total</h1><ul class='no-bullet'><li>$" + total + "</li></ul>";
     if (total == 0) {
         total = '';
         text = "<h1>Order Total</h1><ul class='no-bullet'><li>" + total + "</li></ul>";
@@ -166,7 +166,7 @@ function update_total() {
 function print_price(){
     let PLen = prices.length;
 
-    let text = "<u><h1>Subtotal</h1></u><ul class='no-bullet'>";
+    let text = "<h1>Item Prices</h1><ul class='no-bullet'>";
     if (prices[0] != '') {
         for (let i = 0; i < PLen; i++) {
             text += "<li class='no-bullet'>$" + prices[i] + "</li>";
@@ -441,16 +441,16 @@ async function place_order(){
     switch (order[0]) {
         case "Bowl":
             if (!order[3]) {order[3] = "none";}
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + order[3] + "', ";
             break;
         case "Plate":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', '" + order[2] + "', 'none', '" + order[3] + "', 'none', '" + order[4] + "', ";
             break;
         case "Bigger Plate":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', '" + order[2] + "', '" + order[3] + "', '" + order[4] + "', 'none', '" + order[5] + "', ";
             break;
         case "Family Meal":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', '" + order[2] + "', '" + order[3] + "', '" + order[4] + "', '" + order[5] + "', '" + order[6] + "', ";
             break;
         case "Cub Meal":
             queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
@@ -471,7 +471,7 @@ async function place_order(){
             queryString += "'" + order[0] + "', 'none', 'none', 'none', '"+order[1]+"', 'none', '" + order[3] + "', ";
             break;
         default:
-            queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', "
+            queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', ";
     }
     queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
