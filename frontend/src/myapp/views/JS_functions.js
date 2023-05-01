@@ -150,7 +150,7 @@ function update_total() {
     let text = "<u><h1>Order Total</h1></u><ul class='no-bullet'><li>$" + total + "</li></ul>";
     if (total == 0) {
         total = '';
-        text = "<u>Order Total</u><ul class='no-bullet'><li>" + total + "</li></ul>";
+        text = "<h1>Order Total</h1><ul class='no-bullet'><li>" + total + "</li></ul>";
     }
 
     document.getElementById("total").innerHTML = text;
@@ -441,47 +441,45 @@ async function place_order(){
     switch (order[0]) {
         case "Bowl":
             if (!order[3]) {order[3] = "none";}
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Plate":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Bigger Plate":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Family Meal":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Cub Meal":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Small Entree A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Medium Entree A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Large Entree A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Medium Side A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', 'none', 'none', 'none', '"+order[1]+"', 'none', '" + order[3] + "', ";
             break;
         case "Large Side A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', 'none', 'none', 'none', '"+order[1]+"', 'none', '" + order[3] + "', ";
             break;
         default:
             queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', "
     }
     queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
-    document.getElementById("cart").innerHTML = queryString;
     insert_query(queryString);
 }
 
 //Google Maps Functionality
 let map;
-
 async function initMap() {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
@@ -502,5 +500,4 @@ async function initMap() {
 
   marker.setMap(map);
 }
-
 initMap();

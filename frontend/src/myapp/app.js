@@ -26,17 +26,6 @@ process.on('SIGINT', function() {
     process.exit(0);
 });
 
-/*
-async function connect() {
-    try {
-      await pool.connect();
-      console.log('Connected to database');
-    } catch (error) {
-      console.error('Error connecting to database', error);
-    }
-}
-*/
-
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/views'));
 app.use(session({

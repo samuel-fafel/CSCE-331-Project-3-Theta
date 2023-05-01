@@ -329,7 +329,7 @@
       </div>
       <div class="section13" id="cart"><h1>Pay Here</h1>
         <div class="pay-area-grid-container">
-          <button type="button" onclick="add_meal(order, ''), 0">Clear Order</button>
+          <button type="button" onclick="add_meal(order, '', 0)">Clear Order</button>
           <button type="button" onclick="place_order()">Place Order</button>
 
         </div>
@@ -337,12 +337,10 @@
 
     </div>
 
-
-
   <script>
     let OLen = order.length;
 
-    let text = "<h1>Order Items:</h1><ul class='no-bullet'>";
+    let text = "<h1>Order Items</h1><ul class='no-bullet'>";
     for (let i = 0; i < OLen; i++) {
       text += "<li class='no-bullet'>" + order[i] + "</li>";
     }
@@ -351,9 +349,8 @@
     document.getElementById("order").innerHTML = text;
   </script>
 
-
   <script src="../app.js"></script>
-  <script src="JS_functions.js"></script>
+  <script src="../JS_functions.js"></script>
 
 </body>
 
