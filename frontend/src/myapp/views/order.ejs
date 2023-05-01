@@ -25,7 +25,7 @@
 	</nav>
     <div class="grid-container">
       <div class="section1">Panda Express Ordering System</div>
-      <div class="section2">Regular Meals
+      <div class="section2"><h1>Step 1: Meal Size</h1>
         <div class="meal-button-grid-container">
             <button type="button" onclick="add_meal(order, 'Bowl',        1)">
               Bowl
@@ -65,7 +65,7 @@
             <!-- <button type="button" onclick="add_meal(order, '',            0)">None</button> -->
         </div>
       </div>
-      <div class="section3">A-La-Carte
+      <div class="section3"><h1>Option: A-La-Carte</h1>
         <div class="alc-button-grid-container">
             <button type="button" onclick="add_meal(order, 'A_La_Carte_Entree_Sm')">
               Small Entree
@@ -101,7 +101,7 @@
         </div>
       </div>
 
-      <div class="section4">Entrees
+      <div class="section4"><h1>Step 2: Entrees</h1>
         <div class="entree-button-grid-container">
             <button type="button" onclick="add_entree(order, 'Orange_Chicken')">
               Orange Chicken
@@ -193,7 +193,7 @@
             <!-- <button type="button" onclick="add_entree(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section5">Sides
+      <div class="section5"><h1>Step 3: Sides</h1>
         <div class="sides-button-grid-container">
           <button type="button" onclick="add_side(order, 'White_Rice')">
             White<br>Rice
@@ -233,7 +233,7 @@
           <!-- <button type="button" onclick="add_side(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section6">Appetizers
+      <div class="section6"><h1>Optional: Apps</h1>
         <div class="app-button-grid-container">
           <button type="button" onclick="add_appetizer(order, 'Spring_Rolls')">
             Veggie Spring Roll
@@ -252,7 +252,7 @@
           <!-- <button type="button" onclick="add_appetizer(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section7">Drinks
+      <div class="section7"><h1>Optional: Drinks</h1>
         <div class="drink-button-grid-container">
           <button type="button" onclick="add_drink(order, 'Sm_Drink')">
             Small Fountain Drink
@@ -294,9 +294,9 @@
         </div>
       </div>
       <div class="section8" id="order">Order Items</div>
-      <div class="section9" id="prices">Item Prices</div>
-      <div class="section10" id="total">Order Total</div>
-      <div class="section11" id="payment">Payment Method
+      <div class="section9" id="prices"><h1>Item Prices</h1></div>
+      <div class="section10" id="total"><h1>Order Total</h1></div>
+      <div class="section11" id="payment"><h1>Payment Method</h1>
         <div class="radio-button-container">
           <label>
             <input type="radio" name="payment" value="meal_swipe">
@@ -308,17 +308,18 @@
           </label>
         </div>
       </div>
-      <div class="section12" id="accessibility">Accessibility
+      <div class="section12" id="accessibility"><h1>Accessibility</h1>
         <div class="access-button-grid-container">
           <button class="button_access" onclick="resize_def()">Default Interface</button>
           <button class="button_access" onclick="resize_large()">Larger Interface</button>
           <!--<button class="button_access" onclick="resize_huge()">Much Larger Inteface</button> -->
         </div>
       </div>
-      <div class="section13" id="cart">Pay Here
+      <div class="section13" id="cart"><h1>Pay Here</h1>
         <div class="pay-area-grid-container">
-          <button type="button" onclick="">Place Order</button>
           <button type="button" onclick="">Clear Order</button>
+          <button type="button" onclick="">Place Order</button>
+          
         </div>
       </div>
 
@@ -329,7 +330,7 @@
     <script>
         let OLen = order.length;
 
-        let text = "Order Items:<ul class='no-bullet'>";
+        let text = "<h1>Order Items:</h1><ul class='no-bullet'>";
         for (let i = 0; i < OLen; i++) {
           text += "<li class='no-bullet'>" + order[i] + "</li>";
         }

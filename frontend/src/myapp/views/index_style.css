@@ -114,3 +114,12 @@ nav li a:active {
     margin-left: 7px;
   
   }
+
+  .auth-button {
+    height:480px;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 10px;
+    border-width: 1px;
+    outline: solid black;
+  }
