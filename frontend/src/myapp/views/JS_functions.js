@@ -120,7 +120,7 @@ async function get_drink_price(id) {
 function print_order(){
     let OLen = order.length;
 
-    let text = "<u>Order Items</u><ul class='no-bullet'>";
+    let text = "<h1>Order Items</h1><ul class='no-bullet'>";
     for (let i = 0; i < OLen; i++) {
         if (i == 0) {
             text += "<li class='no-bullet'><b>" + order[i] + "</b></li>";
@@ -147,10 +147,10 @@ function update_total() {
     total += Number((total * 0.0825).toFixed(2));
     total = Number(total.toFixed(2));
 
-    let text = "<u>Order Total</u><ul class='no-bullet'><li>$" + total + "</li></ul>";
+    let text = "<h1>Order Total</h1><ul class='no-bullet'><li>$" + total + "</li></ul>";
     if (total == 0) {
         total = '';
-        text = "<u>Order Total</u><ul class='no-bullet'><li>" + total + "</li></ul>";
+        text = "<h1>Order Total</h1><ul class='no-bullet'><li>" + total + "</li></ul>";
     }
     
     document.getElementById("total").innerHTML = text;
@@ -166,7 +166,7 @@ function update_total() {
 function print_price(){
     let PLen = prices.length;
 
-    let text = "<u>Subtotal</u><ul class='no-bullet'>";
+    let text = "<h1>Item Prices</h1><ul class='no-bullet'>";
     if (prices[0] != '') {
         for (let i = 0; i < PLen; i++) {
             text += "<li class='no-bullet'>$" + prices[i] + "</li>";
@@ -441,47 +441,45 @@ async function place_order(){
     switch (order[0]) {
         case "Bowl":
             if (!order[3]) {order[3] = "none";}
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Plate":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Bigger Plate":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Family Meal":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '"+order[2]+"', 'none', '" + order[3] + "', ";
             break;
         case "Cub Meal":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Small Entree A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Medium Entree A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Large Entree A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', 'none', 'none', '" + order[3] + "', ";
             break;
         case "Medium Side A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', 'none', 'none', 'none', '"+order[1]+"', 'none', '" + order[3] + "', ";
             break;
         case "Large Side A-La-Carte":
-            queryString += "'" + order[0] + "', '" + order[1] + "', 'none', 'none', '" + order[2] + "', 'none', '" + "', '" + order[3] + "', ";
+            queryString += "'" + order[0] + "', 'none', 'none', 'none', '"+order[1]+"', 'none', '" + order[3] + "', ";
             break;
         default:
             queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', "
     }
     queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2) 
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
-    document.getElementById("cart").innerHTML = queryString;
     insert_query(queryString);
 }
 
 //Google Maps Functionality
 let map;
-
 async function initMap() {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
@@ -502,7 +500,6 @@ async function initMap() {
 
   marker.setMap(map);
 }
-
 initMap();
 
 // get radio buttons and labels
