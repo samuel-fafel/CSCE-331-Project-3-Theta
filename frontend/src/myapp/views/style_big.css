@@ -293,7 +293,7 @@ body {
       background-color: white
     }
 
-    h1 {
+    h2 {
       color: black;
       text-align: center;
       font-size: 25px
@@ -437,7 +437,7 @@ body {
     margin-bottom: 5px;
   }
 
-  h1 {
+  h2 {
     background-color: black;
     width: 89%;
     text-align: center;
