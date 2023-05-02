@@ -5,15 +5,17 @@
 <head>
 	<title>Panda Express Home</title>
 	<link rel="stylesheet" type="text/css" href="index_style.css">
+  <meta name="viewport" user-scalable="yes" maximum-scale="10">
 </head>
 <body>
-	<nav>
+	<nav title="Navigation Bar">
+
 		<ul>
-			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda">
+			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda" title="Link to Employee Interface">
         <%= username?.user?.displayName ?? "Employee" %>
       </a></li>
-			<li><a href="/order">Order</a></li>
-			<li><a href="/">Home</a></li>
+			<li><a href="/order" title="Link to Customer Order Interface">Order</a></li>
+			<li><a href="/" title="Link to Panda Express MSC Home Page">Home</a></li>
 		</ul>
     <div id="google_translate_element">
 
@@ -28,7 +30,7 @@
 
   <div class="grid-container">
     <div class="section1">
-      <img src="./Panda_Express_Images/Home_Page/Panda_Express_logo.png" class="Logo">
+      <img src="./Panda_Express_Images/Home_Page/Panda_Express_logo.png" class="Logo" alt="Panda Express Logo ">
       <p class="mission-statement"> Our mission at Panda Express is to inspire better lives by creating delicious,
         flavorful meals that are made with high-quality ingredients and served in a welcoming and enjoyable environment.
         We strive to provide exceptional service to our guests while also fostering a culture of respect, diversity, and continuous improvement among our team members.
@@ -36,18 +38,21 @@
       </p>
     </div>
     <div class="section2">
-      <div id="text">Our Location</div>
+      <h1 id="text">Our Location</h1>
       <div id="map"></div>
       <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHMrXaSQ6ROeOPjYppOK1rorr5laqEBbg&callback=initMap">
       </script>
     </div>
-    <div class="section3"><div id="text">Sign in with Google</div>
+    <div class="section3"><h1 id="text">Sign in with Google</h1>
       <button class="auth-button-area">
-        <a href="/auth/google" class="auth-button">
+        <a href="/auth/google" class="auth-button" title="Link to Google Login.">
           <span class="fa fa-google"></span>Click Here</a>
       </button>
     </div>
+    <button onclick="window.location.href='docs/index.html'">Go to project 3 docs Page</button>
+    <button onclick="window.location.href='docs_p2/index.html'">Go to project 2 docs Page</button>
+
     <script src="JS_functions.js"></script>
   </body>
 </html>
