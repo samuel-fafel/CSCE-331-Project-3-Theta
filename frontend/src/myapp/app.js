@@ -40,15 +40,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/order', (req, res) => {
-    res.render('order', { username: req.session.user });
-});
-
-app.get('/auth', (req, res) =>{
-    res.render('auth');
-});
-
-app.get('/success', (req, res) =>{
-  res.render('success');
+    res.render('order');
 });
 
 app.get('/get-price', async (req, res) => {
@@ -109,15 +101,11 @@ console.log(`App listening at http://localhost:${port}`);
 //Passport for OAuth 
 //(see https://www.loginradius.com/blog/engineering/google-authentication-with-nodejs-and-passportjs/)
 const passport = require('passport');
-var userProfile;
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('view engine', 'ejs');
-
-app.get('/success', (req, res) => res.send(userProfile));
-app.get('/error', (req, res) => res.send("error logging in"));
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -135,10 +123,9 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://project-3-theta-panda-express.onrender.com/auth/google/callback"
+    callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-      userProfile=profile;
       return done(null, userProfile);
   }
 ));

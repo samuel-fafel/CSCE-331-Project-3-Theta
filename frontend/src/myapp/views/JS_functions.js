@@ -83,6 +83,11 @@ window.onload = function(){
         var element = document.getElementById("css");
         // replace href attribute of html element.
         element.setAttribute("href", style_element);
+
+        //Set name of user
+        var name_button = getElementById("worker_button");
+        var username = localStorage.getItem("username");
+        name_button.innerHTML = "username";
 }
 
 /**
@@ -598,3 +603,5 @@ async function initMap() {
   marker.setMap(map);
 }
 initMap();
+
+//
