@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/order', (req, res) => {
-    res.render('order');
+  res.render('order', { username: req.session.user });
 });
 
 app.get('/get-price', async (req, res) => {
