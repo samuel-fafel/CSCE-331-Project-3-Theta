@@ -279,6 +279,7 @@ body {
       font-size: 20px;
       border-radius:10px;
       font-weight: bold;
+      transition: background-color 0.1s ease-in-out;
     }
 
     .button_access{
@@ -291,6 +292,10 @@ body {
     button:hover
     {
       background-color: white
+    }
+
+    button:active {
+      background-color: #333;
     }
 
     h1 {
