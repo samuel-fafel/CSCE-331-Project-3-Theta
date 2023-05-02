@@ -126,13 +126,17 @@ nav li a:active {
     background-size: cover;
   }
 
-  .mission-statement {
+  h1 {
     line-height: 1.5;
-    font-size: 30px;
+    font-size: 20px;
     justify-content: center;
     text-align: left;
     padding-right: 200px;
     font-style: italic;
+  }
+
+  .mission-statement{
+    font-size: 28px;
   }
 
   .auth-button {
@@ -155,6 +159,11 @@ nav li a:active {
     background-color: #d5004c;
   }
 
-  h1{
+  h2{
     font-size: 25px;
+  }
+
+  .skip-link{
+    display: none;
+    visibility: hidden;
   }

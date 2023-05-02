@@ -8,6 +8,9 @@
   <meta name="viewport" user-scalable="yes" maximum-scale="10">
 </head>
 <body>
+  <header>
+    <a class="skip-link" href="#map" title="Link to Skip to our location.">Skip to Our Location</a>
+  </header>
 	<nav title="Navigation Bar">
 
 		<ul>
@@ -31,23 +34,23 @@
   <div class="grid-container">
     <div class="section1">
       <img src="./Panda_Express_Images/Home_Page/Panda_Express_logo.png" class="Logo" alt="Panda Express Logo ">
-      <p class="mission-statement"> Our mission at Panda Express is to inspire better lives by creating delicious,
+      <h1 class="mission-statement"> Our mission at Panda Express is to inspire better lives by creating delicious,
         flavorful meals that are made with high-quality ingredients and served in a welcoming and enjoyable environment.
         We strive to provide exceptional service to our guests while also fostering a culture of respect, diversity, and continuous improvement among our team members.
         Through our commitment to these values, we aim to be a positive force in the communities we serve, and to promote healthy and fulfilling lifestyles for all.
-      </p>
+      </h1>
     </div>
-    <div class="section2">
-      <h1 id="text">Our Location</h1>
-      <div id="map"></div>
+    <div class="section2" role="contentinfo">
+      <h2 id="text">Our Location</h2>
+      <div id="map" tabindex="0"></div>
       <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHMrXaSQ6ROeOPjYppOK1rorr5laqEBbg&callback=initMap">
       </script>
     </div>
-    <div class="section3"><h1 id="text">Sign in with Google</h1>
+    <div class="section3"><h2 id="text">Sign in with Google</h2>
       <button class="auth-button-area">
         <a href="/auth/google" class="auth-button" title="Link to Google Login.">
-          <span class="fa fa-google"></span>Click Here</a>
+          <span class="fa fa-google" role="presentation"></span>Click Here</a>
       </button>
     </div>
     <button onclick="window.location.href='docs/index.html'">Go to project 3 docs Page</button>
