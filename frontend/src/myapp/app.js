@@ -123,7 +123,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://project-3-theta-panda-express.onrender.com/auth/google/callback"
+    callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -135,8 +135,8 @@ app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'e
  
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/error' }), function(req, res) {
   req.session.user = { user: req.user };
-  console.log(req.session.user);
-  res.render('index', { username: req.session.user });
+  //console.log(req.session.user);
+  res.redirect('/');
 });
 
 app.get('/auth/google/index_style.css', function(req, res) {
@@ -145,6 +145,7 @@ app.get('/auth/google/index_style.css', function(req, res) {
   res.sendFile(filePath);
 });
 
+/*
 app.get('/auth/google/Panda_Express_Images/Home_Page/Panda_Express_logo.png', function(req, res) {
   res.type('text/css');
   const filePath = my_path.join(__dirname, 'views', 'Panda_Express_Images', 'Home_Page', 'Panda_Express_logo.png');
@@ -174,3 +175,4 @@ app.get('/auth/google/docs_p2/index.html', function(req, res) {
   const filePath = my_path.join(__dirname, 'views', 'docs_p2', 'index.html');
   res.sendFile(filePath);
 });
+*/
