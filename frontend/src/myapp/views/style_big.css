@@ -293,6 +293,12 @@ body {
       background-color: white
     }
 
+    h1 {
+      color: black;
+      text-align: center;
+      font-size: 25px
+    }
+
     h2 {
       color: black;
       text-align: center;
@@ -437,6 +443,20 @@ body {
     margin-bottom: 5px;
   }
 
+  h1 {
+    background-color: black;
+    width: 89%;
+    text-align: center;
+    color: white;
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-radius: 10px;
+
+  }
+
   h2 {
     background-color: black;
     width: 89%;
@@ -453,4 +473,9 @@ body {
 
   button {
     font-size: 40px;
+  }
+
+  .skip-link{
+    display: none;
+    visibility: hidden;
   }
