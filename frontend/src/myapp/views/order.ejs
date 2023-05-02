@@ -7,6 +7,9 @@
     <meta name="viewport" user-scalable="yes" maximum-scale="10">
 </head>
 <body>
+  <header>
+    <a class="skip-link" href="#order" title="Link to Skip to order items.">Skip to Order Items</a>
+  </header>
   <nav>
 		<ul>
 			<li><a id="worker_button" href="http://35.224.239.144/ajaxswing/apps/Panda" title="Link to Employee Interface">
@@ -27,7 +30,7 @@
 	</nav>
     <div class="grid-container">
       <div class="section1">Panda Express Ordering System</div>
-      <div class="section2"><h1>Step 1: Meal Size</h1>
+      <div class="section2" role="main"><h2>Step 1: Meal Size</h2>
         <div class="meal-button-grid-container">
           <button type="button" onclick="add_meal(order, 'Bowl', 1)">
             Bowl
@@ -67,7 +70,7 @@
             <!-- <button type="button" onclick="add_meal(order, '',            0)">None</button> -->
         </div>
       </div>
-      <div class="section3"><h1>Option: A-La-Carte</h1>
+      <div class="section3"><h2>Option: A-La-Carte</h2>
         <div class="alc-button-grid-container">
           <button type="button" onclick="add_meal(order, 'Small Entree A-La-Carte', 6)">
             Small Entree
@@ -103,7 +106,7 @@
         </div>
       </div>
 
-      <div class="section4"><h1>Step 2: Entrees</h1>
+      <div class="section4"><h2>Step 2: Entrees</h2>
         <div class="entree-button-grid-container">
           <button type="button" onclick="add_entree(order, 'Orange Chicken')">
             Orange Chicken
@@ -195,7 +198,7 @@
           <!-- <button type="button" onclick="add_entree(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section5"><h1>Step 3: Sides</h1>
+      <div class="section5"><h2>Step 3: Sides</h2>
         <div class="sides-button-grid-container">
           <button type="button" onclick="add_side(order, 'White Rice')">
             White<br>Rice
@@ -235,7 +238,7 @@
           <!-- <button type="button" onclick="add_side(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section6"><h1>Optional: Apps</h1>
+      <div class="section6"><h2>Optional: Apps</h2>
         <div class="app-button-grid-container">
           <button type="button" onclick="add_appetizer(order, 'Spring Rolls')">
             Veggie Spring Roll
@@ -254,7 +257,7 @@
           <!-- <button type="button" onclick="add_appetizer(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section7"><h1>Optional: Drinks</h1>
+      <div class="section7"><h2>Optional: Drinks</h2>
         <div class="drink-button-grid-container">
           <button type="button" onclick="add_drink(order, 'Small Drink', 1)">
             Small Fountain Drink
@@ -295,10 +298,10 @@
           <!-- <button type="button" onclick="add_drink(order, '')">None</button> -->
         </div>
       </div>
-      <div class="section8" id="order"><h1>Order Items</h1></div>
-      <div class="section9" id="prices"><h1>Item Prices</h1></div>
-      <div class="section10" id="total"><h1>Order Total</h1></div>
-      <div class="section11" id="payment"><h1>Payment Method</h1>
+      <div class="section8" id="order"><h2>Order Items</h2></div>
+      <div class="section9" id="prices"><h2>Item Prices</h2></div>
+      <div class="section10" id="total"><h2>Order Total</h2></div>
+      <div class="section11" id="payment"><h2>Payment Method</h2>
         <div class="radio-button-container">
           <label>
             <input type="radio" name="payment" value="Dining Dollars" id="dining-dollars">
@@ -322,14 +325,14 @@
           </script>
         </div>
       </div>
-      <div class="section12" id="accessibility"><h1>Accessibility</h1>
+      <div class="section12" id="accessibility"><h2>Accessibility</h2>
         <div class="access-button-grid-container">
           <button class="button_access" onclick="resize_def()">Default Interface</button>
           <button class="button_access" onclick="resize_large()">Larger Interface</button>
           <!--<button class="button_access" onclick="resize_huge()">Much Larger Inteface</button> -->
         </div>
       </div>
-      <div class="section13" id="cart"><h1>Pay Here</h1>
+      <div class="section13" id="cart"><h2>Pay Here</h2>
         <div class="pay-area-grid-container">
           <button type="button" id="clear_order" onclick="add_meal(order, '', 0)">Clear Order</button>
           <button type="button" id="place_order" onclick="place_order()">Place Order</button>
