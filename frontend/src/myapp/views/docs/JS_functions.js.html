@@ -34,6 +34,7 @@ let current_entree = 1;
 let current_side = 2;
 let current_drink = 3;
 let TRANSACTION_ID = 300000;
+let CONDUCTED_BY = "Customer";
 let PAYMENT_METHOD = "Dining Dollars";
 
 /**
@@ -41,6 +42,7 @@ let PAYMENT_METHOD = "Dining Dollars";
  * These functions are used to change the size of all elements on the website.
  * This helps with accessibility.
  *
+ * @function
  */
 function resize_def(){
     //Get style element by ID (hint: getElementById)
@@ -110,6 +112,11 @@ window.onload = function(){
         var element = document.getElementById("css");
         // replace href attribute of html element.
         element.setAttribute("href", style_element);
+
+        //Set name of user
+        var name_button = getElementById("worker_button");
+        var username = localStorage.getItem("username");
+        name_button.innerHTML = "username";
 }
 
 /**
@@ -377,8 +384,12 @@ function add_side(order, item){
  * @param item The item that will be added to the order
  */
 function add_appetizer(order, item) {
-    if (order[0] != "" &amp;&amp; !order[0].includes() != "First select from:") {
-        order[current_drink+1] = item;
+    if (order.length &amp;&amp; !(order[0].includes("First select from:"))) {
+        if (order.length > current_drink) {
+            order[current_drink+1] = item;
+        } else {
+            order.push(item);
+        }
         print_order();
     }
 }
@@ -481,12 +492,18 @@ async function insert_query(my_query) {
             body: JSON.stringify({ my_query })
         });
         const data = await response.text();
-        console.log(data);
     } catch (error) {
         console.error('Error inserting query', error);
     }
 }
 
+/**
+ * get_user
+ * This function retrieves and returns the current OAuth-logged-in user, or Customer if none exists
+ */
+function set_user() {
+    CONDUCTED_BY = document.getElementById("worker_button").innerText;
+}
 
 /**
  * place_order
@@ -497,6 +514,7 @@ async function insert_query(my_query) {
  */
 async function place_order(){
     await get_latest_transaction();
+    set_user();
     let OLen = order.length;
     let PLen = prices.length;
     let taxtotal = update_total();
@@ -566,7 +584,7 @@ async function place_order(){
             queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', ";
             valid = 0;
     }
-    queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
+    queryString += "'" + formattedDate + "', '" + CONDUCTED_BY + "', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
     for (let i = 0; i &lt; OLen; i++) {
         if (order[i].includes("Please choose from:") || order[i].includes("First select from:")) {
@@ -592,6 +610,7 @@ let map;
  * This function does the API call for Google maps,
  * it passes exact coordinates and places a marker
  * 
+ * @function
  */
 async function initMap() {
   //@ts-ignore
@@ -613,7 +632,9 @@ async function initMap() {
 
   marker.setMap(map);
 }
-initMap();</code></pre>
+initMap();
+
+//</code></pre>
         </article>
     </section>
 
@@ -623,13 +644,13 @@ initMap();</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#add_appetizer">add_appetizer</a></li><li><a href="global.html#add_drink">add_drink</a></li><li><a href="global.html#add_entree">add_entree</a></li><li><a href="global.html#add_meal">add_meal</a></li><li><a href="global.html#add_side">add_side</a></li><li><a href="global.html#alter_payment_method">alter_payment_method</a></li><li><a href="global.html#clear_order">clear_order</a></li><li><a href="global.html#clear_price">clear_price</a></li><li><a href="global.html#get_drink_price">get_drink_price</a></li><li><a href="global.html#get_latest_transaction">get_latest_transaction</a></li><li><a href="global.html#get_price">get_price</a></li><li><a href="global.html#initMap">initMap</a></li><li><a href="global.html#insert_query">insert_query</a></li><li><a href="global.html#place_order">place_order</a></li><li><a href="global.html#print_order">print_order</a></li><li><a href="global.html#print_price">print_price</a></li><li><a href="global.html#resize_def">resize_def</a></li><li><a href="global.html#resize_large">resize_large</a></li><li><a href="global.html#update_total">update_total</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#add_appetizer">add_appetizer</a></li><li><a href="global.html#add_drink">add_drink</a></li><li><a href="global.html#add_entree">add_entree</a></li><li><a href="global.html#add_meal">add_meal</a></li><li><a href="global.html#add_side">add_side</a></li><li><a href="global.html#alter_payment_method">alter_payment_method</a></li><li><a href="global.html#clear_order">clear_order</a></li><li><a href="global.html#clear_price">clear_price</a></li><li><a href="global.html#get_drink_price">get_drink_price</a></li><li><a href="global.html#get_latest_transaction">get_latest_transaction</a></li><li><a href="global.html#get_price">get_price</a></li><li><a href="global.html#initMap">initMap</a></li><li><a href="global.html#insert_query">insert_query</a></li><li><a href="global.html#place_order">place_order</a></li><li><a href="global.html#print_order">print_order</a></li><li><a href="global.html#print_price">print_price</a></li><li><a href="global.html#resize_def">resize_def</a></li><li><a href="global.html#resize_large">resize_large</a></li><li><a href="global.html#set_user">set_user</a></li><li><a href="global.html#update_total">update_total</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 01 2023 21:56:28 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 12:57:46 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
