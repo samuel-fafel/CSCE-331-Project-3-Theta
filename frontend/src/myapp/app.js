@@ -126,6 +126,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
       return done(null, userProfile);
   }
 ));
