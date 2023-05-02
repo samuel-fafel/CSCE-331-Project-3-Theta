@@ -6,6 +6,7 @@ let current_entree = 1;
 let current_side = 2;
 let current_drink = 3;
 let TRANSACTION_ID = 300000;
+let CONDUCTED_BY = "Customer";
 let PAYMENT_METHOD = "Dining Dollars";
 
 /**
@@ -13,8 +14,8 @@ let PAYMENT_METHOD = "Dining Dollars";
  * These functions are used to change the size of all elements on the website.
  * This helps with accessibility.
  *
+ * @function
  */
-
 function resize_def(){
     //Get style element by ID (hint: getElementById)
     var style_el = document.getElementById("css");
@@ -31,6 +32,13 @@ function resize_def(){
     localStorage.setItem("styleSheet", newFileName);
 }
 
+/**
+ * Resize to LArger Functions
+ * This functions is used to change the size of all elements on the website to be larger.
+ * This helps with accessibility.
+ *
+ * @function
+ */
 function resize_large(){
     //Get style element by ID (hint: getElementById)
     var style_el = document.getElementById("css");
@@ -48,21 +56,21 @@ function resize_large(){
     localStorage.setItem("styleSheet", newFileName);
 }
 
-function resize_huge(){
-    //Get style element by ID (hint: getElementById)
-    var style_el = document.getElementById("css");
-    //Check the current stylesheet file name.
-    var fileName = style_el.getAttribute("href");
-    //Determine new stylesheet file name
-    var newFileName = "style_huge.css";
-    if (fileName != "style_huge.css"){
-        // replace stylesheet with new stylesheet
-        style_el.setAttribute("href", newFileName);
-    }
+// function resize_huge(){
+//     //Get style element by ID (hint: getElementById)
+//     var style_el = document.getElementById("css");
+//     //Check the current stylesheet file name.
+//     var fileName = style_el.getAttribute("href");
+//     //Determine new stylesheet file name
+//     var newFileName = "style_huge.css";
+//     if (fileName != "style_huge.css"){
+//         // replace stylesheet with new stylesheet
+//         style_el.setAttribute("href", newFileName);
+//     }
 
-    //store new name
-    localStorage.setItem("styleSheet", newFileName);
-}
+//     //store new name
+//     localStorage.setItem("styleSheet", newFileName);
+// }
 
 window.onload = function(){
         // get stylesheet name from local storage hint: localStorage.getItem(name)
@@ -76,12 +84,20 @@ window.onload = function(){
         var element = document.getElementById("css");
         // replace href attribute of html element.
         element.setAttribute("href", style_element);
+
+        //Set name of user
+        var name_button = getElementById("worker_button");
+        var username = localStorage.getItem("username");
+        name_button.innerHTML = "username";
 }
 
 /**
  * get_price
  * This function fetches the price of a meal with the given id
  * calls the print_price() function after retrieval.
+ * 
+ * @function
+ * @param id - Item ID, used as an index
  */
 async function get_price(id) {
     try {
@@ -99,6 +115,9 @@ async function get_price(id) {
  * get_drink_price
  * This function fetches the price of a drink with the given id
  * calls the print_price() function after retrieval.
+ * 
+ * @function
+ * @param id - Item ID, used as an index
  */
 async function get_drink_price(id) {
     try {
@@ -116,6 +135,8 @@ async function get_drink_price(id) {
  * print_order
  * This function prints the current order to the "Order Items" panel
  * Does not return anything
+ * 
+ * @function
  */
 function print_order(){
     let OLen = order.length;
@@ -137,6 +158,9 @@ function print_order(){
  * update_total
  * This function updates the Total price in the "Order Total" panel
  * Returns the total price, including tax
+ * 
+ * @function
+ * @returns The new total price of an order including tax
  */
 function update_total() {
     let PLen = prices.length;
@@ -162,6 +186,8 @@ function update_total() {
  * This function prints the current order's price to the "Subtotal" panel
  * Calls the update_total() function
  * Does not return anything
+ * 
+ * @function
  */
 function print_price(){
     let PLen = prices.length;
@@ -182,6 +208,8 @@ function print_price(){
  * add_meal
  * This function resets the current order/price and adds the selected meal to the order panel
  * Calls print_order() and get_price()
+ * 
+ * @function
  */
 function add_meal(order, item, id) {
     clear_order(); // Reset Order
@@ -242,6 +270,10 @@ function add_meal(order, item, id) {
  * add_entree
  * This function adds the selected entree to the order panel
  * Depending on the meal type selected, behavior changes slightly
+ * 
+ * @function
+ * @param order The order that the entree will be added to
+ * @param item The item that will be added to the order
  */
 function add_entree(order, item){
     if (order[0] == "Bowl" || order[0] == "Cub Meal" || order[0].includes("Entree")) {
@@ -279,6 +311,10 @@ function add_entree(order, item){
  * add_side
  * This function adds the selected side to the order panel
  * Depending on the meal type selected, behavior changes slightly
+ * 
+ * @function
+ * @param order The order that the side will be added to
+ * @param item The item that will be added to the order
  */
 function add_side(order, item){
     if (order[0] == "Bowl" || order[0] == "Cub Meal") {
@@ -314,10 +350,18 @@ function add_side(order, item){
  * add_appetizer
  * This function adds the selected appetizer to the order panel
  * Depending on the meal type selected, behavior changes slightly
+ * 
+ * @function
+ * @param order The order that the side will be added to
+ * @param item The item that will be added to the order
  */
 function add_appetizer(order, item) {
-    if (order[0] != "" && !order[0].includes() != "First select from:") {
-        order[current_drink+1] = item;
+    if (order.length && !(order[0].includes("First select from:"))) {
+        if (order.length > current_drink) {
+            order[current_drink+1] = item;
+        } else {
+            order.push(item);
+        }
         print_order();
     }
 }
@@ -326,6 +370,11 @@ function add_appetizer(order, item) {
  * add_drink
  * This function adds the selected drink to the order panel
  * Depending on the meal type selected, behavior changes slightly
+ * 
+ * @function
+ * @param order The order that the drink will be added to
+ * @param item The item that will be added to the order
+ * @id The item identification
  */
 function add_drink(order, item, id) {
     if (order[0] != "" && !order[0].includes("First select from:") ) {
@@ -342,6 +391,8 @@ function add_drink(order, item, id) {
  * clear_order
  * This function resets the current order list
  * Does not return anything
+ * 
+ * @function
  */
 function clear_order(){
     current_entree = 1;
@@ -357,6 +408,8 @@ function clear_order(){
  * clear_price
  * This function resets the current price list
  * Does not return anything
+ * 
+ * @function
  */
 function clear_price(){
     for (let i = 0; i < prices.length; i++) {
@@ -368,6 +421,9 @@ function clear_price(){
  * alter_payment_method
  * This function is used to set the payment method
  * Does not return anything
+ * 
+ * @function
+ * @param method This is the type of payment method the customer will use
  */
 function alter_payment_method(method) {
     PAYMENT_METHOD = method;
@@ -377,6 +433,8 @@ function alter_payment_method(method) {
 /**
  * get_latest_transaction
  * This function fetches the latest transaction id
+ * 
+ * @function
  */
 async function get_latest_transaction() {
     try {
@@ -392,6 +450,9 @@ async function get_latest_transaction() {
 /**
  * insert_query
  * This function inserts the given query into the AWS Database
+ * 
+ * @function
+ * @param my_query This is the SQL query that is passed
  */
 async function insert_query(my_query) {
     try {
@@ -403,20 +464,29 @@ async function insert_query(my_query) {
             body: JSON.stringify({ my_query })
         });
         const data = await response.text();
-        console.log(data);
     } catch (error) {
         console.error('Error inserting query', error);
     }
 }
 
+/**
+ * get_user
+ * This function retrieves and returns the current OAuth-logged-in user, or Customer if none exists
+ */
+function set_user() {
+    CONDUCTED_BY = document.getElementById("worker_button").innerText;
+}
 
 /**
  * place_order
  * This function sends a complete transaction to the database and clears the current order.
  * Does not return anything
+ * 
+ * @function
  */
 async function place_order(){
     await get_latest_transaction();
+    set_user();
     let OLen = order.length;
     let PLen = prices.length;
     let taxtotal = update_total();
@@ -486,7 +556,7 @@ async function place_order(){
             queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', ";
             valid = 0;
     }
-    queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
+    queryString += "'" + formattedDate + "', '" + CONDUCTED_BY + "', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
     for (let i = 0; i < OLen; i++) {
         if (order[i].includes("Please choose from:") || order[i].includes("First select from:")) {
@@ -508,6 +578,12 @@ async function place_order(){
 
 //Google Maps Functionality
 let map;
+/**
+ * This function does the API call for Google maps,
+ * it passes exact coordinates and places a marker
+ * 
+ * @function
+ */
 async function initMap() {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
@@ -529,3 +605,5 @@ async function initMap() {
   marker.setMap(map);
 }
 initMap();
+
+//

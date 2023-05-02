@@ -36,23 +36,11 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-    res.render('index');
-});
-
-app.get('/index2', (req, res) => {
-  res.render('index2');
+  res.render('index', { username: req.session.user });
 });
 
 app.get('/order', (req, res) => {
-    res.render('order');
-});
-
-app.get('/auth', (req, res) =>{
-    res.render('auth');
-});
-
-app.get('/success', (req, res) =>{
-  res.render('success');
+  res.render('order', { username: req.session.user });
 });
 
 app.get('/get-price', async (req, res) => {
@@ -105,7 +93,6 @@ app.post('/insert-query', async (req, res) => {
   }
 });
 
-    
 app.listen(port, () => {
 console.log(`App listening at http://localhost:${port}`);
 });
@@ -114,15 +101,11 @@ console.log(`App listening at http://localhost:${port}`);
 //Passport for OAuth 
 //(see https://www.loginradius.com/blog/engineering/google-authentication-with-nodejs-and-passportjs/)
 const passport = require('passport');
-var userProfile;
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('view engine', 'ejs');
-
-app.get('/success', (req, res) => res.send(userProfile));
-app.get('/error', (req, res) => res.send("error logging in"));
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -133,7 +116,7 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 /*  Google AUTH  */
- 
+
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const GOOGLE_CLIENT_ID = '418130719038-tdrrf2gggsmkabeg10p0lgvq0cihv1b9.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
@@ -151,8 +134,9 @@ passport.use(new GoogleStrategy({
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/error' }), function(req, res) {
-  // Successful authentication, redirect success.
-  res.render('index2', { user: req.user });
+  req.session.user = { user: req.user };
+  //console.log(req.session.user);
+  res.redirect('/');
 });
 
 app.get('/auth/google/index_style.css', function(req, res) {
@@ -161,8 +145,34 @@ app.get('/auth/google/index_style.css', function(req, res) {
   res.sendFile(filePath);
 });
 
-app.get('/auth/google/Panda_Express_logo.png', function(req, res) {
+/*
+app.get('/auth/google/Panda_Express_Images/Home_Page/Panda_Express_logo.png', function(req, res) {
   res.type('text/css');
-  const filePath = my_path.join(__dirname, 'views', 'Panda_Express_logo.png');
+  const filePath = my_path.join(__dirname, 'views', 'Panda_Express_Images', 'Home_Page', 'Panda_Express_logo.png');
   res.sendFile(filePath);
 });
+
+app.get('/auth/google/Panda_Express_Images/Home_Page/Panda_Express_Cover_Image.jpg', function(req, res) {
+  res.type('text/css');
+  const filePath = my_path.join(__dirname, 'views', 'Panda_Express_Images', 'Home_Page', 'Panda_Express_Cover_Image.jpg');
+  res.sendFile(filePath);
+});
+
+app.get('/auth/google/JS_functions.js', function(req, res) {
+  res.type('text/html');
+  const filePath = my_path.join(__dirname, 'views', 'JS_functions.js');
+  res.sendFile(filePath);
+});
+
+app.get('/auth/google/docs/index.html', function(req, res) {
+  res.type('text/html');
+  const filePath = my_path.join(__dirname, 'views', 'docs', 'index.html');
+  res.sendFile(filePath);
+});
+
+app.get('/auth/google/docs_p2/index.html', function(req, res) {
+  res.type('text/html');
+  const filePath = my_path.join(__dirname, 'views', 'docs_p2', 'index.html');
+  res.sendFile(filePath);
+});
+*/
