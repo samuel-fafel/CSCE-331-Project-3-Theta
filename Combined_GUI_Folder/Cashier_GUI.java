@@ -917,7 +917,7 @@ public class Cashier_GUI extends JFrame {
             current_item_list.put(4,"entree2");
             current_item_list.put(6,"side1");
             current_item_list.put(7,"side2");
-          }else if(meals.get(0).contains("Bowl")){
+          }else if(meals.get(0).contains("Bowl")|| meals.get(0).contains("Cub_Meal")){
             meal_cap=1;
             current_item_list.put(3,"entree1");
             current_item_list.put(6,"side1");
@@ -925,6 +925,9 @@ public class Cashier_GUI extends JFrame {
           }else if(meals.get(0).contains("A_La_Carte_Side")){
             meal_cap=0;
             current_item_list.put(6,"side1");
+          }else if(meals.get(0).contains("A_La_Carte_Entree")){
+            meal_cap=1;
+            current_item_list.put(3,"entree1");
           }else{
             meal_cap=1;
           }

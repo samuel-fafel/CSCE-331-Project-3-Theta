@@ -150,7 +150,7 @@ public class MAIN_GUI extends JFrame {
       e.printStackTrace();
       System.err.println(e.getClass().getName()+": "+e.getMessage());
       //System.exit(0);
-    } //JOptionPane.showMessageDialog(null,"Opened database successfully");
+    }
 
     // run command
     try{
@@ -259,7 +259,6 @@ public class MAIN_GUI extends JFrame {
     //closing the connection
     try {
       conn.close();
-      //JOptionPane.showMessageDialog(null,"Connection Closed.");
     } catch(Exception e) {
       JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
     }
@@ -424,7 +423,9 @@ public class MAIN_GUI extends JFrame {
               JOptionPane.showMessageDialog(null,"Error opening Cashier GUI: " + a);
             }
           } else {
-            JOptionPane.showMessageDialog(null, "Please login first!");
+            JLabel must_login = new JLabel("Please login first!");
+            must_login.setFont(new Font("Verdana",Font.BOLD,24));
+            JOptionPane.showMessageDialog(null, must_login);
           }
         }
       });
@@ -437,7 +438,9 @@ public class MAIN_GUI extends JFrame {
               JOptionPane.showMessageDialog(null,"Error opening Product GUI: " + a);
             }
           } else {
-            JOptionPane.showMessageDialog(null, "You do not have authorization access to view!");
+            JLabel unauth = new JLabel("You do not have authorization access to view!");
+            unauth.setFont(new Font("Verdana",Font.BOLD,24));
+            JOptionPane.showMessageDialog(null, unauth);
           }
         }
       });
@@ -450,7 +453,9 @@ public class MAIN_GUI extends JFrame {
               JOptionPane.showMessageDialog(null,"Error opening Transactions GUI: " + a);
             }
           } else {
-            JOptionPane.showMessageDialog(null, "You dod not have authorization access to view!");
+            JLabel unauth = new JLabel("You do not have authorization access to view!");
+            unauth.setFont(new Font("Verdana",Font.BOLD,24));
+            JOptionPane.showMessageDialog(null, unauth);
           }
         }
       });
