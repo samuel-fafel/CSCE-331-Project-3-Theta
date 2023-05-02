@@ -174,3 +174,15 @@ app.get('/auth/google/JS_functions.js', function(req, res) {
   const filePath = my_path.join(__dirname, 'views', 'JS_functions.js');
   res.sendFile(filePath);
 });
+
+app.get('/auth/google/docs/index.html', function(req, res) {
+  res.type('text/html');
+  const filePath = my_path.join(__dirname, 'views', 'docs', 'index.html');
+  res.sendFile(filePath);
+});
+
+app.get('/auth/google/docs_p2/index.html', function(req, res) {
+  res.type('text/html');
+  const filePath = my_path.join(__dirname, 'views', 'docs_p2', 'index.html');
+  res.sendFile(filePath);
+});
