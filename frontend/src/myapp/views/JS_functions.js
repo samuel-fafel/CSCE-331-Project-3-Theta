@@ -14,6 +14,7 @@ let PAYMENT_METHOD = "Dining Dollars";
  * These functions are used to change the size of all elements on the website.
  * This helps with accessibility.
  *
+ * @function
  */
 function resize_def(){
     //Get style element by ID (hint: getElementById)
@@ -581,6 +582,7 @@ let map;
  * This function does the API call for Google maps,
  * it passes exact coordinates and places a marker
  * 
+ * @function
  */
 async function initMap() {
   //@ts-ignore
