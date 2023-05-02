@@ -11,7 +11,9 @@
 	<nav title="Navigation Bar">
 
 		<ul>
-			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda" title="Link to Employee Interface">Employee</a></li>
+			<li><a href="http://35.224.239.144/ajaxswing/apps/Panda" title="Link to Employee Interface">
+        <%= username?.user?.displayName ?? "Employee" %>
+      </a></li>
 			<li><a href="/order" title="Link to Customer Order Interface">Order</a></li>
 			<li><a href="/" title="Link to Panda Express MSC Home Page">Home</a></li>
 		</ul>

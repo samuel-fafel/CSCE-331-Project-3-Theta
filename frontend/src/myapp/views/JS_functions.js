@@ -6,6 +6,7 @@ let current_entree = 1;
 let current_side = 2;
 let current_drink = 3;
 let TRANSACTION_ID = 300000;
+let CONDUCTED_BY = "Customer";
 let PAYMENT_METHOD = "Dining Dollars";
 
 /**
@@ -316,8 +317,12 @@ function add_side(order, item){
  * Depending on the meal type selected, behavior changes slightly
  */
 function add_appetizer(order, item) {
-    if (order[0] != "" && !order[0].includes() != "First select from:") {
-        order[current_drink+1] = item;
+    if (order.length && !(order[0].includes("First select from:"))) {
+        if (order.length > current_drink) {
+            order[current_drink+1] = item;
+        } else {
+            order.push(item);
+        }
         print_order();
     }
 }
@@ -403,12 +408,18 @@ async function insert_query(my_query) {
             body: JSON.stringify({ my_query })
         });
         const data = await response.text();
-        console.log(data);
     } catch (error) {
         console.error('Error inserting query', error);
     }
 }
 
+/**
+ * get_user
+ * This function retrieves and returns the current OAuth-logged-in user, or Customer if none exists
+ */
+function set_user() {
+    CONDUCTED_BY = document.getElementById("worker_button").innerText;
+}
 
 /**
  * place_order
@@ -417,6 +428,7 @@ async function insert_query(my_query) {
  */
 async function place_order(){
     await get_latest_transaction();
+    set_user();
     let OLen = order.length;
     let PLen = prices.length;
     let taxtotal = update_total();
@@ -486,7 +498,7 @@ async function place_order(){
             queryString += "'none', 'none', 'none', 'none', 'none', 'none', 'none', ";
             valid = 0;
     }
-    queryString += "'" + formattedDate + "', 'Customer', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
+    queryString += "'" + formattedDate + "', '" + CONDUCTED_BY + "', '" + PAYMENT_METHOD + "', '" + Number(subtotal).toFixed(2) + "', '" + Number(tax).toFixed(2)
     + "', '" + Number(taxtotal).toFixed(2) + "', '" + formattedTime + "', '" + Number(TRANSACTION_ID/100).toFixed(0) + "')";
     for (let i = 0; i < OLen; i++) {
         if (order[i].includes("Please choose from:") || order[i].includes("First select from:")) {
