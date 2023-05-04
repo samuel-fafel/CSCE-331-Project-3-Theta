@@ -279,8 +279,18 @@ public class Cashier_GUI extends JFrame {
     int month = calendar.get(Calendar.MONTH) + 1;
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     String current_time = sdf.format(now);
-    String almost_date = "0" + month + "/" + day + "/" + year;
-    String current_date = almost_date.substring(almost_date.length() - 10);
+    String almost_date;
+    if (month < 10 && day < 10) {
+      almost_date = "0" + month + "/0" + day + "/" + year;
+    } else if (month < 10) {
+      almost_date = "0" + month + "/" + day + "/" + year;
+    } else if (day < 10) {
+      almost_date = month + "/0" + day + "/" + year;
+    } else {
+      almost_date = month + "/" + day + "/" + year;
+    }
+    String current_date = almost_date.substring(almost_date.length()-10);
+    
 
     // CREATE TRANSACTION
     double tax = Math.round(subtotal * 0.0825 * 100.0) / 100.0;
