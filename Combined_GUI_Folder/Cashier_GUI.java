@@ -1060,6 +1060,7 @@ public class Cashier_GUI extends JFrame {
         for (HashMap<Integer, String> item : cart) {
           item.clear();
         }
+        cart.clear();
         update_text(order_items, current_price);
         order_subtotal.setText(String.format("$0.00"));
         order_taxtotal.setText(String.format("$0.00"));
@@ -1114,12 +1115,12 @@ public class Cashier_GUI extends JFrame {
           cart_panel.remove(empty_cart);
           for (HashMap<Integer, String> item : cart) {
             String meal_type = item.get(2);
-            String entree1 = item.get(3); if (entree1 == "none") { entree1 = ""; };
-            String entree2 = item.get(4); if (entree2 == "none") { entree2 = ""; };
-            String entree3 = item.get(5); if (entree3 == "none") { entree3 = ""; };
-            String side1 = item.get(6);   if (side1   == "none") { side1   = ""; };
-            String side2 = item.get(7);   if (side2   == "none") { side2   = ""; };
-            String drink = item.get(8);   if (drink   == "none") { drink   = ""; };
+            String entree1 = item.get(3); if (entree1 == "none" || entree1 == "entree1") { entree1 = ""; };
+            String entree2 = item.get(4); if (entree2 == "none" || entree2 == "entree2") { entree2 = ""; };
+            String entree3 = item.get(5); if (entree3 == "none" || entree3 == "entree3") { entree3 = ""; };
+            String side1 = item.get(6);   if (side1   == "none" || side1 == "side1") { side1   = ""; };
+            String side2 = item.get(7);   if (side2   == "none" || side2 == "side1") { side2   = ""; };
+            String drink = item.get(8);   if (drink   == "none" || drink == "No_Drink") { drink   = ""; };
 
             if (meal_type == null) {
               cart_panel.add(empty_cart);
