@@ -1,6 +1,7 @@
-Point of Sale System for Panda Express
-03/2023 - 05/2023
+Point of Sale System for Panda Express 03/2023 - 05/2023
+
 Texas A&M Department of Computer Science & Engineering
+
 Collaborated with a team to develop and enhance a comprehensive Point of Sale system for a mock Panda Express restaurant. Created a user-friendly interface for employees and customers, integrating various APIs and efficient database management.
 
 Technologies Used: Java, Javascript, React, Node.js, SQL, Git, OAuth, Google Maps API, Google Translate API, AjaxSwing.
