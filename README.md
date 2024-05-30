@@ -1,4 +1,4 @@
-Point of Sale System for Panda Express 03/2023 - 05/2023
+Point of Sale System for Panda Express (03/2023 - 05/2023)
 
 Texas A&M Department of Computer Science & Engineering
 
